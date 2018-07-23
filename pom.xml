@@ -7,7 +7,7 @@
     <groupId>moe.him188</groupId>
     <artifactId>gui</artifactId>
     <name>GUI</name>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
 
     <repositories>
         <repository>
@@ -16,7 +16,7 @@
         </repository>
     </repositories>
 
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -56,6 +56,22 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.7.0</version>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.1</version>
+                <configuration>
+                    <attach>true</attach>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
