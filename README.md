@@ -94,7 +94,7 @@ By using **GUI**, you can easily create forms.
         <version>1.0</version>
     </dependency>
     ```
-3. Don't forget add `depend` into `plugin.yml`
+3. Don't forget to add `depend` into `plugin.yml`
     ```yaml
     depend:
     - GUI
