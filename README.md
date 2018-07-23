@@ -13,33 +13,36 @@ By using **GUI**, you can easily create forms.
   This will reduce much codes in send TipWindows  
   You can send FormWindow and process only in one line!  
   Sample:
-  `player.showFormWindow(new ResponsibleFormWindowModal("Tips", "Hello", "Yes", "No")
-   .onClicked(confirmation -> player.sendMessage("Your choice:"+confirmation)));`
+  `
+  player.showFormWindow(new ResponsibleFormWindowModal("Tips", "Hello", "Yes", "No")
+   .onClicked(confirmation -> player.sendMessage("Your choice:"+confirmation)));
+  `
 
 * **Inner** Listeners for each window
   This is very useful!  
   Sample:  
-  <br />
-      <xmp>class A extends ResponsibleFormWindowSimple implements SimpleResponseListener {</xmp>  
-      <xmp>    A() {</xmp>  
-      <xmp>        super("Title", "Content");</xmp>  
-      <xmp>        addButton(new ElementButton("Say Hi"));</xmp>  
-      <xmp>        addButton(new ElementButton("Say Hello"));</xmp>  
-      <xmp>    }</xmp>  
-      <xmp>    public void onClicked(int id, Player player) {</xmp>  
-      <xmp>        switch (id){</xmp>  
-      <xmp>            case 0:</xmp>  
-      <xmp>                player.sendMessage("Hi");</xmp>  
-      <xmp>                break;</xmp>  
-      <xmp>            case 1:</xmp>  
-      <xmp>                player.sendMessage("Hello");</xmp>  
-      <xmp>                break;</xmp>  
-      <xmp>        }</xmp>  
-      <xmp>    }</xmp>  
-      <xmp>    public void onClosed(Player player) {</xmp>  
-      <xmp>        player.sendMessage("You Closed");</xmp>  
-      <xmp>    }</xmp>  
-      <xmp>}</xmp>
+  ```java
+  class A extends ResponsibleFormWindowSimple implements SimpleResponseListener {
+      A() {
+          super("Title", "Content");
+          addButton(new ElementButton("Say Hi"));
+          addButton(new ElementButton("Say Hello"));
+      }
+      public void onClicked(int id, Player player) {
+          switch (id){
+              case 0:
+                  player.sendMessage("Hi");
+                  break;
+              case 1:
+                  player.sendMessage("Hello");
+                  break;
+          }
+      }
+      public void onClosed(Player player) {
+          player.sendMessage("You Closed");
+      }
+  }
+  ```
   Don't you think it is much easier to create FormWindow by using interface **ResponseListener** instead of another nukkit EventListener?
 
 * Useful implements of ResponsibleFormWindow  
@@ -47,9 +50,21 @@ By using **GUI**, you can easily create forms.
   Sample:
   * **ResponsibleButton** for ResponsibleFormWindowSimple
     You think ResponsibleFormWindowSimple is also too trouble to use? --This would be great choice!  
-    Sample(comparing with the sample above):  
-    <xmp>    </xmp>addButton(new ElementButton("Say Hi", **player->player.sendMessage("Hi")**));  
-    <xmp>    </xmp>addButton(new ElementButton("Say Hello", **player->player.sendMessage("Hello")**));  
+    Sample(comparing with the sample above):
+    ```java
+    class A extends ResponsibleFormWindowSimple implements SimpleResponseListener {
+        A() {
+            super("Title", "Content");
+            addButton(new ElementButton("Say Hi", player->player.sendMessage("Hi")));
+            addButton(new ElementButton("Say Hello", player->player.sendMessage("Hello")));
+        }
+        public void onClicked(int id, Player player) {
+        }
+        public void onClosed(Player player) {
+            player.sendMessage("You Closed");
+        }
+    }
+    ```
     Yeah! Your codes is more and more conciser, isn't it?
   * ResponsibleFormWindowSimple**Advanced**
     This is a wonderful implement of ResponsibleFormWindowSimple!
@@ -59,18 +74,22 @@ By using **GUI**, you can easily create forms.
 ### Maven repository
 
 1. Add `repository` in `repositories`
-
-    <xmp>    <repository></xmp>  
-    <xmp>        <id>him188-gui</id></xmp>  
-    <xmp>        <url>http://repo.him188.moe:8081/repository/gui</url></xmp>  
-    <xmp>    </repository></xmp>
-
+    ```xml
+    <repository>
+        <id>him188-gui</id>
+        <url>http://repo.him188.moe:8081/repository/gui</url>
+    </repository>
+    ```
 2. Add `dependency` in `build.dependencies`
-
-    <xmp><dependency></xmp>  
-    <xmp>    <groupId>moe.him188</groupId></xmp>  
-    <xmp>    <artifactId>gui</artifactId></xmp>  
-    <xmp>    <version>1.0</version></xmp>  
-    <xmp></dependency></xmp>
-
+    ```xml
+    <dependency>
+        <groupId>moe.him188</groupId>
+        <artifactId>gui</artifactId>
+        <version>1.0</version>
+    </dependency>
+    ```
 3. Don't forget add `depend` into `plugin.yml`
+    ```yaml
+    depend:
+    - GUI
+    ```
