@@ -1,6 +1,9 @@
+### 中文版说明
+[**Chinese README**](README-chs.md)
+
 # GUI - FormWindow tools
 
-This plugin is made for developers.
+This plugin is made for developers.  
 By using **GUI**, you can easily create forms.
 
 ## Features
@@ -12,10 +15,10 @@ By using **GUI**, you can easily create forms.
 * Functional Methods(lambda) support  
   This will reduce much codes in send TipWindows  
   You can send FormWindow and process only in one line!  
-  Sample:
+  Sample:  
   `
   player.showFormWindow(new ResponsibleFormWindowModal("Tips", "Hello", "Yes", "No")
-   .onClicked(confirmation -> player.sendMessage("Your choice:"+confirmation)));
+.onClicked(confirmation -> player.sendMessage("Your choice:"+confirmation)));
   `
 
 * **Inner** Listeners for each window
@@ -48,9 +51,11 @@ By using **GUI**, you can easily create forms.
 * Useful implements of ResponsibleFormWindow  
   More useful than ResponsibleFormWindow!
   Sample:
-  * **ResponsibleButton** for ResponsibleFormWindowSimple
+  * **ResponsibleButton** for ResponsibleFormWindowSimple  
+    Not only windows but also buttons can have listeners!  
     You think ResponsibleFormWindowSimple is also too trouble to use? --This would be great choice!  
     Sample(comparing with the sample above):
+
     ```java
     class A extends ResponsibleFormWindowSimple implements SimpleResponseListener {
         A() {
@@ -66,7 +71,8 @@ By using **GUI**, you can easily create forms.
     }
     ```
     Yeah! Your codes is more and more conciser, isn't it?
-  * ResponsibleFormWindowSimple**Advanced**
+
+  * ResponsibleFormWindowSimple**Advanced**  
     This is a wonderful implement of ResponsibleFormWindowSimple!
     Please use a minute to check the [source code](src/main/java/moe/him188/gui/window/ResponsibleFormWindowSimpleAdvanced.java)
 
