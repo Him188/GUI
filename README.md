@@ -99,3 +99,9 @@ By using **GUI**, you can easily create forms.
     depend:
     - GUI
     ```
+
+### Package JAR file
+
+1. Run command `mvn clean package` in project root path
+
+2. Find JAR in `target/`

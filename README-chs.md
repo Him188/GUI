@@ -107,3 +107,9 @@
     depend:
     - GUI
     ```
+
+### Package JAR file
+
+1. 在项目根目录中运行 `mvn clean package`
+
+2. 在 `target/` 中找到构建完成的 jar
