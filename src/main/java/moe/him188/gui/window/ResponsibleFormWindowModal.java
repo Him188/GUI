@@ -64,6 +64,45 @@ public class ResponsibleFormWindowModal extends FormWindowModal {
     }
 
     /**
+     * 在玩家提交表单后调用
+     *
+     * @param listenerOnTrue  当玩家点击 <code>true</code> 按钮时调用的函数
+     * @param listenerOnFalse 当玩家点击 <code>false</code> 按钮时调用的函数
+     */
+    public ResponsibleFormWindowModal onResponded(Runnable listenerOnTrue, Runnable listenerOnFalse) {
+        Objects.requireNonNull(listenerOnTrue);
+        Objects.requireNonNull(listenerOnFalse);
+        this.buttonClickedListener = (confirmation, player) -> {
+            if (confirmation) {
+                listenerOnTrue.run();
+            } else {
+                listenerOnFalse.run();
+            }
+        };
+        return this;
+    }
+
+    /**
+     * 在玩家提交表单后调用
+     *
+     * @param listenerOnTrue  当玩家点击 <code>true</code> 按钮时调用的函数
+     * @param listenerOnFalse 当玩家点击 <code>false</code> 按钮时调用的函数
+     */
+    public ResponsibleFormWindowModal onResponded(Consumer<Player> listenerOnTrue, Consumer<Player> listenerOnFalse) {
+        Objects.requireNonNull(listenerOnTrue);
+        Objects.requireNonNull(listenerOnFalse);
+        this.buttonClickedListener = (confirmation, player) -> {
+            if (confirmation) {
+                listenerOnTrue.accept(player);
+            } else {
+                listenerOnFalse.accept(player);
+            }
+        };
+        return this;
+    }
+
+
+    /**
      * 在玩家关闭窗口而没有点击按钮提交表单后调用.
      *
      * @param listener 调用的方法
