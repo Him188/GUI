@@ -3,6 +3,7 @@ package moe.him188.gui.window;
 import cn.nukkit.Player;
 import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerFormRespondedEvent;
+import cn.nukkit.form.response.FormResponse;
 import cn.nukkit.form.response.FormResponseModal;
 import cn.nukkit.form.window.FormWindowModal;
 import com.google.gson.Gson;
@@ -14,9 +15,13 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 /**
- * 能直接接受提交表单 ({@link #onResponded(BiConsumer)}) 和关闭窗口事件({@link #onClosed(Consumer)}) 的 {@link FormWindowModal}.
+ * 能直接接受提交表单 ({@link #onResponded}) 和关闭窗口事件({@link #onClosed}) 的 {@link FormWindowModal}.
  * 相较于 {@link FormWindowModal}, 该类无需依赖于 {@link Listener} 去监听 {@link PlayerFormRespondedEvent}, 而可以直接通过 lambda 方法收到返回数据.
  * 这个表单的组成是: 一段文字说明 + 两个按钮.
+ * <br>
+ * {@link FormWindowModal} that can receive click button event({@link #onResponded}) and close window event({@link #onClosed}).
+ * Comparing with {@link FormWindowModal}, this responsible one does not need {@link Listener} to listen {@link PlayerFormRespondedEvent},
+ * but it can directly receive {@link FormResponse} through lambda statements.
  *
  * @author Him188moe @ ProjectARK Project
  */
@@ -32,7 +37,8 @@ public class ResponsibleFormWindowModal extends FormWindowModal {
     }
 
     /**
-     * 在玩家提交表单, 或关闭表单窗口后调用.
+     * 在玩家提交表单, 或关闭表单窗口后调用. <br>
+     * Called on submitted
      *
      * @param listener 调用的方法
      */
@@ -42,7 +48,8 @@ public class ResponsibleFormWindowModal extends FormWindowModal {
     }
 
     /**
-     * 在玩家提交表单后调用
+     * 在玩家提交表单后调用. <br>
+     * Called on submitted
      *
      * @param listener 调用的方法(无 Player)
      */
@@ -53,7 +60,8 @@ public class ResponsibleFormWindowModal extends FormWindowModal {
     }
 
     /**
-     * 在玩家提交表单后调用
+     * 在玩家提交表单后调用 <br>
+     * Called on submitted
      *
      * @param listener 调用的方法(无参数)
      */
@@ -64,7 +72,8 @@ public class ResponsibleFormWindowModal extends FormWindowModal {
     }
 
     /**
-     * 在玩家提交表单后调用
+     * 在玩家提交表单后调用 <br>
+     * Called on submitted
      *
      * @param listenerOnTrue  当玩家点击 <code>true</code> 按钮时调用的函数
      * @param listenerOnFalse 当玩家点击 <code>false</code> 按钮时调用的函数
@@ -83,7 +92,8 @@ public class ResponsibleFormWindowModal extends FormWindowModal {
     }
 
     /**
-     * 在玩家提交表单后调用
+     * 在玩家提交表单后调用 <br>
+     * Called on submitted
      *
      * @param listenerOnTrue  当玩家点击 <code>true</code> 按钮时调用的函数
      * @param listenerOnFalse 当玩家点击 <code>false</code> 按钮时调用的函数
@@ -101,9 +111,9 @@ public class ResponsibleFormWindowModal extends FormWindowModal {
         return this;
     }
 
-
     /**
-     * 在玩家关闭窗口而没有点击按钮提交表单后调用.
+     * 在玩家关闭窗口而没有点击按钮提交表单后调用. <br>
+     * Called on closed without submitting.
      *
      * @param listener 调用的方法
      */
@@ -112,13 +122,9 @@ public class ResponsibleFormWindowModal extends FormWindowModal {
         return this;
     }
 
-    @Override
-    public String getJSONData() {
-        return new Gson().toJson(this, FormWindowModal.class);
-    }
-
     /**
-     * 在玩家关闭窗口而没有点击按钮提交表单后调用.
+     * 在玩家关闭窗口而没有点击按钮提交表单后调用. <br>
+     * Called on closed without submitting.
      *
      * @param listener 调用的方法
      */
@@ -126,6 +132,11 @@ public class ResponsibleFormWindowModal extends FormWindowModal {
         Objects.requireNonNull(listener);
         this.windowClosedListener = (player) -> listener.run();
         return this;
+    }
+
+    @Override
+    public String getJSONData() {
+        return new Gson().toJson(this, FormWindowModal.class);
     }
 
     public void callClicked(boolean response, Player player) {
@@ -136,6 +147,7 @@ public class ResponsibleFormWindowModal extends FormWindowModal {
         this.windowClosedListener.accept(Objects.requireNonNull(player));
     }
 
+    @SuppressWarnings("UnusedReturnValue")
     public static boolean onEvent(PlayerFormRespondedEvent event) {
         if (event.getWindow() instanceof ResponsibleFormWindowModal && event.getResponse() instanceof FormResponseModal) {
             ResponsibleFormWindowModal window = (ResponsibleFormWindowModal) event.getWindow();
