@@ -58,8 +58,8 @@
     class A extends ResponsibleFormWindowSimple implements SimpleResponseListener {
         A() {
             super("Title", "Content");
-            addButton(new ElementButton("Say Hi", player->player.sendMessage("Hi")));
-            addButton(new ElementButton("Say Hello", player->player.sendMessage("Hello")));
+            addButton(new ResponsibleElementButton("Say Hi", player->player.sendMessage("Hi")));
+            addButton(new ResponsibleElementButton("Say Hello", player->player.sendMessage("Hello")));
         }
         public void onClicked(int id, Player player) {
         }
