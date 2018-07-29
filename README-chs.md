@@ -9,10 +9,10 @@
   * `ResponseListener`s
   * `ResponsibleElement`(s)
 
-* 函数式方法(lambda) 支持
-  这将会大幅缩短创建一些表单的代码, 比如提示窗口
-  你可以仅使用一行代码就对玩家发送一个窗口并处理点击按钮事件
-  例子:
+* 函数式方法(lambda) 支持  
+  这将会大幅缩短创建一些表单的代码, 比如提示窗口  
+  你可以仅使用一行代码就对玩家发送一个窗口并处理点击按钮事件  
+  例子:  
   `
   player.showFormWindow(new ResponsibleFormWindowModal("Tips", "Hello", "Yes", "No")
 .onClicked(confirmation -> player.sendMessage("Your choice:"+confirmation)));
