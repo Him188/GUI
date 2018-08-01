@@ -5,9 +5,9 @@ import cn.nukkit.form.element.ElementButton;
 import cn.nukkit.form.element.ElementButtonImageData;
 import cn.nukkit.form.window.FormWindowSimple;
 import com.google.gson.annotations.Expose;
+import moe.him188.gui.window.listener.action.ClickListener;
 
 import java.util.Objects;
-import java.util.function.Consumer;
 
 /**
  * 能监听点击事件的按钮, 注意这个按钮只能用于 {@link FormWindowSimple}
@@ -16,18 +16,13 @@ import java.util.function.Consumer;
  */
 public class ResponsibleButton extends ElementButton {
     @Expose(serialize = false, deserialize = false)
-    private Consumer<Player> listener = null;
+    private ClickListener listener = null;
 
     public ResponsibleButton(String text) {
         super(Objects.requireNonNull(text));
     }
 
-    public ResponsibleButton(String text, Consumer<Player> onClicked) {
-        this(text);
-        setClickListener(onClicked);
-    }
-
-    public ResponsibleButton(String text, Runnable onClicked) {
+    public ResponsibleButton(String text, ClickListener onClicked) {
         this(text);
         setClickListener(onClicked);
     }
@@ -36,23 +31,13 @@ public class ResponsibleButton extends ElementButton {
         super(Objects.requireNonNull(text), image);
     }
 
-    public ResponsibleButton(String text, ElementButtonImageData image, Consumer<Player> onClicked) {
+    public ResponsibleButton(String text, ElementButtonImageData image, ClickListener onClicked) {
         this(text, image);
         setClickListener(onClicked);
     }
 
-    public ResponsibleButton(String text, ElementButtonImageData image, Runnable onClicked) {
-        this(text, image);
-        setClickListener(onClicked);
-    }
-
-    public ResponsibleButton setClickListener(Consumer<Player> listener) {
+    public ResponsibleButton setClickListener(ClickListener listener) {
         this.listener = listener;
-        return this;
-    }
-
-    public ResponsibleButton setClickListener(Runnable listener) {
-        this.listener = (player) -> listener.run();
         return this;
     }
 
@@ -62,7 +47,7 @@ public class ResponsibleButton extends ElementButton {
         }
     }
 
-    public Consumer<Player> getClickListener() {
+    public ClickListener getClickListener() {
         return listener;
     }
 }
