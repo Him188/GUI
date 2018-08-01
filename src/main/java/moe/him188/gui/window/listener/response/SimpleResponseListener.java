@@ -1,4 +1,4 @@
-package moe.him188.gui.window.listener;
+package moe.him188.gui.window.listener.response;
 
 import cn.nukkit.Player;
 import cn.nukkit.form.response.FormResponseSimple;
@@ -8,9 +8,10 @@ import cn.nukkit.form.response.FormResponseSimple;
  */
 public interface SimpleResponseListener extends ResponseListener<FormResponseSimple> {
     /**
-     * 当表单提交数据并关闭窗口时调用
+     * 当表单提交数据并关闭窗口时调用. <br>
+     * Called when player clicked a button.
      *
-     * @param id     按钮 ID, 从 0 开始
+     * @param id     button id, starts from 0. | 按钮 ID, 从 0 开始
      * @param player player
      */
     void onClicked(int id, Player player);

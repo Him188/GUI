@@ -6,7 +6,7 @@ import cn.nukkit.form.element.ElementButton;
 import cn.nukkit.form.response.FormResponseSimple;
 import cn.nukkit.form.window.FormWindowSimple;
 import com.google.gson.annotations.Expose;
-import moe.him188.gui.window.listener.AdvancedSimpleResponseListener;
+import moe.him188.gui.window.listener.response.AdvancedSimpleResponseListener;
 
 import java.util.*;
 import java.util.function.BiConsumer;
@@ -61,7 +61,7 @@ public class ResponsibleFormWindowSimpleAdvanced<E> extends MarkedFormWindowSimp
     /**
      * 用于 {@linkplain #onEvent(PlayerFormRespondedEvent) 收到返回数据时获取实例}
      */
-    private static Map<Integer, ResponsibleFormWindowSimpleAdvanced> instances = new HashMap<>();
+    private static Map<Integer, ResponsibleFormWindowSimpleAdvanced<?>> instances = new HashMap<>();
 
     @Expose(serialize = false, deserialize = false)
     private BiConsumer<E, Player> buttonClickedListener = null;
@@ -91,11 +91,53 @@ public class ResponsibleFormWindowSimpleAdvanced<E> extends MarkedFormWindowSimp
         Objects.requireNonNull(buttonTextGetter);
         Objects.requireNonNull(entries);
 
-        this.entries = new ArrayList<>(entries);
-        for (E entry : this.entries) {
+        for (E entry : entries) {
             this.addButton(new ElementButton(buttonTextGetter.apply(entry)));
         }
+        this.entries = Collections.unmodifiableList(new ArrayList<>(entries));
         instances.put(this.getId(), this);
+    }
+
+    @Expose(serialize = false, deserialize = false)
+    private boolean singleUse = true;
+
+    public boolean isSingleUse() {
+        return singleUse;
+    }
+
+    /**
+     * 标识是否只能使用一次这个表单对象. <br>
+     * Identify whether you can use(send) the form object only once. <br>
+     * 如果 true, 第二次将这个表单对象发送给玩家时将无法接受 response. <br>
+     * If true, when you send the form twice, it will not be able to accept the response <br>
+     * 如果 false, 每次都能正常接受 response. <br>
+     * If false, you can send the form every time, and successfully receive the response <br>
+     * 设置为 true 将会更适合长时间运行服务器. <br>
+     * True is better for long-time working.
+     *
+     * @param singleUse single-use
+     *
+     * @return this
+     */
+    public ResponsibleFormWindowSimpleAdvanced<E> setSingleUse(boolean singleUse) {
+        this.singleUse = singleUse;
+        return this;
+    }
+
+    /**
+     * 判断这个窗口是否还可以正常接受 response. <br>
+     * Check whether this window can receive response.
+     *
+     * @return valid or not
+     *
+     * @see #setSingleUse(boolean)
+     */
+    public boolean isValid() {
+        if (!this.isSingleUse()) {
+            return true;
+        }
+
+        return instances.containsKey(this.getId());
     }
 
     /**
@@ -104,7 +146,7 @@ public class ResponsibleFormWindowSimpleAdvanced<E> extends MarkedFormWindowSimp
      *
      * @param listener 调用的方法
      */
-    public ResponsibleFormWindowSimpleAdvanced onClicked(BiConsumer<E, Player> listener) {
+    public ResponsibleFormWindowSimpleAdvanced<E> onClicked(BiConsumer<E, Player> listener) {
         this.buttonClickedListener = listener;
         return this;
     }
@@ -115,7 +157,7 @@ public class ResponsibleFormWindowSimpleAdvanced<E> extends MarkedFormWindowSimp
      *
      * @param listener 调用的方法(无 Player)
      */
-    public ResponsibleFormWindowSimpleAdvanced onClicked(Consumer<E> listener) {
+    public ResponsibleFormWindowSimpleAdvanced<E> onClicked(Consumer<E> listener) {
         Objects.requireNonNull(listener);
         this.buttonClickedListener = (response, player) -> listener.accept(response);
         return this;
@@ -127,7 +169,7 @@ public class ResponsibleFormWindowSimpleAdvanced<E> extends MarkedFormWindowSimp
      *
      * @param listener 调用的方法
      */
-    public ResponsibleFormWindowSimpleAdvanced onClosed(Consumer<Player> listener) {
+    public ResponsibleFormWindowSimpleAdvanced<E> onClosed(Consumer<Player> listener) {
         this.windowClosedListener = listener;
         return this;
     }
@@ -138,10 +180,17 @@ public class ResponsibleFormWindowSimpleAdvanced<E> extends MarkedFormWindowSimp
      *
      * @param listener 调用的方法
      */
-    public ResponsibleFormWindowSimpleAdvanced onClosed(Runnable listener) {
+    public ResponsibleFormWindowSimpleAdvanced<E> onClosed(Runnable listener) {
         Objects.requireNonNull(listener);
         this.windowClosedListener = (player) -> listener.run();
         return this;
+    }
+
+    @Override
+    public void addButton(ElementButton button) {
+        if (this.entries != null) {
+            throw new UnsupportedOperationException("could not addButton after construction!");
+        }
     }
 
     public void callClicked(E entry, Player player) {
@@ -158,7 +207,11 @@ public class ResponsibleFormWindowSimpleAdvanced<E> extends MarkedFormWindowSimp
     @SuppressWarnings("unchecked")
     public static boolean onEvent(PlayerFormRespondedEvent event) {
         if (event.getWindow() instanceof MarkedFormWindowSimple && event.getResponse() instanceof FormResponseSimple) {
-            ResponsibleFormWindowSimpleAdvanced window = instances.remove(((MarkedFormWindowSimple) event.getWindow()).getId());
+            int id = ((MarkedFormWindowSimple) event.getWindow()).getId();
+            ResponsibleFormWindowSimpleAdvanced window = instances.get(id);
+            if (window.isSingleUse()) {
+                instances.remove(id);
+            }
             if (window instanceof AdvancedSimpleResponseListener) {
                 ((AdvancedSimpleResponseListener) window).onClicked((FormResponseSimple) event.getResponse(), event.getPlayer());
             }

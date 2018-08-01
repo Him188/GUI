@@ -10,7 +10,8 @@ import cn.nukkit.form.window.FormWindowSimple;
 import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 import moe.him188.gui.element.ResponsibleButton;
-import moe.him188.gui.window.listener.SimpleResponseListener;
+import moe.him188.gui.window.listener.action.ClickListener;
+import moe.him188.gui.window.listener.response.SimpleResponseListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,6 +104,17 @@ public class ResponsibleFormWindowSimple extends FormWindowSimple {
         Objects.requireNonNull(listener);
         this.windowClosedListener = (player) -> listener.run();
         return this;
+    }
+
+    /**
+     * 快速添加 {@link ResponsibleButton}. <br>
+     * Fast adding {@link ResponsibleButton}
+     *
+     * @param name          button name
+     * @param clickListener listener
+     */
+    public void addButton(String name, ClickListener clickListener) {
+        this.addButton(new ResponsibleButton(name, clickListener));
     }
 
     @Override

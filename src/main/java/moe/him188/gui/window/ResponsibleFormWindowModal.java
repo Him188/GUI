@@ -8,7 +8,7 @@ import cn.nukkit.form.response.FormResponseModal;
 import cn.nukkit.form.window.FormWindowModal;
 import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
-import moe.him188.gui.window.listener.ModalResponseListener;
+import moe.him188.gui.window.listener.response.ModalResponseListener;
 
 import java.util.Objects;
 import java.util.function.BiConsumer;

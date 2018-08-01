@@ -9,7 +9,7 @@ import cn.nukkit.form.response.FormResponseCustom;
 import cn.nukkit.form.window.FormWindowCustom;
 import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
-import moe.him188.gui.window.listener.CustomResponseListener;
+import moe.him188.gui.window.listener.response.CustomResponseListener;
 
 import java.util.ArrayList;
 import java.util.List;
