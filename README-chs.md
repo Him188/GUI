@@ -99,7 +99,7 @@
     <dependency>
         <groupId>moe.him188</groupId>
         <artifactId>gui</artifactId>
-        <version>1.0</version>
+        <version>1.1</version>
     </dependency>
     ```
 3. Don't forget to add `depend` into `plugin.yml`
