@@ -93,19 +93,23 @@ public class ResponsibleFormWindowModal extends FormWindowModal {
 
     /**
      * 在玩家提交表单后调用 <br>
-     * Called on submitted
+     * Called on submitted <br>
+     * 参数任意一项可以为 null. <br>
+     * Args can be null.
      *
      * @param listenerOnTrue  当玩家点击 <code>true</code> 按钮时调用的函数
      * @param listenerOnFalse 当玩家点击 <code>false</code> 按钮时调用的函数
      */
     public ResponsibleFormWindowModal onResponded(Consumer<Player> listenerOnTrue, Consumer<Player> listenerOnFalse) {
-        Objects.requireNonNull(listenerOnTrue);
-        Objects.requireNonNull(listenerOnFalse);
         this.buttonClickedListener = (confirmation, player) -> {
             if (confirmation) {
-                listenerOnTrue.accept(player);
+                if (listenerOnTrue != null) {
+                    listenerOnTrue.accept(player);
+                }
             } else {
-                listenerOnFalse.accept(player);
+                if (listenerOnFalse != null) {
+                    listenerOnFalse.accept(player);
+                }
             }
         };
         return this;
