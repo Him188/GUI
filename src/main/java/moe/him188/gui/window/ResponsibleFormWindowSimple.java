@@ -39,11 +39,11 @@ public class ResponsibleFormWindowSimple extends FormWindowSimple {
     private Consumer<Player> windowClosedListener = null;
 
     public ResponsibleFormWindowSimple(String title, String content) {
-        this(title, "\n" + content + "\n", new ArrayList<>());
+        this(title, content, new ArrayList<>());
     }
 
     public ResponsibleFormWindowSimple(String title, String content, List<ElementButton> buttons) {
-        super(Objects.requireNonNull(title), "\n" + Objects.requireNonNull(content) + "\n", Objects.requireNonNull(buttons));
+        super(Objects.requireNonNull(title), Objects.requireNonNull(content), Objects.requireNonNull(buttons));
     }
 
 

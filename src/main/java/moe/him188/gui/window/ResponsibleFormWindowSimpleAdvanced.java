@@ -87,7 +87,7 @@ public class ResponsibleFormWindowSimpleAdvanced<E> extends MarkedFormWindowSimp
      * @param buttonTextGetter 按钮名字获取器. 用于获取每个数据对应的按钮的名字 | Used to get the name of each button
      */
     public ResponsibleFormWindowSimpleAdvanced(String title, String content, Collection<E> entries, Function<? super E, String> buttonTextGetter) {
-        super(Objects.requireNonNull(title), "\n" + Objects.requireNonNull(content) + "\n");
+        super(Objects.requireNonNull(title), Objects.requireNonNull(content));
         Objects.requireNonNull(buttonTextGetter);
         Objects.requireNonNull(entries);
 
