@@ -7,14 +7,16 @@ import moe.him188.gui.window.ResponsibleFormWindowSimpleAdvanced;
 /**
  * @author Him188moe @ ProjectARK Project
  */
-public interface AdvancedSimpleResponseListener<E> extends ResponseListener<FormResponseSimple> {
+public interface ResponseListenerAdvanced<E> extends ResponseListener<FormResponseSimple> {
     /**
      * 当表单提交数据并关闭窗口时调用
      *
      * @param entry  数据
      * @param player player
      */
-    void onClicked(E entry, Player player);
+    default void onClicked(E entry, Player player) {
+
+    }
 
     @SuppressWarnings("unchecked")
     @Override

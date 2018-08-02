@@ -19,12 +19,16 @@ interface ResponseListener<R extends FormResponse> {
      * @param response 表单提交的数据
      * @param player   player
      */
-    void onClicked(R response, Player player);
+    default void onClicked(R response, Player player) {
+
+    }
 
     /**
      * 当表单被关闭(点击右上角关闭按钮), 而没有提交数据时调用
      *
      * @param player player
      */
-    void onClosed(Player player);
+    default void onClosed(Player player) {
+
+    }
 }

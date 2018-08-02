@@ -14,7 +14,9 @@ public interface SimpleResponseListener extends ResponseListener<FormResponseSim
      * @param id     button id, starts from 0. | 按钮 ID, 从 0 开始
      * @param player player
      */
-    void onClicked(int id, Player player);
+    default void onClicked(int id, Player player) {
+
+    }
 
     @Override
     default void onClicked(FormResponseSimple response, Player player) {
