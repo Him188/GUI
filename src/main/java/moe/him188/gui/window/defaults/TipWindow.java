@@ -24,13 +24,14 @@ public class TipWindow extends ResponsibleFormWindowSimple {
     }
 
     public TipWindow(String content, String buttonText) {
-        super("提示 | Announcement", content, new ArrayList<ElementButton>() {
-            {
-                add(new ElementButton(buttonText));
-            }
-        });
+        this("提示 | Announcement", content, buttonText);
     }
 
+    public TipWindow(String content) {
+        this("提示 | Announcement", content, "OK");
+    }
+
+    @Deprecated
     public TipWindow onClickedPlayerly(Consumer<Player> listener) {
         Objects.requireNonNull(listener);
         return (TipWindow) super.onClicked((id, player) -> listener.accept(player));

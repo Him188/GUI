@@ -135,22 +135,22 @@ public class ResponsibleFormWindowSimple extends FormWindowSimple {
 
     public void callClosed(Player player) {
         Objects.requireNonNull(player);
-        this.windowClosedListener.accept(player);
+        if (this.windowClosedListener != null) {
+            this.windowClosedListener.accept(player);
+        }
     }
 
     public static boolean onEvent(PlayerFormRespondedEvent event) {
         if (event.getWindow() instanceof ResponsibleFormWindowSimple && event.getResponse() instanceof FormResponseSimple) {
             ResponsibleFormWindowSimple window = (ResponsibleFormWindowSimple) event.getWindow();
-            if (window instanceof SimpleResponseListener) {
-                ((SimpleResponseListener) window).onClicked((FormResponseSimple) event.getResponse(), event.getPlayer());
-            }
 
             if (event.getWindow().wasClosed() || event.getResponse() == null) {
-                if (window.windowClosedListener == null) {
-                    return true;
-                }
                 window.callClosed(event.getPlayer());
             } else {
+                if (window instanceof SimpleResponseListener) {
+                    ((SimpleResponseListener) window).onClicked((FormResponseSimple) event.getResponse(), event.getPlayer());
+                }
+
                 window.callClicked(((FormResponseSimple) event.getResponse()).getClickedButtonId(), event.getPlayer());
             }
             return true;

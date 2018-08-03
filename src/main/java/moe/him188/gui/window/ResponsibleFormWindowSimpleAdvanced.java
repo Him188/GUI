@@ -6,7 +6,7 @@ import cn.nukkit.form.element.ElementButton;
 import cn.nukkit.form.response.FormResponseSimple;
 import cn.nukkit.form.window.FormWindowSimple;
 import com.google.gson.annotations.Expose;
-import moe.him188.gui.window.listener.response.AdvancedSimpleResponseListener;
+import moe.him188.gui.window.listener.response.ResponseListenerAdvanced;
 
 import java.util.*;
 import java.util.function.BiConsumer;
@@ -196,35 +196,33 @@ public class ResponsibleFormWindowSimpleAdvanced<E> extends MarkedFormWindowSimp
     public void callClicked(E entry, Player player) {
         Objects.requireNonNull(player);
         Objects.requireNonNull(entry);
-        this.buttonClickedListener.accept(entry, player);
+        if (this.buttonClickedListener != null) {
+            this.buttonClickedListener.accept(entry, player);
+        }
     }
 
     public void callClosed(Player player) {
         Objects.requireNonNull(player);
-        this.windowClosedListener.accept(player);
+        if (this.windowClosedListener != null) {
+            this.windowClosedListener.accept(player);
+        }
     }
 
     @SuppressWarnings("unchecked")
     public static boolean onEvent(PlayerFormRespondedEvent event) {
         if (event.getWindow() instanceof MarkedFormWindowSimple && event.getResponse() instanceof FormResponseSimple) {
             int id = ((MarkedFormWindowSimple) event.getWindow()).getId();
-            ResponsibleFormWindowSimpleAdvanced window = instances.get(id);
+            ResponsibleFormWindowSimpleAdvanced window = instances.get(id); // TODO: 2018/8/1 0001 测试能不能直接 event.getWindow()
             if (window.isSingleUse()) {
                 instances.remove(id);
             }
-            if (window instanceof AdvancedSimpleResponseListener) {
-                ((AdvancedSimpleResponseListener) window).onClicked((FormResponseSimple) event.getResponse(), event.getPlayer());
-            }
-
             if (event.getWindow().wasClosed() || event.getResponse() == null) {
-                if (window.windowClosedListener == null) {
-                    return true;
-                }
                 window.callClosed(event.getPlayer());
             } else {
-                if (window.buttonClickedListener == null || event.getResponse() == null) {
-                    return true;
+                if (window instanceof ResponseListenerAdvanced) {
+                    ((ResponseListenerAdvanced) window).onClicked((FormResponseSimple) event.getResponse(), event.getPlayer());
                 }
+
                 window.callClicked(window.getEntry(((FormResponseSimple) event.getResponse()).getClickedButtonId()), event.getPlayer());
             }
 

@@ -10,15 +10,18 @@ import cn.nukkit.event.player.PlayerFormRespondedEvent;
  *
  * @author Him188moe @ ProjectARK Project
  */
-public class WindowManager {
+public final class WindowManager {
 
-    public static class RespondedListener implements Listener {
+    public static final class RespondedListener implements Listener {
         @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
         public void onResponded(PlayerFormRespondedEvent event) {
             if (ResponsibleFormWindowSimpleAdvanced.onEvent(event)) {
                 return;
             }
             if (ResponsibleFormWindowSimple.onEvent(event)) {
+                return;
+            }
+            if (ResponsibleFormWindowTemplated.onEvent(event)) {
                 return;
             }
             if (ResponsibleFormWindowCustom.onEvent(event)) {

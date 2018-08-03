@@ -8,7 +8,7 @@ import cn.nukkit.form.response.FormResponseModal;
 import cn.nukkit.form.window.FormWindowModal;
 import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
-import moe.him188.gui.window.listener.response.ModalResponseListener;
+import moe.him188.gui.window.listener.response.ResponseListenerModal;
 
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -144,30 +144,31 @@ public class ResponsibleFormWindowModal extends FormWindowModal {
     }
 
     public void callClicked(boolean response, Player player) {
-        this.buttonClickedListener.accept(response, Objects.requireNonNull(player));
+        Objects.requireNonNull(player);
+        if (this.buttonClickedListener != null) {
+            this.buttonClickedListener.accept(response, Objects.requireNonNull(player));
+        }
     }
 
     public void callClosed(Player player) {
-        this.windowClosedListener.accept(Objects.requireNonNull(player));
+        Objects.requireNonNull(player);
+        if (this.windowClosedListener != null) {
+            this.windowClosedListener.accept(Objects.requireNonNull(player));
+        }
     }
 
     @SuppressWarnings("UnusedReturnValue")
     public static boolean onEvent(PlayerFormRespondedEvent event) {
         if (event.getWindow() instanceof ResponsibleFormWindowModal && event.getResponse() instanceof FormResponseModal) {
             ResponsibleFormWindowModal window = (ResponsibleFormWindowModal) event.getWindow();
-            if (window instanceof ModalResponseListener) {
-                ((ModalResponseListener) window).onClicked((FormResponseModal) event.getResponse(), event.getPlayer());
-            }
 
             if (event.getWindow().wasClosed() || event.getResponse() == null) {
-                if (window.windowClosedListener == null) {
-                    return true;
-                }
                 window.callClosed(event.getPlayer());
             } else {
-                if (window.buttonClickedListener == null) {
-                    return true;
+                if (window instanceof ResponseListenerModal) {
+                    ((ResponseListenerModal) window).onClicked((FormResponseModal) event.getResponse(), event.getPlayer());
                 }
+
                 window.callClicked(((FormResponseModal) event.getResponse()).getClickedButtonId() == 0, event.getPlayer());
             }
             return true;

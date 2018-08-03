@@ -9,7 +9,7 @@ import cn.nukkit.form.response.FormResponseCustom;
 import cn.nukkit.form.window.FormWindowCustom;
 import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
-import moe.him188.gui.window.listener.response.CustomResponseListener;
+import moe.him188.gui.window.listener.response.ResponseListenerCustom;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -112,30 +112,29 @@ public class ResponsibleFormWindowCustom extends FormWindowCustom {
     public void callClicked(FormResponseCustom response, Player player) {
         Objects.requireNonNull(player);
         Objects.requireNonNull(response);
-        this.buttonClickedListener.accept(response, player);
+        if (this.buttonClickedListener != null) {
+            this.buttonClickedListener.accept(response, player);
+        }
     }
 
     public void callClosed(Player player) {
         Objects.requireNonNull(player);
-        this.windowClosedListener.accept(player);
+        if (this.windowClosedListener != null) {
+            this.windowClosedListener.accept(player);
+        }
     }
 
     public static boolean onEvent(PlayerFormRespondedEvent event) {
         if (event.getWindow() instanceof ResponsibleFormWindowCustom && event.getResponse() instanceof FormResponseCustom) {
             ResponsibleFormWindowCustom window = (ResponsibleFormWindowCustom) event.getWindow();
-            if (window instanceof CustomResponseListener) {
-                ((CustomResponseListener) window).onClicked((FormResponseCustom) event.getResponse(), event.getPlayer());
-            }
 
             if (event.getWindow().wasClosed() || event.getResponse() == null) {
-                if (window.windowClosedListener == null) {
-                    return true;
-                }
                 window.callClosed(event.getPlayer());
             } else {
-                if (window.buttonClickedListener == null) {
-                    return true;
+                if (window instanceof ResponseListenerCustom) {
+                    ((ResponseListenerCustom) window).onClicked((FormResponseCustom) event.getResponse(), event.getPlayer());
                 }
+
                 window.callClicked((FormResponseCustom) event.getResponse(), event.getPlayer());
             }
             return true;
