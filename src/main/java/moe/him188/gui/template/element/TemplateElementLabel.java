@@ -11,8 +11,8 @@ import moe.him188.gui.template.response.TemplateResponse;
 public class TemplateElementLabel<K> extends TemplateElement<K> {
     private final String name;
 
-    public TemplateElementLabel(K elementKey, String name) {
-        super(elementKey);
+    public TemplateElementLabel(String name) {
+        super(null);
 
         this.name = name;
     }
