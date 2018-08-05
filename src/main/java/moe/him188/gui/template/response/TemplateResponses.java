@@ -9,6 +9,7 @@ import moe.him188.gui.utils.InputTypeInteger;
 import moe.him188.gui.utils.InputTypeString;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 
 /**
@@ -183,11 +184,19 @@ public final class TemplateResponses<K> extends LinkedHashMap<K, TemplateRespons
          * @param form form
          */
         public void applyToWindow(FormWindowCustom form) { // FIXME: 2018/8/3 0003 不能正确填充数据! 填入的数据都无效, 是空白  已确认不是continue问题
-            int id = 0;
-            for (K key : TemplateResponses.this.keySet()) {
-                Element element = form.getElements().get(id++);
-                if (get(key) == null) {
-                    continue;//上次填写格式错误导致的null, 此时应该留空
+            Iterator<K> keyIterator = keySet().iterator();
+            for (Element element : form.getElements()) {
+                if (element instanceof ElementLabel) {
+                    continue;
+                }
+
+                //gets a key with non-null value.
+                K key = null;
+                while (key == null || get(key) == null) {
+                    if (!keyIterator.hasNext()) {
+                        throw new RuntimeException("unmatched form");
+                    }
+                    key = keyIterator.next();
                 }
 
                 if (element instanceof ElementInput) {
