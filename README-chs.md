@@ -84,6 +84,19 @@
     ```
     请花上一分钟时间读一读 [源代码](src/main/java/moe/him188/gui/window/ResponsibleFormWindowSimpleAdvanced.java), 你就会懂了
 
+  * ResponsibleFormWindow**Templated**  
+    这是 ResponsibleFormWindow 的实现.  
+    通过使用它, 你可以通过你自己的 **key** 比如 `enum`, `String` 来获取表单数据.  
+    模板的 `ElementInput` 拥有内容检查你, 它可以自动检查玩家表单输入是否正确(符合预期格式).
+    ```
+    比如, 你设置ID为"test"的 Input 只能输入整数, 你在收到返回数据时, 可以通过ID "test" 直接获取玩家的输入内容. 而原本NK表单只有整数ID, 对于项目多达十几个的表单很不方便.
+    当玩家提交表单, 模板会将表单数据按照你预期希望的数据类型转换, 因此你可以直接取到整数型, 日期型, 甚至`Level`, `Player`, `Item`类型的数据!(不然, 试想10个输入框, 你需要花几十行判断和转换类型?)
+    如果玩家输入数据有误, 你可以选择性地处理错误. 我们提供了 `ExceptionConsumer` 来捕获错误. 也提供了默认的处理方法: 只处理一个错误, 处理每个错误, 集中处理全部错误.
+    当你想让玩家重新填写这一项, 你可以连已经填写的其他正确数据, 一起发送表格. 这样能大幅提高表格输入体验.(不然, 试想10个输入框, 填错了一个就全没了?)
+    ```
+    请查看源码 [`ResponsibleFormWindowTemplated`](https://github.com/Him188/GUI/blob/master/src/main/java/moe/him188/gui/window/ResponsibleFormWindowTemplated.java)  
+    **或者查看模板示例, 快速了解如何使用**: [template example](https://github.com/Him188/GUI/blob/master/TemplateExample.md)
+
 ## How to use
 ### Maven repository
 

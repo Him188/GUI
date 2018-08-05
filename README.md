@@ -63,8 +63,6 @@ By using **GUI**, you can easily create forms.
             addButton(new ResponsibleElementButton("Say Hi", player->player.sendMessage("Hi")));
             addButton(new ResponsibleElementButton("Say Hello", player->player.sendMessage("Hello")));
         }
-        public void onClicked(int id, Player player) {
-        }
         public void onClosed(Player player) {
             player.sendMessage("You Closed");
         }
@@ -76,6 +74,12 @@ By using **GUI**, you can easily create forms.
     This is a wonderful implement of ResponsibleFormWindowSimple!
     Please use a minute to check the [source code](src/main/java/moe/him188/gui/window/ResponsibleFormWindowSimpleAdvanced.java)
 
+  * ResponsibleFormWindow**Templated**  
+    This ia a implement of ResponsibleFormWindow.  
+    You can create a template, and get responses by custom **key** such as `enum`, `String`  
+    The template has checkers(parsers) to `ElementInput`, It can automatically check whether the input is correct.  
+    Please check the [source code](src/main/java/moe/him188/gui/window/ResponsibleFormWindowTemplated.java)  
+    Or fast know hot wo use: [template example](TemplateExample.md)
 ## How to use
 ### Maven repository
 
