@@ -140,7 +140,7 @@ public class ResponsibleFormWindowSimple extends FormWindowSimple {
         }
     }
 
-    public static boolean onEvent(PlayerFormRespondedEvent event) {
+    static boolean onEvent(PlayerFormRespondedEvent event) {
         if (event.getWindow() instanceof ResponsibleFormWindowSimple && event.getResponse() instanceof FormResponseSimple) {
             ResponsibleFormWindowSimple window = (ResponsibleFormWindowSimple) event.getWindow();
 

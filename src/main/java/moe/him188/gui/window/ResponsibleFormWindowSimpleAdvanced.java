@@ -209,7 +209,7 @@ public class ResponsibleFormWindowSimpleAdvanced<E> extends MarkedFormWindowSimp
     }
 
     @SuppressWarnings("unchecked")
-    public static boolean onEvent(PlayerFormRespondedEvent event) {
+    static boolean onEvent(PlayerFormRespondedEvent event) {
         if (event.getWindow() instanceof MarkedFormWindowSimple && event.getResponse() instanceof FormResponseSimple) {
             int id = ((MarkedFormWindowSimple) event.getWindow()).getId();
             ResponsibleFormWindowSimpleAdvanced window = instances.get(id); // TODO: 2018/8/1 0001 测试能不能直接 event.getWindow()

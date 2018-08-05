@@ -124,7 +124,7 @@ public class ResponsibleFormWindowCustom extends FormWindowCustom {
         }
     }
 
-    public static boolean onEvent(PlayerFormRespondedEvent event) {
+    static boolean onEvent(PlayerFormRespondedEvent event) {
         if (event.getWindow() instanceof ResponsibleFormWindowCustom && event.getResponse() instanceof FormResponseCustom) {
             ResponsibleFormWindowCustom window = (ResponsibleFormWindowCustom) event.getWindow();
 

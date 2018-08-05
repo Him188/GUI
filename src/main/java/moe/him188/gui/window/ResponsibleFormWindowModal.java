@@ -158,7 +158,7 @@ public class ResponsibleFormWindowModal extends FormWindowModal {
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    public static boolean onEvent(PlayerFormRespondedEvent event) {
+    static boolean onEvent(PlayerFormRespondedEvent event) {
         if (event.getWindow() instanceof ResponsibleFormWindowModal && event.getResponse() instanceof FormResponseModal) {
             ResponsibleFormWindowModal window = (ResponsibleFormWindowModal) event.getWindow();
 
