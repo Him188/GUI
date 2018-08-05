@@ -29,9 +29,10 @@ public class TestTemplate extends Template<TestTemplate.ElementKey> {
     public TestTemplate() {
         setTitle("Test Template");
 
-        addElement(new TemplateElementInput<>(ElementKey.INT_TEST, InputTypes.INTEGER, "int test"));
-        addElement(new TemplateElementInput<>(ElementKey.DATE_TEST, InputTypes.DATE(new SimpleDateFormat("yyyy/MM/dd HH:mm")), "date test"));
-        addElement(new TemplateElementInput<>(ElementKey.STRING_TEST, InputTypes.STRING, "string test"));
+        addElement(new TemplateElementLabel<>("test label"));
+        addElement(new TemplateElementInput<>(ElementKey.INT_TEST, "int test", InputTypes.INTEGER));
+        addElement(new TemplateElementInput<>(ElementKey.DATE_TEST, "date test", InputTypes.DATE(new SimpleDateFormat("yyyy/MM/dd HH:mm"))));
+        addElement(new TemplateElementInput<>(ElementKey.STRING_TEST, "string test", InputTypes.STRING));
         addElement(new TemplateElementDropdown<>(ElementKey.DROPDOWN, "dropdown", Arrays.asList("1", "2", "3")));
         addElement(new TemplateElementToggle<>(ElementKey.TOGGLE, "toggle", true));
         addElement(new TemplateElementSlider<>(ElementKey.SLIDER, "slider", 0, 100));
