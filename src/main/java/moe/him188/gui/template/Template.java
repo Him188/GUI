@@ -6,11 +6,13 @@ import cn.nukkit.form.window.FormWindowCustom;
 import moe.him188.gui.template.element.TemplateElement;
 import moe.him188.gui.template.response.TemplateResponses;
 import moe.him188.gui.utils.ExceptionConsumer;
+import moe.him188.gui.utils.ExceptionConsumerIgnore;
 import moe.him188.gui.utils.KeyAlreadyContainsException;
 import moe.him188.gui.utils.ResponseParseException;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @param <K> 元素的 key 的类型
@@ -50,6 +52,9 @@ public class Template<K> {
     }
 
     public TemplateElement<K> getElement(K key) {
+        if (key == null) {
+            throw new UnsupportedOperationException("can't get elements with null key");
+        }
         for (TemplateElement<K> value : this.elements.values()) {
             if (value.getResponseKey() == key) {
                 return value;
@@ -64,11 +69,15 @@ public class Template<K> {
     }
 
     public void addElement(TemplateElement<K> element) throws KeyAlreadyContainsException {
+        Objects.requireNonNull(element);
         checkElementKeyContains(element.getResponseKey());
         this.elements.put(this.elements.size(), element.setId(this.elements.size()));
     }
 
     private void checkElementKeyContains(K key) throws KeyAlreadyContainsException {
+        if (key == null) {
+            return;
+        }
         for (TemplateElement<K> value : elements.values()) {
             if (value.getResponseKey() == key) {
                 throw new KeyAlreadyContainsException(key.toString());
@@ -94,6 +103,11 @@ public class Template<K> {
         }
 
         public TemplateResponses<K> parseTemplateResponse(Player player, FormResponseCustom form, ExceptionConsumer<ResponseParseException> exceptionConsumer) {
+            Objects.requireNonNull(player);
+            Objects.requireNonNull(form);
+            if (exceptionConsumer == null) {
+                exceptionConsumer = new ExceptionConsumerIgnore<>();
+            }
             TemplateResponses<K> responses = new TemplateResponses<>();
             for (Map.Entry<Integer, Object> entry : form.getResponses().entrySet()) {
                 if (!getElements().containsKey(entry.getKey())) {//最后一项为null?
