@@ -43,6 +43,10 @@ public class TemplateElementDropdown<K> extends TemplateElement<K> {
         return options;
     }
 
+    public String getOption(int id) {
+        return this.options.get(id);
+    }
+
     public int getDefaultOption() {
         return defaultOption;
     }
@@ -55,20 +59,28 @@ public class TemplateElementDropdown<K> extends TemplateElement<K> {
     @Override
     public Response parseResponse(Object object) throws ResponseParseException {
         try {
-            return new Response(Integer.parseInt(String.valueOf(object)));
+            int response = Integer.parseInt(String.valueOf(object));
+            return new Response(response, this.getOption(response));
         } catch (NumberFormatException e) {
             throw new ResponseParseException(this, e);
         }
     }
 
     public static class Response extends TemplateResponse<Integer> {
-        private Response(int response) {
+        private final String option;
+
+        private Response(int response, String option) {
             super(response);
+            this.option = option;
         }
 
         @Override
         public Integer get() {
             return response;
+        }
+
+        public String getOption() {
+            return option;
         }
     }
 }

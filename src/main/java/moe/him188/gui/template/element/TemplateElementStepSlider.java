@@ -37,6 +37,10 @@ public class TemplateElementStepSlider<K> extends TemplateElement<K> {
         return steps;
     }
 
+    public String getStep(int id) {
+        return this.steps.get(id);
+    }
+
     public int getDefaultStepIndex() {
         return defaultStepIndex;
     }
@@ -49,20 +53,28 @@ public class TemplateElementStepSlider<K> extends TemplateElement<K> {
     @Override
     public TemplateElementStepSlider.Response parseResponse(Object object) throws ResponseParseException {
         try {
-            return new TemplateElementStepSlider.Response(Integer.parseInt(String.valueOf(object)));
+            int id = Integer.parseInt(String.valueOf(object));
+            return new TemplateElementStepSlider.Response(id, this.getStep(id));
         } catch (NumberFormatException e) {
             throw new ResponseParseException(this, e);
         }
     }
 
     public static class Response extends TemplateResponse<Integer> {
-        private Response(Integer response) {
+        private final String step;
+
+        private Response(Integer response, String step) {
             super(response);
+            this.step = step;
         }
 
         @Override
         public Integer get() {
             return response;
+        }
+
+        public String getStep() {
+            return step;
         }
     }
 }

@@ -112,6 +112,19 @@ public final class TemplateResponses<K> extends LinkedHashMap<K, TemplateRespons
     }
 
     /**
+     * 获取选中的项目内容. <br>
+     *
+     * @param key key
+     *
+     * @return 选中的项目内容
+     *
+     * @see TemplateElementDropdown
+     */
+    public String getDropdownOption(K key) {
+        return getDropdownResponse(key).getOption();
+    }
+
+    /**
      * 获取开关的状态
      *
      * @param key key
@@ -129,12 +142,25 @@ public final class TemplateResponses<K> extends LinkedHashMap<K, TemplateRespons
      *
      * @param key key
      *
-     * @return 滑块停留的项目
+     * @return 滑块停留的项目 ID
      *
      * @see TemplateElementStepSlider
      */
     public int getStepSlider(K key) {
         return getStepSliderResponse(key).get();
+    }
+
+    /**
+     * 获取滑块位置对应的项目
+     *
+     * @param key key
+     *
+     * @return 滑块停留的项目
+     *
+     * @see TemplateElementStepSlider
+     */
+    public String getStepSliderValue(K key) {
+        return getStepSliderResponse(key).getStep();
     }
 
     /**
