@@ -15,4 +15,9 @@ public abstract class TemplateResponse<R> extends FormResponse {
     public R get() {
         return response;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(this.response);
+    }
 }
