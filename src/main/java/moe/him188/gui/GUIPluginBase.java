@@ -8,6 +8,16 @@ import moe.him188.gui.window.WindowManager;
  * @author Him188moe @ GUI Project
  */
 public class GUIPluginBase extends PluginBase {
+    private static GUIPluginBase instance;
+
+    {
+        instance = this;
+    }
+
+    public static GUIPluginBase getInstance() {
+        return instance;
+    }
+
     private WindowManager.RespondedListener listener;
 
     @Override

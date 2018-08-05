@@ -4,7 +4,6 @@ import cn.nukkit.Player;
 import cn.nukkit.form.element.ElementButton;
 import cn.nukkit.form.element.ElementButtonImageData;
 import cn.nukkit.form.window.FormWindowSimple;
-import com.google.gson.annotations.Expose;
 import moe.him188.gui.window.listener.action.ClickListener;
 
 import java.util.Objects;
@@ -15,8 +14,7 @@ import java.util.Objects;
  * @author Him188moe @ GUI Project
  */
 public class ResponsibleButton extends ElementButton {
-    @Expose(serialize = false, deserialize = false)
-    private ClickListener listener = null;
+    private transient ClickListener listener = null;
 
     public ResponsibleButton(String text) {
         super(Objects.requireNonNull(text));

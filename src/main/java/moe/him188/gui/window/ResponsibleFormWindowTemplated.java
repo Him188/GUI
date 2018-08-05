@@ -6,8 +6,6 @@ import cn.nukkit.event.player.PlayerFormRespondedEvent;
 import cn.nukkit.form.response.FormResponse;
 import cn.nukkit.form.response.FormResponseCustom;
 import cn.nukkit.form.window.FormWindowCustom;
-import com.google.gson.Gson;
-import com.google.gson.annotations.Expose;
 import moe.him188.gui.template.Template;
 import moe.him188.gui.template.response.TemplateResponses;
 import moe.him188.gui.utils.ExceptionConsumer;
@@ -30,23 +28,17 @@ import java.util.function.Consumer;
  * @author Him188moe @ GUI Project
  */
 public class ResponsibleFormWindowTemplated<K> extends MarkedFormWindowCustom {
-    @Expose(serialize = false, deserialize = false)
-    private final Template<K> template;
+    private transient final Template<K> template;
 
-    @Expose(serialize = false, deserialize = false)
-    private BiConsumer<TemplateResponses<K>, Player> buttonClickedListener = null;
+    private transient BiConsumer<TemplateResponses<K>, Player> buttonClickedListener = null;
 
-    @Expose(serialize = false, deserialize = false)
-    private Consumer<Player> windowClosedListener = null;
+    private transient Consumer<Player> windowClosedListener = null;
 
-    @Expose(serialize = false, deserialize = false)
-    private TemplateResponses<K> lastResponses = null;
+    private transient TemplateResponses<K> lastResponses = null;
 
-    @Expose(serialize = false, deserialize = false)
-    private Player lastPlayer = null;
+    private transient Player lastPlayer = null;
 
-    @Expose(serialize = false, deserialize = false)
-    private ExceptionConsumer<ResponseParseException> exceptionConsumer;
+    private transient ExceptionConsumer<ResponseParseException> exceptionConsumer;
 
     public ResponsibleFormWindowTemplated(Template<K> template) {
         this("", template);
@@ -160,11 +152,6 @@ public class ResponsibleFormWindowTemplated<K> extends MarkedFormWindowCustom {
         Objects.requireNonNull(listener);
         this.windowClosedListener = (player) -> listener.run();
         return this;
-    }
-
-    @Override
-    public String getJSONData() {
-        return new Gson().toJson(this, FormWindowCustom.class);
     }
 
     public void callClicked(TemplateResponses<K> response, Player player) {
