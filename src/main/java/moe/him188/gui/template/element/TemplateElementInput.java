@@ -24,7 +24,7 @@ public class TemplateElementInput<K, R> extends TemplateElement<K> {
      *
      * @see InputTypes
      */
-    public TemplateElementInput(K elementKey, InputType<R> type, String name, String placeholder, String defaultText) {
+    public TemplateElementInput(K elementKey, String name, InputType<R> type, String placeholder, String defaultText) {
         super(elementKey);
         this.type = type;
 
@@ -33,12 +33,12 @@ public class TemplateElementInput<K, R> extends TemplateElement<K> {
         this.defaultText = defaultText;
     }
 
-    public TemplateElementInput(K elementKey, InputType<R> type, String name) {
-        this(elementKey, type, name, "");
+    public TemplateElementInput(K elementKey, String name, InputType<R> type) {
+        this(elementKey, name, type, "");
     }
 
-    public TemplateElementInput(K elementKey, InputType<R> type, String name, String placeholder) {
-        this(elementKey, type, name, placeholder, "");
+    public TemplateElementInput(K elementKey, String name, InputType<R> type, String placeholder) {
+        this(elementKey, name, type, placeholder, "");
     }
 
     @Override
