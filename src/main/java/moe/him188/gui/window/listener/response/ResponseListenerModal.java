@@ -4,7 +4,7 @@ import cn.nukkit.Player;
 import cn.nukkit.form.response.FormResponseModal;
 
 /**
- * @author Him188moe @ ProjectARK Project
+ * @author Him188moe @ GUI Project
  */
 public interface ResponseListenerModal extends ResponseListener<FormResponseModal> {
     /**

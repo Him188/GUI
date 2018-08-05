@@ -4,7 +4,7 @@ import cn.nukkit.Player;
 import moe.him188.gui.template.response.TemplateResponses;
 
 /**
- * @author Him188moe @ ProjectARK Project
+ * @author Him188moe @ GUI Project
  */
 public interface ResponseListenerTemplate<K> {
     /**

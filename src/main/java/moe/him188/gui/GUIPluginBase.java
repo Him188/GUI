@@ -5,7 +5,7 @@ import cn.nukkit.plugin.PluginBase;
 import moe.him188.gui.window.WindowManager;
 
 /**
- * @author Him188moe @ ProjectARK Project
+ * @author Him188moe @ GUI Project
  */
 public class GUIPluginBase extends PluginBase {
     private WindowManager.RespondedListener listener;

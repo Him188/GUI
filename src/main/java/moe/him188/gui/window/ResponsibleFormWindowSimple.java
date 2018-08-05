@@ -29,7 +29,7 @@ import java.util.function.Consumer;
  * but it can directly receive {@link FormResponse} through lambda statements.
  * The composition of the form is: A piece of message + button(s). There are no more messages between buttons.
  *
- * @author Him188moe @ ProjectARK Project
+ * @author Him188moe @ GUI Project
  */
 public class ResponsibleFormWindowSimple extends FormWindowSimple {
     @Expose(serialize = false, deserialize = false)

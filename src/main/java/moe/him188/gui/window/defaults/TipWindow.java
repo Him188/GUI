@@ -12,7 +12,7 @@ import java.util.function.Consumer;
  * 提示窗口 <br>
  * Tip window
  *
- * @author Him188moe @ ProjectARK Project
+ * @author Him188moe @ GUI Project
  */
 public class TipWindow extends ResponsibleFormWindowSimple {
     public TipWindow(String title, String content, String buttonText) {

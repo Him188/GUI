@@ -12,7 +12,7 @@ import java.util.Objects;
 /**
  * 能监听点击事件的按钮, 注意这个按钮只能用于 {@link FormWindowSimple}
  *
- * @author Him188moe @ ProjectARK Project
+ * @author Him188moe @ GUI Project
  */
 public class ResponsibleButton extends ElementButton {
     @Expose(serialize = false, deserialize = false)

@@ -8,7 +8,7 @@ import cn.nukkit.event.player.PlayerFormRespondedEvent;
 /**
  * 用于管理窗口回调
  *
- * @author Him188moe @ ProjectARK Project
+ * @author Him188moe @ GUI Project
  */
 public final class WindowManager {
 

@@ -23,7 +23,7 @@ import java.util.function.Consumer;
  * Comparing with {@link FormWindowModal}, this responsible one does not need {@link Listener} to listen {@link PlayerFormRespondedEvent},
  * but it can directly receive {@link FormResponse} through lambda statements.
  *
- * @author Him188moe @ ProjectARK Project
+ * @author Him188moe @ GUI Project
  */
 public class ResponsibleFormWindowModal extends FormWindowModal {
     @Expose(serialize = false, deserialize = false)

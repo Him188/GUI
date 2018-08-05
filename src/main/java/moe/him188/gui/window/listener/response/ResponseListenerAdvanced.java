@@ -5,7 +5,7 @@ import cn.nukkit.form.response.FormResponseSimple;
 import moe.him188.gui.window.ResponsibleFormWindowSimpleAdvanced;
 
 /**
- * @author Him188moe @ ProjectARK Project
+ * @author Him188moe @ GUI Project
  */
 public interface ResponseListenerAdvanced<E> extends ResponseListener<FormResponseSimple> {
     /**

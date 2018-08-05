@@ -55,7 +55,7 @@ import java.util.function.Function;
  * });
  * </pre>
  *
- * @author Him188moe @ ProjectARK Project
+ * @author Him188moe @ GUI Project
  */
 public class ResponsibleFormWindowSimpleAdvanced<E> extends MarkedFormWindowSimple {
     /**

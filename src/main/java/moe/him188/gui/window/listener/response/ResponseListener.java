@@ -10,7 +10,7 @@ import cn.nukkit.form.response.FormResponse;
  * 当你的表单返回数据处理过程很多时, 你可能就不应该使用原 ResponsibleForm 中的函数式(lambda) onClick 了.<br>
  * {@link ResponseListener} 是不错的替代! <br>
  *
- * @author Him188moe @ ProjectARK Project
+ * @author Him188moe @ GUI Project
  */
 interface ResponseListener<R extends FormResponse> {
     /**

@@ -14,7 +14,7 @@ import java.util.List;
  * Windows that was numbered by {@link #id}. <br/>
  * Used for the identify of {@link ResponsibleFormWindowSimpleAdvanced}
  *
- * @author Him188moe @ ProjectARK Project
+ * @author Him188moe @ GUI Project
  */
 class MarkedFormWindowCustom extends FormWindowCustom {
     private static int id_internal = 0;
