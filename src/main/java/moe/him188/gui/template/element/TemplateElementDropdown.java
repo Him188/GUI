@@ -35,6 +35,19 @@ public class TemplateElementDropdown<K> extends TemplateElement<K> {
     }
 
     @Override
+    public String getName() {
+        return name;
+    }
+
+    public List<String> getOptions() {
+        return options;
+    }
+
+    public int getDefaultOption() {
+        return defaultOption;
+    }
+
+    @Override
     public Element build() {
         return new ElementDropdown(this.name, this.options, this.defaultOption);
     }

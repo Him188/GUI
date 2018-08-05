@@ -18,6 +18,11 @@ public class TemplateElementLabel<K> extends TemplateElement<K> {
     }
 
     @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
     public Element build() {
         return new ElementLabel(this.name);
     }

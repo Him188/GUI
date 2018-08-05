@@ -41,6 +41,7 @@ public class TemplateElementInput<K, R> extends TemplateElement<K> {
         this(elementKey, type, name, placeholder, "");
     }
 
+    @Override
     public String getName() {
         return name;
     }

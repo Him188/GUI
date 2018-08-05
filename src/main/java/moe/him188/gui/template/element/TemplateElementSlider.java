@@ -33,6 +33,7 @@ public class TemplateElementSlider<K> extends TemplateElement<K> {
         this.defaultValue = defaultValue;
     }
 
+    @Override
     public String getName() {
         return name;
     }

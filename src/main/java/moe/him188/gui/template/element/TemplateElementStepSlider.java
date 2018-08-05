@@ -28,6 +28,7 @@ public class TemplateElementStepSlider<K> extends TemplateElement<K> {
         this.defaultStepIndex = defaultStep;
     }
 
+    @Override
     public String getName() {
         return name;
     }

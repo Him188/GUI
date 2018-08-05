@@ -37,6 +37,8 @@ public abstract class TemplateElement<K> { // TODO: 2018/8/1 0001 添加所有 e
         return this;
     }
 
+    public abstract String getName();
+
     /**
      * Build nukkit element
      */

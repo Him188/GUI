@@ -24,6 +24,11 @@ public class TemplateElementToggle<K> extends TemplateElement<K> {
         this.defaultValue = defaultValue;
     }
 
+    @Override
+    public String getName() {
+        return name;
+    }
+
     public boolean getDefaultValue() {
         return defaultValue;
     }
