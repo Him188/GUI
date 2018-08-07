@@ -191,6 +191,7 @@ public class ResponsibleFormWindowSimpleAdvanced<E> extends MarkedFormWindowSimp
         if (this.entries != null) {
             throw new UnsupportedOperationException("could not addButton after construction!");
         }
+        super.addButton(button);
     }
 
     public void callClicked(E entry, Player player) {
