@@ -8,10 +8,9 @@ import cn.nukkit.form.response.FormResponse;
 import cn.nukkit.form.response.FormResponseSimple;
 import cn.nukkit.form.window.FormWindowSimple;
 import com.google.gson.Gson;
-import com.google.gson.annotations.Expose;
 import moe.him188.gui.element.ResponsibleButton;
 import moe.him188.gui.window.listener.action.ClickListener;
-import moe.him188.gui.window.listener.response.SimpleResponseListener;
+import moe.him188.gui.window.listener.response.ResponseListenerSimple;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,11 +31,9 @@ import java.util.function.Consumer;
  * @author Him188moe @ GUI Project
  */
 public class ResponsibleFormWindowSimple extends FormWindowSimple {
-    @Expose(serialize = false, deserialize = false)
-    private BiConsumer<Integer, Player> buttonClickedListener = null;
+    private transient BiConsumer<Integer, Player> buttonClickedListener = null;
 
-    @Expose(serialize = false, deserialize = false)
-    private Consumer<Player> windowClosedListener = null;
+    private transient Consumer<Player> windowClosedListener = null;
 
     public ResponsibleFormWindowSimple(String title, String content) {
         this(title, content, new ArrayList<>());
@@ -124,10 +121,16 @@ public class ResponsibleFormWindowSimple extends FormWindowSimple {
 
     public void callClicked(int id, Player player) {
         Objects.requireNonNull(player);
+
         ElementButton button = getButtons().get(id);
         if (button instanceof ResponsibleButton) {
             ((ResponsibleButton) button).callClicked(player);
         }
+
+        if (this instanceof ResponseListenerSimple) {
+            ((ResponseListenerSimple) this).onClicked(id, player);
+        }
+
         if (this.buttonClickedListener != null) {
             this.buttonClickedListener.accept(id, player);
         }
@@ -147,10 +150,6 @@ public class ResponsibleFormWindowSimple extends FormWindowSimple {
             if (event.getWindow().wasClosed() || event.getResponse() == null) {
                 window.callClosed(event.getPlayer());
             } else {
-                if (window instanceof SimpleResponseListener) {
-                    ((SimpleResponseListener) window).onClicked((FormResponseSimple) event.getResponse(), event.getPlayer());
-                }
-
                 window.callClicked(((FormResponseSimple) event.getResponse()).getClickedButtonId(), event.getPlayer());
             }
             return true;

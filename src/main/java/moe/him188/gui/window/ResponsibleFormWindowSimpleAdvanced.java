@@ -5,8 +5,9 @@ import cn.nukkit.event.player.PlayerFormRespondedEvent;
 import cn.nukkit.form.element.ElementButton;
 import cn.nukkit.form.response.FormResponseSimple;
 import cn.nukkit.form.window.FormWindowSimple;
-import com.google.gson.annotations.Expose;
+import com.google.gson.Gson;
 import moe.him188.gui.window.listener.response.ResponseListenerAdvanced;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 import java.util.function.BiConsumer;
@@ -60,14 +61,9 @@ import java.util.function.Function;
 public class ResponsibleFormWindowSimpleAdvanced<E> extends FormWindowSimple {
     private transient BiConsumer<E, Player> buttonClickedListener = null;
 
-    @Expose(serialize = false, deserialize = false)
-    private BiConsumer<E, Player> buttonClickedListener = null;
+    private transient Consumer<Player> windowClosedListener = null;
 
-    @Expose(serialize = false, deserialize = false)
-    private Consumer<Player> windowClosedListener = null;
-
-    @Expose(serialize = false, deserialize = false)
-    private final List<E> entries;
+    private transient final List<E> entries;
 
     public List<E> getEntries() {
         return entries;
@@ -148,15 +144,21 @@ public class ResponsibleFormWindowSimpleAdvanced<E> extends FormWindowSimple {
         super.addButton(button);
     }
 
-    public void callClicked(E entry, Player player) {
+    @SuppressWarnings("unchecked")
+    public void callClicked(@NotNull E entry, @NotNull Player player) {
         Objects.requireNonNull(player);
         Objects.requireNonNull(entry);
+
+        if (this instanceof ResponseListenerAdvanced) {
+            ((ResponseListenerAdvanced) this).onClicked(entry, player);
+        }
+
         if (this.buttonClickedListener != null) {
             this.buttonClickedListener.accept(entry, player);
         }
     }
 
-    public void callClosed(Player player) {
+    public void callClosed(@NotNull Player player) {
         Objects.requireNonNull(player);
         if (this.windowClosedListener != null) {
             this.windowClosedListener.accept(player);
@@ -176,10 +178,6 @@ public class ResponsibleFormWindowSimpleAdvanced<E> extends FormWindowSimple {
             if (event.getWindow().wasClosed() || event.getResponse() == null) {
                 window.callClosed(event.getPlayer());
             } else {
-                if (window instanceof ResponseListenerAdvanced) {
-                    ((ResponseListenerAdvanced) window).onClicked((FormResponseSimple) event.getResponse(), event.getPlayer());
-                }
-
                 window.callClicked(window.getEntry(((FormResponseSimple) event.getResponse()).getClickedButtonId()), event.getPlayer());
             }
 

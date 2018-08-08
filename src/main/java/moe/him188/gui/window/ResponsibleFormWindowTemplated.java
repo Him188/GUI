@@ -155,8 +155,21 @@ public class ResponsibleFormWindowTemplated<K> extends FormWindowCustom {
         return this;
     }
 
+    /**
+     * 不会重置 {@linkplain #lastResponses 最后的回复数据}
+     *
+     * @param response response
+     * @param player   player
+     */
+    @SuppressWarnings("unchecked")
     public void callClicked(TemplateResponses<K> response, Player player) {
         Objects.requireNonNull(player);
+        Objects.requireNonNull(response);
+
+        if (this instanceof ResponseListenerTemplate) {
+            ((ResponseListenerTemplate) this).onResponded(response, player);
+        }
+
         if (this.buttonClickedListener != null) {
             this.buttonClickedListener.accept(response, player);
         }
@@ -199,9 +212,6 @@ public class ResponsibleFormWindowTemplated<K> extends FormWindowCustom {
                 window.callClosed(event.getPlayer());
             } else {
                 window.setLastResponses(event.getPlayer(), (FormResponseCustom) event.getResponse());
-                if (window instanceof ResponseListenerTemplate) {
-                    ((ResponseListenerTemplate) window).onResponded(window.getLastResponses(), event.getPlayer());
-                }
                 window.callClicked(window.getLastResponses(), event.getPlayer());
             }
             return true;
