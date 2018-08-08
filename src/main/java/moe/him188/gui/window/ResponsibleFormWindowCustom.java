@@ -9,6 +9,7 @@ import cn.nukkit.form.response.FormResponseCustom;
 import cn.nukkit.form.window.FormWindowCustom;
 import com.google.gson.Gson;
 import moe.him188.gui.window.listener.response.ResponseListenerCustom;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,11 +36,11 @@ public class ResponsibleFormWindowCustom extends FormWindowCustom {
         this(title, new ArrayList<>());
     }
 
-    public ResponsibleFormWindowCustom(String title, List<Element> contents) {
+    public ResponsibleFormWindowCustom(String title, @NotNull List<Element> contents) {
         this(title, contents, "");
     }
 
-    public ResponsibleFormWindowCustom(String title, List<Element> contents, String icon) {
+    public ResponsibleFormWindowCustom(String title, @NotNull List<Element> contents, @NotNull String icon) {
         super(Objects.requireNonNull(title), Objects.requireNonNull(contents), Objects.requireNonNull(icon));
     }
 
@@ -49,7 +50,8 @@ public class ResponsibleFormWindowCustom extends FormWindowCustom {
      *
      * @param listener 调用的方法
      */
-    public ResponsibleFormWindowCustom onResponded(BiConsumer<FormResponseCustom, Player> listener) {
+    public ResponsibleFormWindowCustom onResponded(@NotNull BiConsumer<FormResponseCustom, Player> listener) {
+        Objects.requireNonNull(listener);
         this.buttonClickedListener = listener;
         return this;
     }
@@ -60,7 +62,7 @@ public class ResponsibleFormWindowCustom extends FormWindowCustom {
      *
      * @param listener 调用的方法(无 Player)
      */
-    public ResponsibleFormWindowCustom onResponded(Consumer<FormResponseCustom> listener) {
+    public ResponsibleFormWindowCustom onResponded(@NotNull Consumer<FormResponseCustom> listener) {
         Objects.requireNonNull(listener);
         this.buttonClickedListener = (response, player) -> listener.accept(response);
         return this;
@@ -72,7 +74,7 @@ public class ResponsibleFormWindowCustom extends FormWindowCustom {
      *
      * @param listener 调用的方法(无参数)
      */
-    public ResponsibleFormWindowCustom onResponded(Runnable listener) {
+    public ResponsibleFormWindowCustom onResponded(@NotNull Runnable listener) {
         Objects.requireNonNull(listener);
         this.buttonClickedListener = (id, player) -> listener.run();
         return this;
@@ -84,7 +86,8 @@ public class ResponsibleFormWindowCustom extends FormWindowCustom {
      *
      * @param listener 调用的方法
      */
-    public ResponsibleFormWindowCustom onClosed(Consumer<Player> listener) {
+    public ResponsibleFormWindowCustom onClosed(@NotNull Consumer<Player> listener) {
+        Objects.requireNonNull(listener);
         this.windowClosedListener = listener;
         return this;
     }
@@ -95,7 +98,7 @@ public class ResponsibleFormWindowCustom extends FormWindowCustom {
      *
      * @param listener 调用的方法
      */
-    public ResponsibleFormWindowCustom onClosed(Runnable listener) {
+    public ResponsibleFormWindowCustom onClosed(@NotNull Runnable listener) {
         Objects.requireNonNull(listener);
         this.windowClosedListener = (player) -> listener.run();
         return this;
@@ -111,7 +114,7 @@ public class ResponsibleFormWindowCustom extends FormWindowCustom {
                 .replace("defaultStepIndex", "default");
     }
 
-    public void callClicked(FormResponseCustom response, Player player) {
+    public void callClicked(@NotNull FormResponseCustom response, @NotNull Player player) {
         Objects.requireNonNull(player);
         Objects.requireNonNull(response);
 
@@ -124,7 +127,7 @@ public class ResponsibleFormWindowCustom extends FormWindowCustom {
         }
     }
 
-    public void callClosed(Player player) {
+    public void callClosed(@NotNull Player player) {
         Objects.requireNonNull(player);
         if (this.windowClosedListener != null) {
             this.windowClosedListener.accept(player);

@@ -12,6 +12,8 @@ import moe.him188.gui.template.response.TemplateResponses;
 import moe.him188.gui.utils.ExceptionConsumer;
 import moe.him188.gui.utils.ResponseParseException;
 import moe.him188.gui.window.listener.response.ResponseListenerTemplate;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -41,11 +43,11 @@ public class ResponsibleFormWindowTemplated<K> extends FormWindowCustom {
 
     private transient ExceptionConsumer<ResponseParseException> exceptionConsumer;
 
-    public ResponsibleFormWindowTemplated(Template<K> template) {
+    public ResponsibleFormWindowTemplated(@NotNull Template<K> template) {
         this("", template);
     }
 
-    public ResponsibleFormWindowTemplated(String title, Template<K> template) {
+    public ResponsibleFormWindowTemplated(String title, @NotNull Template<K> template) {
         super(Objects.requireNonNull(title), new ArrayList<>(), "");
         Objects.requireNonNull(template);
         this.template = template;
@@ -57,6 +59,7 @@ public class ResponsibleFormWindowTemplated<K> extends FormWindowCustom {
      *
      * @return last response, nullable.
      */
+    @Nullable
     public TemplateResponses<K> getLastResponses() {
         return lastResponses;
     }
@@ -66,11 +69,15 @@ public class ResponsibleFormWindowTemplated<K> extends FormWindowCustom {
      *
      * @return last player, nullable
      */
+    @Nullable
     public Player getLastPlayer() {
         return lastPlayer;
     }
 
-    public void setLastResponses(Player player, FormResponseCustom response) {
+    public void setLastResponses(@NotNull Player player, @NotNull FormResponseCustom response) {
+        Objects.requireNonNull(player);
+        Objects.requireNonNull(response);
+
         this.lastPlayer = player;
         this.lastResponses = this.template.getBuilder().parseTemplateResponse(player, response, this.exceptionConsumer);
     }
@@ -80,7 +87,8 @@ public class ResponsibleFormWindowTemplated<K> extends FormWindowCustom {
      *
      * @param exceptionConsumer 处理异常的函数
      */
-    public ResponsibleFormWindowTemplated<K> setExceptionConsumer(ExceptionConsumer<ResponseParseException> exceptionConsumer) {
+    public ResponsibleFormWindowTemplated<K> setExceptionConsumer(@NotNull ExceptionConsumer<ResponseParseException> exceptionConsumer) {
+        Objects.requireNonNull(exceptionConsumer);
         this.exceptionConsumer = exceptionConsumer;
         return this;
     }
@@ -95,7 +103,7 @@ public class ResponsibleFormWindowTemplated<K> extends FormWindowCustom {
      *
      * @param listener 调用的方法
      */
-    public ResponsibleFormWindowTemplated<K> onResponded(BiConsumer<TemplateResponses<K>, Player> listener) {
+    public ResponsibleFormWindowTemplated<K> onResponded(@NotNull BiConsumer<TemplateResponses<K>, Player> listener) {
         this.buttonClickedListener = listener;
         return this;
     }
@@ -110,7 +118,7 @@ public class ResponsibleFormWindowTemplated<K> extends FormWindowCustom {
      *
      * @param listener 调用的方法(无 Player)
      */
-    public ResponsibleFormWindowTemplated<K> onResponded(Consumer<TemplateResponses<K>> listener) {
+    public ResponsibleFormWindowTemplated<K> onResponded(@NotNull Consumer<TemplateResponses<K>> listener) {
         Objects.requireNonNull(listener);
         this.buttonClickedListener = (response, player) -> listener.accept(response);
         return this;
@@ -126,7 +134,7 @@ public class ResponsibleFormWindowTemplated<K> extends FormWindowCustom {
      *
      * @param listener 调用的方法(无参数)
      */
-    public ResponsibleFormWindowTemplated<K> onResponded(Runnable listener) {
+    public ResponsibleFormWindowTemplated<K> onResponded(@NotNull Runnable listener) {
         Objects.requireNonNull(listener);
         this.buttonClickedListener = (id, player) -> listener.run();
         return this;
@@ -138,7 +146,7 @@ public class ResponsibleFormWindowTemplated<K> extends FormWindowCustom {
      *
      * @param listener 调用的方法
      */
-    public ResponsibleFormWindowTemplated<K> onClosed(Consumer<Player> listener) {
+    public ResponsibleFormWindowTemplated<K> onClosed(@NotNull Consumer<Player> listener) {
         this.windowClosedListener = listener;
         return this;
     }
@@ -149,7 +157,7 @@ public class ResponsibleFormWindowTemplated<K> extends FormWindowCustom {
      *
      * @param listener 调用的方法
      */
-    public ResponsibleFormWindowTemplated<K> onClosed(Runnable listener) {
+    public ResponsibleFormWindowTemplated<K> onClosed(@NotNull Runnable listener) {
         Objects.requireNonNull(listener);
         this.windowClosedListener = (player) -> listener.run();
         return this;
@@ -162,7 +170,7 @@ public class ResponsibleFormWindowTemplated<K> extends FormWindowCustom {
      * @param player   player
      */
     @SuppressWarnings("unchecked")
-    public void callClicked(TemplateResponses<K> response, Player player) {
+    public void callClicked(@NotNull TemplateResponses<K> response, @NotNull Player player) {
         Objects.requireNonNull(player);
         Objects.requireNonNull(response);
 
@@ -178,7 +186,8 @@ public class ResponsibleFormWindowTemplated<K> extends FormWindowCustom {
     /**
      * 将表单重新发送给玩家, 并保留已经填写的格式正确的数据.
      */
-    public void resendWindow(Player player) {
+    public void resendWindow(@NotNull Player player) {
+        Objects.requireNonNull(player);
         if (this.lastResponses == null) {
             throw new UnsupportedOperationException();
         }
@@ -186,7 +195,7 @@ public class ResponsibleFormWindowTemplated<K> extends FormWindowCustom {
         player.showFormWindow(this);
     }
 
-    public void callClosed(Player player) {
+    public void callClosed(@NotNull Player player) {
         Objects.requireNonNull(player);
         if (this.windowClosedListener != null) {
             this.windowClosedListener.accept(player);

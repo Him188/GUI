@@ -3,6 +3,7 @@ package moe.him188.gui.template.element;
 import cn.nukkit.form.element.Element;
 import moe.him188.gui.template.response.TemplateResponse;
 import moe.him188.gui.utils.ResponseParseException;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * 模板的元素
@@ -15,7 +16,12 @@ public abstract class TemplateElement<K> { // TODO: 2018/8/1 0001 添加所有 e
      */
     private final K responseKey;
 
-    public TemplateElement(K responseKey) {
+    /**
+     * <code>@Nullable</code> for {@link TemplateElementLabel}
+     *
+     * @param responseKey
+     */
+    public TemplateElement(@Nullable K responseKey) {
         this.responseKey = responseKey;
     }
 

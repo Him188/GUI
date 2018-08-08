@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 import moe.him188.gui.element.ResponsibleButton;
 import moe.him188.gui.window.listener.action.ClickListener;
 import moe.him188.gui.window.listener.response.ResponseListenerSimple;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +40,7 @@ public class ResponsibleFormWindowSimple extends FormWindowSimple {
         this(title, content, new ArrayList<>());
     }
 
-    public ResponsibleFormWindowSimple(String title, String content, List<ElementButton> buttons) {
+    public ResponsibleFormWindowSimple(String title, String content, @NotNull List<ElementButton> buttons) {
         super(Objects.requireNonNull(title), Objects.requireNonNull(content), Objects.requireNonNull(buttons));
     }
 
@@ -50,7 +51,8 @@ public class ResponsibleFormWindowSimple extends FormWindowSimple {
      *
      * @param listener 调用的方法
      */
-    public ResponsibleFormWindowSimple onClicked(BiConsumer<Integer, Player> listener) {
+    public ResponsibleFormWindowSimple onClicked(@NotNull BiConsumer<Integer, Player> listener) {
+        Objects.requireNonNull(listener);
         this.buttonClickedListener = listener;
         return this;
     }
@@ -61,7 +63,7 @@ public class ResponsibleFormWindowSimple extends FormWindowSimple {
      *
      * @param listener 调用的方法(无 Player)
      */
-    public ResponsibleFormWindowSimple onClicked(Consumer<Integer> listener) {
+    public ResponsibleFormWindowSimple onClicked(@NotNull Consumer<Integer> listener) {
         Objects.requireNonNull(listener);
         this.buttonClickedListener = (id, player) -> listener.accept(id);
         return this;
@@ -73,7 +75,7 @@ public class ResponsibleFormWindowSimple extends FormWindowSimple {
      *
      * @param listener 调用的方法(无参数)
      */
-    public ResponsibleFormWindowSimple onClicked(Runnable listener) {
+    public ResponsibleFormWindowSimple onClicked(@NotNull Runnable listener) {
         Objects.requireNonNull(listener);
         this.buttonClickedListener = (id, player) -> listener.run();
         return this;
@@ -86,7 +88,8 @@ public class ResponsibleFormWindowSimple extends FormWindowSimple {
      *
      * @param listener 调用的方法
      */
-    public ResponsibleFormWindowSimple onClosed(Consumer<Player> listener) {
+    public ResponsibleFormWindowSimple onClosed(@NotNull Consumer<Player> listener) {
+        Objects.requireNonNull(listener);
         this.windowClosedListener = listener;
         return this;
     }
@@ -97,7 +100,7 @@ public class ResponsibleFormWindowSimple extends FormWindowSimple {
      *
      * @param listener 调用的方法
      */
-    public ResponsibleFormWindowSimple onClosed(Runnable listener) {
+    public ResponsibleFormWindowSimple onClosed(@NotNull Runnable listener) {
         Objects.requireNonNull(listener);
         this.windowClosedListener = (player) -> listener.run();
         return this;
@@ -110,7 +113,7 @@ public class ResponsibleFormWindowSimple extends FormWindowSimple {
      * @param name          button name
      * @param clickListener listener
      */
-    public void addButton(String name, ClickListener clickListener) {
+    public void addButton(String name, @NotNull ClickListener clickListener) {
         this.addButton(new ResponsibleButton(name, clickListener));
     }
 
@@ -119,7 +122,7 @@ public class ResponsibleFormWindowSimple extends FormWindowSimple {
         return new Gson().toJson(this, FormWindowSimple.class);
     }
 
-    public void callClicked(int id, Player player) {
+    public void callClicked(int id, @NotNull Player player) {
         Objects.requireNonNull(player);
 
         ElementButton button = getButtons().get(id);

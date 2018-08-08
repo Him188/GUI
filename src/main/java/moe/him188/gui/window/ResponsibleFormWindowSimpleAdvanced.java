@@ -70,7 +70,7 @@ public class ResponsibleFormWindowSimpleAdvanced<E> extends FormWindowSimple {
     }
 
     public E getEntry(int id) {
-        return this.entries.get(id);
+        return this.entries.size() <= id ? null : this.entries.get(id);
     }
 
     /**
@@ -79,7 +79,7 @@ public class ResponsibleFormWindowSimpleAdvanced<E> extends FormWindowSimple {
      * @param entries          需要展示在每个按钮上的数据 | entries to show in the buttons
      * @param buttonTextGetter 按钮名字获取器. 用于获取每个数据对应的按钮的名字 | Used to get the name of each button
      */
-    public ResponsibleFormWindowSimpleAdvanced(String title, String content, Collection<E> entries, Function<? super E, String> buttonTextGetter) {
+    public ResponsibleFormWindowSimpleAdvanced(String title, String content, @NotNull Collection<E> entries, @NotNull Function<? super E, String> buttonTextGetter) {
         super(Objects.requireNonNull(title), Objects.requireNonNull(content));
         Objects.requireNonNull(buttonTextGetter);
         Objects.requireNonNull(entries);
@@ -96,7 +96,8 @@ public class ResponsibleFormWindowSimpleAdvanced<E> extends FormWindowSimple {
      *
      * @param listener 调用的方法
      */
-    public ResponsibleFormWindowSimpleAdvanced<E> onClicked(BiConsumer<E, Player> listener) {
+    public ResponsibleFormWindowSimpleAdvanced<E> onClicked(@NotNull BiConsumer<E, Player> listener) {
+        Objects.requireNonNull(listener);
         this.buttonClickedListener = listener;
         return this;
     }
@@ -107,7 +108,7 @@ public class ResponsibleFormWindowSimpleAdvanced<E> extends FormWindowSimple {
      *
      * @param listener 调用的方法(无 Player)
      */
-    public ResponsibleFormWindowSimpleAdvanced<E> onClicked(Consumer<E> listener) {
+    public ResponsibleFormWindowSimpleAdvanced<E> onClicked(@NotNull Consumer<E> listener) {
         Objects.requireNonNull(listener);
         this.buttonClickedListener = (response, player) -> listener.accept(response);
         return this;
@@ -119,7 +120,8 @@ public class ResponsibleFormWindowSimpleAdvanced<E> extends FormWindowSimple {
      *
      * @param listener 调用的方法
      */
-    public ResponsibleFormWindowSimpleAdvanced<E> onClosed(Consumer<Player> listener) {
+    public ResponsibleFormWindowSimpleAdvanced<E> onClosed(@NotNull Consumer<Player> listener) {
+        Objects.requireNonNull(listener);
         this.windowClosedListener = listener;
         return this;
     }
@@ -130,14 +132,15 @@ public class ResponsibleFormWindowSimpleAdvanced<E> extends FormWindowSimple {
      *
      * @param listener 调用的方法
      */
-    public ResponsibleFormWindowSimpleAdvanced<E> onClosed(Runnable listener) {
+    public ResponsibleFormWindowSimpleAdvanced<E> onClosed(@NotNull Runnable listener) {
         Objects.requireNonNull(listener);
         this.windowClosedListener = (player) -> listener.run();
         return this;
     }
 
     @Override
-    public void addButton(ElementButton button) {
+    public void addButton(@NotNull ElementButton button) {
+        Objects.requireNonNull(button);
         if (this.entries != null) {
             throw new UnsupportedOperationException("could not addButton after construction!");
         }

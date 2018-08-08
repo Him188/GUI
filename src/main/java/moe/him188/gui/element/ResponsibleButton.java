@@ -5,6 +5,7 @@ import cn.nukkit.form.element.ElementButton;
 import cn.nukkit.form.element.ElementButtonImageData;
 import cn.nukkit.form.window.FormWindowSimple;
 import moe.him188.gui.window.listener.action.ClickListener;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -16,30 +17,31 @@ import java.util.Objects;
 public class ResponsibleButton extends ElementButton {
     private transient ClickListener listener = null;
 
-    public ResponsibleButton(String text) {
+    public ResponsibleButton(@NotNull String text) {
         super(Objects.requireNonNull(text));
     }
 
-    public ResponsibleButton(String text, ClickListener onClicked) {
+    public ResponsibleButton(@NotNull String text, @NotNull ClickListener onClicked) {
         this(text);
         setClickListener(onClicked);
     }
 
-    public ResponsibleButton(String text, ElementButtonImageData image) {
+    public ResponsibleButton(@NotNull String text, @NotNull ElementButtonImageData image) {
         super(Objects.requireNonNull(text), image);
     }
 
-    public ResponsibleButton(String text, ElementButtonImageData image, ClickListener onClicked) {
+    public ResponsibleButton(@NotNull String text, @NotNull ElementButtonImageData image, @NotNull ClickListener onClicked) {
         this(text, image);
         setClickListener(onClicked);
     }
 
-    public ResponsibleButton setClickListener(ClickListener listener) {
+    public ResponsibleButton setClickListener(@NotNull ClickListener listener) {
+        Objects.requireNonNull(listener);
         this.listener = listener;
         return this;
     }
 
-    public void callClicked(Player player) {
+    public void callClicked(@NotNull Player player) {
         if (this.listener != null) {
             this.listener.accept(player);
         }

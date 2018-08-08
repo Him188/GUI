@@ -8,6 +8,8 @@ import cn.nukkit.form.response.FormResponseModal;
 import cn.nukkit.form.window.FormWindowModal;
 import com.google.gson.Gson;
 import moe.him188.gui.window.listener.response.ResponseListenerModal;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -39,7 +41,8 @@ public class ResponsibleFormWindowModal extends FormWindowModal {
      *
      * @param listener 调用的方法
      */
-    public ResponsibleFormWindowModal onResponded(BiConsumer<Boolean, Player> listener) {
+    public ResponsibleFormWindowModal onResponded(@NotNull BiConsumer<Boolean, Player> listener) {
+        Objects.requireNonNull(listener);
         this.buttonClickedListener = listener;
         return this;
     }
@@ -50,7 +53,7 @@ public class ResponsibleFormWindowModal extends FormWindowModal {
      *
      * @param listener 调用的方法(无 Player)
      */
-    public ResponsibleFormWindowModal onResponded(Consumer<Boolean> listener) {
+    public ResponsibleFormWindowModal onResponded(@NotNull Consumer<Boolean> listener) {
         Objects.requireNonNull(listener);
         this.buttonClickedListener = (response, player) -> listener.accept(response);
         return this;
@@ -62,7 +65,7 @@ public class ResponsibleFormWindowModal extends FormWindowModal {
      *
      * @param listener 调用的方法(无参数)
      */
-    public ResponsibleFormWindowModal onResponded(Runnable listener) {
+    public ResponsibleFormWindowModal onResponded(@NotNull Runnable listener) {
         Objects.requireNonNull(listener);
         this.buttonClickedListener = (id, player) -> listener.run();
         return this;
@@ -75,7 +78,7 @@ public class ResponsibleFormWindowModal extends FormWindowModal {
      * @param listenerOnTrue  当玩家点击 <code>true</code> 按钮时调用的函数
      * @param listenerOnFalse 当玩家点击 <code>false</code> 按钮时调用的函数
      */
-    public ResponsibleFormWindowModal onResponded(Runnable listenerOnTrue, Runnable listenerOnFalse) {
+    public ResponsibleFormWindowModal onResponded(@NotNull Runnable listenerOnTrue, @NotNull Runnable listenerOnFalse) {
         Objects.requireNonNull(listenerOnTrue);
         Objects.requireNonNull(listenerOnFalse);
         this.buttonClickedListener = (confirmation, player) -> {
@@ -97,7 +100,7 @@ public class ResponsibleFormWindowModal extends FormWindowModal {
      * @param listenerOnTrue  当玩家点击 <code>true</code> 按钮时调用的函数
      * @param listenerOnFalse 当玩家点击 <code>false</code> 按钮时调用的函数
      */
-    public ResponsibleFormWindowModal onResponded(Consumer<Player> listenerOnTrue, Consumer<Player> listenerOnFalse) {
+    public ResponsibleFormWindowModal onResponded(@Nullable Consumer<Player> listenerOnTrue, @Nullable Consumer<Player> listenerOnFalse) {
         this.buttonClickedListener = (confirmation, player) -> {
             if (confirmation) {
                 if (listenerOnTrue != null) {
@@ -118,7 +121,8 @@ public class ResponsibleFormWindowModal extends FormWindowModal {
      *
      * @param listener 调用的方法
      */
-    public ResponsibleFormWindowModal onClosed(Consumer<Player> listener) {
+    public ResponsibleFormWindowModal onClosed(@NotNull Consumer<Player> listener) {
+        Objects.requireNonNull(listener);
         this.windowClosedListener = listener;
         return this;
     }
@@ -129,7 +133,7 @@ public class ResponsibleFormWindowModal extends FormWindowModal {
      *
      * @param listener 调用的方法
      */
-    public ResponsibleFormWindowModal onClosed(Runnable listener) {
+    public ResponsibleFormWindowModal onClosed(@NotNull Runnable listener) {
         Objects.requireNonNull(listener);
         this.windowClosedListener = (player) -> listener.run();
         return this;
@@ -140,7 +144,7 @@ public class ResponsibleFormWindowModal extends FormWindowModal {
         return new Gson().toJson(this, FormWindowModal.class);
     }
 
-    public void callClicked(boolean response, Player player) {
+    public void callClicked(boolean response, @NotNull Player player) {
         Objects.requireNonNull(player);
 
         if (this instanceof ResponseListenerModal) {
@@ -152,7 +156,7 @@ public class ResponsibleFormWindowModal extends FormWindowModal {
         }
     }
 
-    public void callClosed(Player player) {
+    public void callClosed(@NotNull Player player) {
         Objects.requireNonNull(player);
         if (this.windowClosedListener != null) {
             this.windowClosedListener.accept(Objects.requireNonNull(player));

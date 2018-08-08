@@ -4,6 +4,7 @@ import cn.nukkit.form.element.Element;
 import cn.nukkit.form.element.ElementDropdown;
 import moe.him188.gui.template.response.TemplateResponse;
 import moe.him188.gui.utils.ResponseParseException;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,18 +20,18 @@ public class TemplateElementDropdown<K> extends TemplateElement<K> {
     /**
      * @see ElementDropdown
      */
-    public TemplateElementDropdown(K elementKey, String name, List<String> options, int defaultOption) {
+    public TemplateElementDropdown(@NotNull K elementKey, String name, List<String> options, int defaultOption) {
         super(elementKey);
         this.name = name;
         this.options = options;
         this.defaultOption = defaultOption;
     }
 
-    public TemplateElementDropdown(K elementKey, String name) {
+    public TemplateElementDropdown(@NotNull K elementKey, String name) {
         this(elementKey, name, new ArrayList<>());
     }
 
-    public TemplateElementDropdown(K elementKey, String name, List<String> options) {
+    public TemplateElementDropdown(@NotNull K elementKey, String name, List<String> options) {
         this(elementKey, name, options, 0);
     }
 

@@ -4,6 +4,7 @@ import cn.nukkit.form.element.Element;
 import cn.nukkit.form.element.ElementSlider;
 import moe.him188.gui.template.response.TemplateResponse;
 import moe.him188.gui.utils.ResponseParseException;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Him188moe @ GUI Project
@@ -16,15 +17,15 @@ public class TemplateElementSlider<K> extends TemplateElement<K> {
     private final int step;
     private final float defaultValue;
 
-    public TemplateElementSlider(K elementKey, String name, int min, int max) {
+    public TemplateElementSlider(@NotNull K elementKey, String name, int min, int max) {
         this(elementKey, name, min, max, 0);
     }
 
-    public TemplateElementSlider(K elementKey, String name, int min, int max, int step) {
+    public TemplateElementSlider(@NotNull K elementKey, String name, int min, int max, int step) {
         this(elementKey, name, min, max, step, 0f);
     }
 
-    public TemplateElementSlider(K elementKey, String name, int min, int max, int step, float defaultValue) {
+    public TemplateElementSlider(@NotNull K elementKey, String name, int min, int max, int step, float defaultValue) {
         super(elementKey);
         this.name = name;
         this.min = min;

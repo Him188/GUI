@@ -8,6 +8,7 @@ import moe.him188.gui.utils.ResponseParseException;
 import moe.him188.gui.window.ResponsibleFormWindowTemplated;
 import moe.him188.gui.window.defaults.TipWindow;
 import moe.him188.gui.window.listener.response.ResponseListenerTemplate;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Him188moe @ GUI Project
@@ -38,7 +39,7 @@ public class TestWindow extends ResponsibleFormWindowTemplated<TestTemplate.Elem
     }
 
     @Override
-    public void onResponded(TemplateResponses<TestTemplate.ElementKey> responses, Player player) {
+    public void onResponded(@NotNull TemplateResponses<TestTemplate.ElementKey> responses, @NotNull Player player) {
         if (responses.hasNull()) {
             System.out.println("onResponded: null responses");
             return;

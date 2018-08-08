@@ -4,6 +4,7 @@ import cn.nukkit.form.element.Element;
 import cn.nukkit.form.element.ElementStepSlider;
 import moe.him188.gui.template.response.TemplateResponse;
 import moe.him188.gui.utils.ResponseParseException;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,15 +14,15 @@ public class TemplateElementStepSlider<K> extends TemplateElement<K> {
     private final List<String> steps;
     private final int defaultStepIndex;
 
-    public TemplateElementStepSlider(K elementKey, String name) {
+    public TemplateElementStepSlider(@NotNull K elementKey, String name) {
         this(elementKey, name, new ArrayList<>());
     }
 
-    public TemplateElementStepSlider(K elementKey, String name, List<String> steps) {
+    public TemplateElementStepSlider(@NotNull K elementKey, String name, List<String> steps) {
         this(elementKey, name, steps, steps.size() == 0 ? 0 : steps.size() - 1);
     }
 
-    public TemplateElementStepSlider(K elementKey, String name, List<String> steps, int defaultStep) {
+    public TemplateElementStepSlider(@NotNull K elementKey, String name, List<String> steps, int defaultStep) {
         super(elementKey);
         this.name = name;
         this.steps = steps;
