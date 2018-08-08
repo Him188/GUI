@@ -57,11 +57,8 @@ import java.util.function.Function;
  *
  * @author Him188moe @ GUI Project
  */
-public class ResponsibleFormWindowSimpleAdvanced<E> extends MarkedFormWindowSimple {
-    /**
-     * 用于 {@linkplain #onEvent(PlayerFormRespondedEvent) 收到返回数据时获取实例}
-     */
-    private static Map<Integer, ResponsibleFormWindowSimpleAdvanced<?>> instances = new HashMap<>();
+public class ResponsibleFormWindowSimpleAdvanced<E> extends FormWindowSimple {
+    private transient BiConsumer<E, Player> buttonClickedListener = null;
 
     @Expose(serialize = false, deserialize = false)
     private BiConsumer<E, Player> buttonClickedListener = null;
@@ -95,49 +92,6 @@ public class ResponsibleFormWindowSimpleAdvanced<E> extends MarkedFormWindowSimp
             this.addButton(new ElementButton(buttonTextGetter.apply(entry)));
         }
         this.entries = Collections.unmodifiableList(new ArrayList<>(entries));
-        instances.put(this.getId(), this);
-    }
-
-    @Expose(serialize = false, deserialize = false)
-    private boolean singleUse = true;
-
-    public boolean isSingleUse() {
-        return singleUse;
-    }
-
-    /**
-     * 标识是否只能使用一次这个表单对象. <br>
-     * Identify whether you can use(send) the form object only once. <br>
-     * 如果 true, 第二次将这个表单对象发送给玩家时将无法接受 response. <br>
-     * If true, when you send the form twice, it will not be able to accept the response <br>
-     * 如果 false, 每次都能正常接受 response. <br>
-     * If false, you can send the form every time, and successfully receive the response <br>
-     * 设置为 true 将会更适合长时间运行服务器. <br>
-     * True is better for long-time working.
-     *
-     * @param singleUse single-use
-     *
-     * @return this
-     */
-    public ResponsibleFormWindowSimpleAdvanced<E> setSingleUse(boolean singleUse) {
-        this.singleUse = singleUse;
-        return this;
-    }
-
-    /**
-     * 判断这个窗口是否还可以正常接受 response. <br>
-     * Check whether this window can receive response.
-     *
-     * @return valid or not
-     *
-     * @see #setSingleUse(boolean)
-     */
-    public boolean isValid() {
-        if (!this.isSingleUse()) {
-            return true;
-        }
-
-        return instances.containsKey(this.getId());
     }
 
     /**
@@ -209,14 +163,16 @@ public class ResponsibleFormWindowSimpleAdvanced<E> extends MarkedFormWindowSimp
         }
     }
 
+    @Override
+    public String getJSONData() {
+        return new Gson().toJson(this, FormWindowSimple.class); //必须以无泛型类转换 json, 否则 StackOverFollow
+    }
+
     @SuppressWarnings("unchecked")
     static boolean onEvent(PlayerFormRespondedEvent event) {
-        if (event.getWindow() instanceof MarkedFormWindowSimple && event.getResponse() instanceof FormResponseSimple) {
-            int id = ((MarkedFormWindowSimple) event.getWindow()).getId();
-            ResponsibleFormWindowSimpleAdvanced window = instances.get(id); // TODO: 2018/8/1 0001 测试能不能直接 event.getWindow()
-            if (window.isSingleUse()) {
-                instances.remove(id);
-            }
+        if (event.getWindow() instanceof ResponsibleFormWindowSimpleAdvanced && event.getResponse() instanceof FormResponseSimple) {
+            ResponsibleFormWindowSimpleAdvanced window = (ResponsibleFormWindowSimpleAdvanced) event.getWindow();
+
             if (event.getWindow().wasClosed() || event.getResponse() == null) {
                 window.callClosed(event.getPlayer());
             } else {

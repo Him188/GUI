@@ -6,6 +6,7 @@ import cn.nukkit.event.player.PlayerFormRespondedEvent;
 import cn.nukkit.form.response.FormResponse;
 import cn.nukkit.form.response.FormResponseCustom;
 import cn.nukkit.form.window.FormWindowCustom;
+import com.google.gson.Gson;
 import moe.him188.gui.template.Template;
 import moe.him188.gui.template.response.TemplateResponses;
 import moe.him188.gui.utils.ExceptionConsumer;
@@ -27,7 +28,7 @@ import java.util.function.Consumer;
  *
  * @author Him188moe @ GUI Project
  */
-public class ResponsibleFormWindowTemplated<K> extends MarkedFormWindowCustom {
+public class ResponsibleFormWindowTemplated<K> extends FormWindowCustom {
     private transient final Template<K> template;
 
     private transient BiConsumer<TemplateResponses<K>, Player> buttonClickedListener = null;
@@ -177,6 +178,16 @@ public class ResponsibleFormWindowTemplated<K> extends MarkedFormWindowCustom {
         if (this.windowClosedListener != null) {
             this.windowClosedListener.accept(player);
         }
+    }
+
+    @Override
+    public String getJSONData() {
+        String toModify = new Gson().toJson(this, FormWindowCustom.class);//must!!
+        //We need to replace this due to Java not supporting declaring class field 'default'
+        return toModify.replace("defaultOptionIndex", "default")
+                .replace("defaultText", "default")
+                .replace("defaultValue", "default")
+                .replace("defaultStepIndex", "default");
     }
 
     @SuppressWarnings("unchecked")

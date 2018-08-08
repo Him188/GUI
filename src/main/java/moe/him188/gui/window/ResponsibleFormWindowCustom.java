@@ -8,7 +8,6 @@ import cn.nukkit.form.response.FormResponse;
 import cn.nukkit.form.response.FormResponseCustom;
 import cn.nukkit.form.window.FormWindowCustom;
 import com.google.gson.Gson;
-import com.google.gson.annotations.Expose;
 import moe.him188.gui.window.listener.response.ResponseListenerCustom;
 
 import java.util.ArrayList;
@@ -28,11 +27,9 @@ import java.util.function.Consumer;
  * @author Him188moe @ GUI Project
  */
 public class ResponsibleFormWindowCustom extends FormWindowCustom {
-    @Expose(serialize = false, deserialize = false)
-    private BiConsumer<FormResponseCustom, Player> buttonClickedListener = null;
+    private transient BiConsumer<FormResponseCustom, Player> buttonClickedListener = null;
 
-    @Expose(serialize = false, deserialize = false)
-    private Consumer<Player> windowClosedListener = null;
+    private transient Consumer<Player> windowClosedListener = null;
 
     public ResponsibleFormWindowCustom(String title) {
         this(title, new ArrayList<>());
@@ -106,12 +103,22 @@ public class ResponsibleFormWindowCustom extends FormWindowCustom {
 
     @Override
     public String getJSONData() {
-        return new Gson().toJson(this, FormWindowCustom.class);
+        String toModify = new Gson().toJson(this, FormWindowCustom.class);//must!!
+        //We need to replace this due to Java not supporting declaring class field 'default'
+        return toModify.replace("defaultOptionIndex", "default")
+                .replace("defaultText", "default")
+                .replace("defaultValue", "default")
+                .replace("defaultStepIndex", "default");
     }
 
     public void callClicked(FormResponseCustom response, Player player) {
         Objects.requireNonNull(player);
         Objects.requireNonNull(response);
+
+        if (this instanceof ResponseListenerCustom) {
+            ((ResponseListenerCustom) this).onClicked(response, player);
+        }
+
         if (this.buttonClickedListener != null) {
             this.buttonClickedListener.accept(response, player);
         }
@@ -131,10 +138,6 @@ public class ResponsibleFormWindowCustom extends FormWindowCustom {
             if (event.getWindow().wasClosed() || event.getResponse() == null) {
                 window.callClosed(event.getPlayer());
             } else {
-                if (window instanceof ResponseListenerCustom) {
-                    ((ResponseListenerCustom) window).onClicked((FormResponseCustom) event.getResponse(), event.getPlayer());
-                }
-
                 window.callClicked((FormResponseCustom) event.getResponse(), event.getPlayer());
             }
             return true;
