@@ -1,12 +1,11 @@
 package moe.him188.gui.window.listener.response;
 
 import cn.nukkit.Player;
-import cn.nukkit.form.response.FormResponseSimple;
 
 /**
  * @author Him188moe @ GUI Project
  */
-public interface SimpleResponseListener extends ResponseListener<FormResponseSimple> {
+public interface ResponseListenerSimple {
     /**
      * 当表单提交数据并关闭窗口时调用. <br>
      * Called when player clicked a button.
@@ -18,8 +17,12 @@ public interface SimpleResponseListener extends ResponseListener<FormResponseSim
 
     }
 
-    @Override
-    default void onClicked(FormResponseSimple response, Player player) {
-        onClicked(response.getClickedButtonId(), player);
+    /**
+     * 当表单关闭而没有提交数据时调用
+     *
+     * @param player player
+     */
+    default void onClosed(Player player) {
+
     }
 }
