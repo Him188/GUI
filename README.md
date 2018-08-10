@@ -18,7 +18,7 @@ By using **GUI**, you can easily create forms.
   Sample:  
   `
   player.showFormWindow(new ResponsibleFormWindowModal("Tips", "Hello", "Yes", "No")
-.onClicked(confirmation -> player.sendMessage("Your choice:"+confirmation)));
+.onResponded(confirmation -> player.sendMessage("Your choice:"+confirmation)));
   `
 
 * **Inner** Listeners for each window
@@ -60,8 +60,8 @@ By using **GUI**, you can easily create forms.
     class A extends ResponsibleFormWindowSimple implements SimpleResponseListener {
         A() {
             super("Title", "Content");
-            addButton(new ResponsibleElementButton("Say Hi", player->player.sendMessage("Hi")));
-            addButton(new ResponsibleElementButton("Say Hello", player->player.sendMessage("Hello")));
+            addButton("Say Hi", player->player.sendMessage("Hi"));//fast addButton
+            addButton(new ResponsibleElementButton("Say Hello", player->player.sendMessage("Hello")));//common addButton
         }
         public void onClosed(Player player) {
             player.sendMessage("You Closed");
