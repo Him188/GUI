@@ -107,6 +107,16 @@ public class ResponsibleFormWindowSimple extends FormWindowSimple {
     }
 
     /**
+     * 快速添加 {@link ElementButton}. <br>
+     * Fast adding {@link ElementButton}
+     *
+     * @param name button name
+     */
+    public void addButton(String name) {
+        this.addButton(new ElementButton(name));
+    }
+
+    /**
      * 快速添加 {@link ResponsibleButton}. <br>
      * Fast adding {@link ResponsibleButton}
      *
