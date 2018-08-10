@@ -15,14 +15,14 @@
   例子:  
   `
   player.showFormWindow(new ResponsibleFormWindowModal("Tips", "Hello", "Yes", "No")
-.onClicked(confirmation -> player.sendMessage("Your choice:"+confirmation)));
+.onResponded(confirmation -> player.sendMessage("Your choice:"+confirmation)));
   `
 
 * 每个表单都可以有 **内部**事件检测器
   这将会比实现nk Listener, 监听 PlayerFormRespondedEvent, 调用窗口的等不知道方便到哪里去!!
   例子:
   ```java
-  class A extends ResponsibleFormWindowSimple implements SimpleResponseListener {
+  class A extends ResponsibleFormWindowSimple implements ResponseListenerSimple {
       A() {
           super("Title", "Content");
           addButton(new ElementButton("Say Hi"));
@@ -55,13 +55,11 @@
     是否觉得上面的写法还是很麻烦? --那么这个实现将会是很好的替代!  
     例子(可以和上面的相比较):
     ```java
-    class A extends ResponsibleFormWindowSimple implements SimpleResponseListener {
+    class A extends ResponsibleFormWindowSimple implements ResponseListenerSimple {
         A() {
             super("Title", "Content");
-            addButton(new ResponsibleElementButton("Say Hi", player->player.sendMessage("Hi")));
-            addButton(new ResponsibleElementButton("Say Hello", player->player.sendMessage("Hello")));
-        }
-        public void onClicked(int id, Player player) {
+            addButton("Say Hi", player->player.sendMessage("Hi"));//快速添加
+            addButton(new ResponsibleElementButton("Say Hello", player->player.sendMessage("Hello")));//通常添加
         }
         public void onClosed(Player player) {
             player.sendMessage("You Closed");
