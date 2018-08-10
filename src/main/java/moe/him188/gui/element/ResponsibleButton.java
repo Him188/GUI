@@ -5,6 +5,7 @@ import cn.nukkit.form.element.ElementButton;
 import cn.nukkit.form.element.ElementButtonImageData;
 import cn.nukkit.form.window.FormWindowSimple;
 import moe.him188.gui.window.listener.action.ClickListener;
+import moe.him188.gui.window.listener.action.ClickListenerSimple;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -26,6 +27,10 @@ public class ResponsibleButton extends ElementButton {
         setClickListener(onClicked);
     }
 
+    public ResponsibleButton(@NotNull String text, @NotNull ClickListenerSimple onClicked) {
+        this(text, (ClickListener) onClicked);
+    }
+
     public ResponsibleButton(@NotNull String text, @NotNull ElementButtonImageData image) {
         super(Objects.requireNonNull(text), image);
     }
@@ -35,10 +40,18 @@ public class ResponsibleButton extends ElementButton {
         setClickListener(onClicked);
     }
 
+    public ResponsibleButton(@NotNull String text, @NotNull ElementButtonImageData image, @NotNull ClickListenerSimple onClicked) {
+        this(text, image, (ClickListener) onClicked);
+    }
+
     public ResponsibleButton setClickListener(@NotNull ClickListener listener) {
         Objects.requireNonNull(listener);
         this.listener = listener;
         return this;
+    }
+
+    public ResponsibleButton setClickListener(@NotNull ClickListenerSimple listener) {
+        return this.setClickListener((ClickListener) listener);
     }
 
     public void callClicked(@NotNull Player player) {
