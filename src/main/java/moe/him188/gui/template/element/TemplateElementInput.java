@@ -7,6 +7,7 @@ import moe.him188.gui.utils.InputFormatException;
 import moe.him188.gui.utils.InputType;
 import moe.him188.gui.utils.InputTypes;
 import moe.him188.gui.utils.ResponseParseException;
+import org.intellij.lang.annotations.MagicConstant;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -25,7 +26,7 @@ public class TemplateElementInput<K, R> extends TemplateElement<K> {
      *
      * @see InputTypes
      */
-    public TemplateElementInput(@NotNull K elementKey, String name, InputType<R> type, String placeholder, String defaultText) {
+    public TemplateElementInput(@NotNull K elementKey, String name, @MagicConstant(valuesFromClass = InputTypes.class) InputType<R> type, String placeholder, String defaultText) {
         super(elementKey);
         this.type = type;
 
@@ -34,11 +35,11 @@ public class TemplateElementInput<K, R> extends TemplateElement<K> {
         this.defaultText = defaultText;
     }
 
-    public TemplateElementInput(@NotNull K elementKey, String name, InputType<R> type) {
+    public TemplateElementInput(@NotNull K elementKey, String name, @MagicConstant(valuesFromClass = InputTypes.class) InputType<R> type) {
         this(elementKey, name, type, "");
     }
 
-    public TemplateElementInput(@NotNull K elementKey, String name, InputType<R> type, String placeholder) {
+    public TemplateElementInput(@NotNull K elementKey, String name, @MagicConstant(valuesFromClass = InputTypes.class) InputType<R> type, String placeholder) {
         this(elementKey, name, type, placeholder, "");
     }
 

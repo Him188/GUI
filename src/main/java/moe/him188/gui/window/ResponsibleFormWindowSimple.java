@@ -6,9 +6,11 @@ import cn.nukkit.event.player.PlayerFormRespondedEvent;
 import cn.nukkit.form.element.ElementButton;
 import cn.nukkit.form.response.FormResponse;
 import cn.nukkit.form.response.FormResponseSimple;
+import cn.nukkit.form.window.FormWindow;
 import cn.nukkit.form.window.FormWindowSimple;
 import com.google.gson.Gson;
 import moe.him188.gui.element.ResponsibleButton;
+import moe.him188.gui.utils.Backable;
 import moe.him188.gui.window.listener.action.ClickListener;
 import moe.him188.gui.window.listener.action.ClickListenerSimple;
 import moe.him188.gui.window.listener.response.ResponseListenerSimple;
@@ -32,10 +34,12 @@ import java.util.function.Consumer;
  *
  * @author Him188moe @ GUI Project
  */
-public class ResponsibleFormWindowSimple extends FormWindowSimple {
-    private transient BiConsumer<Integer, Player> buttonClickedListener = null;
+public class ResponsibleFormWindowSimple extends FormWindowSimple implements Backable, ResponseListenerSimple {
+    protected transient BiConsumer<Integer, Player> buttonClickedListener = null;
 
-    private transient Consumer<Player> windowClosedListener = null;
+    protected transient Consumer<Player> windowClosedListener = null;
+
+    private transient FormWindow parent;
 
     public ResponsibleFormWindowSimple(String title, String content) {
         this(title, content, new ArrayList<>());
@@ -45,6 +49,15 @@ public class ResponsibleFormWindowSimple extends FormWindowSimple {
         super(Objects.requireNonNull(title), Objects.requireNonNull(content), Objects.requireNonNull(buttons));
     }
 
+    @Override
+    public void setParent(FormWindow parent) {
+        this.parent = parent;
+    }
+
+    @Override
+    public FormWindow getParent() {
+        return parent;
+    }
 
     /**
      * 在玩家提交表单后调用 <br>
@@ -52,7 +65,7 @@ public class ResponsibleFormWindowSimple extends FormWindowSimple {
      *
      * @param listener 调用的方法
      */
-    public ResponsibleFormWindowSimple onClicked(@NotNull BiConsumer<Integer, Player> listener) {
+    public final ResponsibleFormWindowSimple onClicked(@NotNull BiConsumer<Integer, Player> listener) {
         Objects.requireNonNull(listener);
         this.buttonClickedListener = listener;
         return this;
@@ -64,7 +77,7 @@ public class ResponsibleFormWindowSimple extends FormWindowSimple {
      *
      * @param listener 调用的方法(无 Player)
      */
-    public ResponsibleFormWindowSimple onClicked(@NotNull Consumer<Integer> listener) {
+    public final ResponsibleFormWindowSimple onClicked(@NotNull Consumer<Integer> listener) {
         Objects.requireNonNull(listener);
         this.buttonClickedListener = (id, player) -> listener.accept(id);
         return this;
@@ -76,7 +89,7 @@ public class ResponsibleFormWindowSimple extends FormWindowSimple {
      *
      * @param listener 调用的方法(无参数)
      */
-    public ResponsibleFormWindowSimple onClicked(@NotNull Runnable listener) {
+    public final ResponsibleFormWindowSimple onClicked(@NotNull Runnable listener) {
         Objects.requireNonNull(listener);
         this.buttonClickedListener = (id, player) -> listener.run();
         return this;
@@ -89,7 +102,7 @@ public class ResponsibleFormWindowSimple extends FormWindowSimple {
      *
      * @param listener 调用的方法
      */
-    public ResponsibleFormWindowSimple onClosed(@NotNull Consumer<Player> listener) {
+    public final ResponsibleFormWindowSimple onClosed(@NotNull Consumer<Player> listener) {
         Objects.requireNonNull(listener);
         this.windowClosedListener = listener;
         return this;
@@ -101,7 +114,7 @@ public class ResponsibleFormWindowSimple extends FormWindowSimple {
      *
      * @param listener 调用的方法
      */
-    public ResponsibleFormWindowSimple onClosed(@NotNull Runnable listener) {
+    public final ResponsibleFormWindowSimple onClosed(@NotNull Runnable listener) {
         Objects.requireNonNull(listener);
         this.windowClosedListener = (player) -> listener.run();
         return this;
@@ -114,7 +127,7 @@ public class ResponsibleFormWindowSimple extends FormWindowSimple {
      * @param name button name
      */
     public void addButton(String name) {
-        this.addButton(new ElementButton(name));
+        super.addButton(new ElementButton(name));
     }
 
     /**
@@ -125,7 +138,7 @@ public class ResponsibleFormWindowSimple extends FormWindowSimple {
      * @param clickListener listener
      */
     public void addButton(String name, @NotNull ClickListener clickListener) {
-        this.addButton(new ResponsibleButton(name, clickListener));
+        super.addButton(new ResponsibleButton(name, clickListener));
     }
 
     /**
@@ -136,7 +149,7 @@ public class ResponsibleFormWindowSimple extends FormWindowSimple {
      * @param clickListener listener
      */
     public void addButton(String name, @NotNull ClickListenerSimple clickListener) {
-        this.addButton(new ResponsibleButton(name, clickListener));
+        super.addButton(new ResponsibleButton(name, clickListener));
     }
 
     @Override
@@ -152,9 +165,7 @@ public class ResponsibleFormWindowSimple extends FormWindowSimple {
             ((ResponsibleButton) button).callClicked(player);
         }
 
-        if (this instanceof ResponseListenerSimple) {
-            ((ResponseListenerSimple) this).onClicked(id, player);
-        }
+        this.onClicked(id, player);
 
         if (this.buttonClickedListener != null) {
             this.buttonClickedListener.accept(id, player);
@@ -163,17 +174,21 @@ public class ResponsibleFormWindowSimple extends FormWindowSimple {
 
     public void callClosed(Player player) {
         Objects.requireNonNull(player);
+
+        this.onClosed(player);
+
         if (this.windowClosedListener != null) {
             this.windowClosedListener.accept(player);
         }
     }
 
     static boolean onEvent(PlayerFormRespondedEvent event) {
-        if (event.getWindow() instanceof ResponsibleFormWindowSimple && event.getResponse() instanceof FormResponseSimple) {
+        if (event.getWindow() instanceof ResponsibleFormWindowSimple) {
             ResponsibleFormWindowSimple window = (ResponsibleFormWindowSimple) event.getWindow();
 
             if (event.getWindow().wasClosed() || event.getResponse() == null) {
                 window.callClosed(event.getPlayer());
+                window.closed = false;//for resending
             } else {
                 window.callClicked(((FormResponseSimple) event.getResponse()).getClickedButtonId(), event.getPlayer());
             }

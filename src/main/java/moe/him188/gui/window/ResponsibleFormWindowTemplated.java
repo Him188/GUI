@@ -5,11 +5,14 @@ import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerFormRespondedEvent;
 import cn.nukkit.form.response.FormResponse;
 import cn.nukkit.form.response.FormResponseCustom;
+import cn.nukkit.form.window.FormWindow;
 import cn.nukkit.form.window.FormWindowCustom;
 import com.google.gson.Gson;
 import moe.him188.gui.template.Template;
 import moe.him188.gui.template.response.TemplateResponses;
+import moe.him188.gui.utils.Backable;
 import moe.him188.gui.utils.ExceptionConsumer;
+import moe.him188.gui.utils.NoParentWindowFoundException;
 import moe.him188.gui.utils.ResponseParseException;
 import moe.him188.gui.window.listener.response.ResponseListenerTemplate;
 import org.jetbrains.annotations.NotNull;
@@ -29,18 +32,20 @@ import java.util.function.Consumer;
  *
  * @author Him188moe @ GUI Project
  */
-public class ResponsibleFormWindowTemplated<K> extends FormWindowCustom {
-    private transient final Template<K> template;
+public class ResponsibleFormWindowTemplated<K> extends FormWindowCustom implements Backable, ResponseListenerTemplate<K> {
+    transient final Template<K> template;
 
-    private transient BiConsumer<TemplateResponses<K>, Player> buttonClickedListener = null;
+    protected transient BiConsumer<TemplateResponses<K>, Player> buttonClickedListener = null;
 
-    private transient Consumer<Player> windowClosedListener = null;
+    protected transient Consumer<Player> windowClosedListener = null;
 
-    private transient TemplateResponses<K> lastResponses = null;
+    protected transient TemplateResponses<K> lastResponses = null;
 
-    private transient Player lastPlayer = null;
+    protected transient Player lastPlayer = null;
 
-    private transient ExceptionConsumer<ResponseParseException> exceptionConsumer;
+    protected transient ExceptionConsumer<ResponseParseException> exceptionConsumer;
+
+    private transient FormWindow parent;
 
     public ResponsibleFormWindowTemplated(@NotNull Template<K> template) {
         this("", template);
@@ -53,19 +58,61 @@ public class ResponsibleFormWindowTemplated<K> extends FormWindowCustom {
         template.getBuilder().applyTemplateTo(this);
     }
 
+    public Template<K> getTemplate() {
+        return template;
+    }
+
+    @Override
+    public void setParent(FormWindow parent) {
+        this.parent = parent;
+    }
+
+    @Override
+    public FormWindow getParent() {
+        return this.parent;
+    }
+
+    @Override
+    public void goBack(Player player) throws NoParentWindowFoundException {
+        Objects.requireNonNull(player);
+        if (getParent() == null) {
+            throw new NoParentWindowFoundException();
+        }
+        if (this.lastResponses != null) {
+            this.applyLastResponse();
+        }
+        player.showFormWindow(this.getParent());
+    }
+
     /**
-     * Nullable
+     * Get last responses
      *
      * @return last response, nullable.
+     *
+     * @see #setLastResponses(Player, FormResponseCustom)
+     * @see #onEvent(PlayerFormRespondedEvent)
      */
     public TemplateResponses<K> getLastResponses() {
         return lastResponses;
     }
 
     /**
+     * Apply {@link #lastResponses} to this.
+     *
+     * @see TemplateResponses.Builder#applyToWindow(FormWindowCustom)
+     */
+    public void applyLastResponse() throws NullPointerException {
+        Objects.requireNonNull(this.lastResponses);
+        this.lastResponses.getBuilder().applyToWindow(this);
+    }
+
+    /**
      * Get last player who responded this form.
      *
      * @return last player, nullable
+     *
+     * @see #setLastResponses(Player, FormResponseCustom)
+     * @see #onEvent(PlayerFormRespondedEvent)
      */
     public Player getLastPlayer() {
         return lastPlayer;
@@ -84,7 +131,7 @@ public class ResponsibleFormWindowTemplated<K> extends FormWindowCustom {
      *
      * @param exceptionConsumer 处理异常的函数
      */
-    public ResponsibleFormWindowTemplated<K> setExceptionConsumer(@NotNull ExceptionConsumer<ResponseParseException> exceptionConsumer) {
+    public final ResponsibleFormWindowTemplated<K> setExceptionConsumer(@NotNull ExceptionConsumer<ResponseParseException> exceptionConsumer) {
         Objects.requireNonNull(exceptionConsumer);
         this.exceptionConsumer = exceptionConsumer;
         return this;
@@ -100,7 +147,7 @@ public class ResponsibleFormWindowTemplated<K> extends FormWindowCustom {
      *
      * @param listener 调用的方法
      */
-    public ResponsibleFormWindowTemplated<K> onResponded(@NotNull BiConsumer<TemplateResponses<K>, Player> listener) {
+    public final ResponsibleFormWindowTemplated<K> onResponded(@NotNull BiConsumer<TemplateResponses<K>, Player> listener) {
         this.buttonClickedListener = listener;
         return this;
     }
@@ -115,7 +162,7 @@ public class ResponsibleFormWindowTemplated<K> extends FormWindowCustom {
      *
      * @param listener 调用的方法(无 Player)
      */
-    public ResponsibleFormWindowTemplated<K> onResponded(@NotNull Consumer<TemplateResponses<K>> listener) {
+    public final ResponsibleFormWindowTemplated<K> onResponded(@NotNull Consumer<TemplateResponses<K>> listener) {
         Objects.requireNonNull(listener);
         this.buttonClickedListener = (response, player) -> listener.accept(response);
         return this;
@@ -131,7 +178,7 @@ public class ResponsibleFormWindowTemplated<K> extends FormWindowCustom {
      *
      * @param listener 调用的方法(无参数)
      */
-    public ResponsibleFormWindowTemplated<K> onResponded(@NotNull Runnable listener) {
+    public final ResponsibleFormWindowTemplated<K> onResponded(@NotNull Runnable listener) {
         Objects.requireNonNull(listener);
         this.buttonClickedListener = (id, player) -> listener.run();
         return this;
@@ -143,7 +190,7 @@ public class ResponsibleFormWindowTemplated<K> extends FormWindowCustom {
      *
      * @param listener 调用的方法
      */
-    public ResponsibleFormWindowTemplated<K> onClosed(@NotNull Consumer<Player> listener) {
+    public final ResponsibleFormWindowTemplated<K> onClosed(@NotNull Consumer<Player> listener) {
         this.windowClosedListener = listener;
         return this;
     }
@@ -154,7 +201,7 @@ public class ResponsibleFormWindowTemplated<K> extends FormWindowCustom {
      *
      * @param listener 调用的方法
      */
-    public ResponsibleFormWindowTemplated<K> onClosed(@NotNull Runnable listener) {
+    public final ResponsibleFormWindowTemplated<K> onClosed(@NotNull Runnable listener) {
         Objects.requireNonNull(listener);
         this.windowClosedListener = (player) -> listener.run();
         return this;
@@ -171,9 +218,7 @@ public class ResponsibleFormWindowTemplated<K> extends FormWindowCustom {
         Objects.requireNonNull(player);
         Objects.requireNonNull(response);
 
-        if (this instanceof ResponseListenerTemplate) {
-            ((ResponseListenerTemplate) this).onResponded(response, player);
-        }
+        this.onResponded(response, player);
 
         if (this.buttonClickedListener != null) {
             this.buttonClickedListener.accept(response, player);
@@ -188,12 +233,15 @@ public class ResponsibleFormWindowTemplated<K> extends FormWindowCustom {
         if (this.lastResponses == null) {
             throw new UnsupportedOperationException();
         }
-        this.lastResponses.getBuilder().applyToWindow(this);
+        this.applyLastResponse();
         player.showFormWindow(this);
     }
 
     public void callClosed(@NotNull Player player) {
         Objects.requireNonNull(player);
+
+        this.onClosed(player);
+
         if (this.windowClosedListener != null) {
             this.windowClosedListener.accept(player);
         }
@@ -211,11 +259,12 @@ public class ResponsibleFormWindowTemplated<K> extends FormWindowCustom {
 
     @SuppressWarnings("unchecked")
     static boolean onEvent(PlayerFormRespondedEvent event) {
-        if (event.getWindow() instanceof ResponsibleFormWindowTemplated && event.getResponse() instanceof FormResponseCustom) {
+        if (event.getWindow() instanceof ResponsibleFormWindowTemplated) {
             ResponsibleFormWindowTemplated window = (ResponsibleFormWindowTemplated) event.getWindow();
 
             if (event.getWindow().wasClosed() || event.getResponse() == null) {
                 window.callClosed(event.getPlayer());
+                window.closed = false;//for resending
             } else {
                 window.setLastResponses(event.getPlayer(), (FormResponseCustom) event.getResponse());
                 window.callClicked(window.getLastResponses(), event.getPlayer());

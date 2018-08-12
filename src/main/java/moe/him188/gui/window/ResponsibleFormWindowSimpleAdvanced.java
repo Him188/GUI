@@ -4,8 +4,11 @@ import cn.nukkit.Player;
 import cn.nukkit.event.player.PlayerFormRespondedEvent;
 import cn.nukkit.form.element.ElementButton;
 import cn.nukkit.form.response.FormResponseSimple;
+import cn.nukkit.form.window.FormWindow;
 import cn.nukkit.form.window.FormWindowSimple;
 import com.google.gson.Gson;
+import moe.him188.gui.utils.Backable;
+import moe.him188.gui.utils.NoParentWindowFoundException;
 import moe.him188.gui.window.listener.response.ResponseListenerAdvanced;
 import org.jetbrains.annotations.NotNull;
 
@@ -58,20 +61,14 @@ import java.util.function.Function;
  *
  * @author Him188moe @ GUI Project
  */
-public class ResponsibleFormWindowSimpleAdvanced<E> extends FormWindowSimple {
-    private transient BiConsumer<E, Player> buttonClickedListener = null;
+public class ResponsibleFormWindowSimpleAdvanced<E> extends FormWindowSimple implements Backable, ResponseListenerAdvanced {
+    protected transient BiConsumer<E, Player> buttonClickedListener = null;
 
-    private transient Consumer<Player> windowClosedListener = null;
+    protected transient Consumer<Player> windowClosedListener = null;
 
-    private transient final List<E> entries;
+    protected transient final List<E> entries;
 
-    public List<E> getEntries() {
-        return entries;
-    }
-
-    public E getEntry(int id) {
-        return this.entries.size() <= id ? null : this.entries.get(id);
-    }
+    private transient FormWindow parent;
 
     /**
      * @param title            标题
@@ -90,13 +87,31 @@ public class ResponsibleFormWindowSimpleAdvanced<E> extends FormWindowSimple {
         this.entries = Collections.unmodifiableList(new ArrayList<>(entries));
     }
 
+    public List<E> getEntries() {
+        return entries;
+    }
+
+    public E getEntry(int id) {
+        return this.entries.get(id);
+    }
+
+    @Override
+    public void setParent(FormWindow parent) throws NoParentWindowFoundException {
+        this.parent = parent;
+    }
+
+    @Override
+    public FormWindow getParent() {
+        return parent;
+    }
+
     /**
      * 在玩家提交表单后调用 <br>
      * Called on submitted
      *
      * @param listener 调用的方法
      */
-    public ResponsibleFormWindowSimpleAdvanced<E> onClicked(@NotNull BiConsumer<E, Player> listener) {
+    public final ResponsibleFormWindowSimpleAdvanced<E> onClicked(@NotNull BiConsumer<E, Player> listener) {
         Objects.requireNonNull(listener);
         this.buttonClickedListener = listener;
         return this;
@@ -108,7 +123,7 @@ public class ResponsibleFormWindowSimpleAdvanced<E> extends FormWindowSimple {
      *
      * @param listener 调用的方法(无 Player)
      */
-    public ResponsibleFormWindowSimpleAdvanced<E> onClicked(@NotNull Consumer<E> listener) {
+    public final ResponsibleFormWindowSimpleAdvanced<E> onClicked(@NotNull Consumer<E> listener) {
         Objects.requireNonNull(listener);
         this.buttonClickedListener = (response, player) -> listener.accept(response);
         return this;
@@ -120,7 +135,7 @@ public class ResponsibleFormWindowSimpleAdvanced<E> extends FormWindowSimple {
      *
      * @param listener 调用的方法
      */
-    public ResponsibleFormWindowSimpleAdvanced<E> onClosed(@NotNull Consumer<Player> listener) {
+    public final ResponsibleFormWindowSimpleAdvanced<E> onClosed(@NotNull Consumer<Player> listener) {
         Objects.requireNonNull(listener);
         this.windowClosedListener = listener;
         return this;
@@ -132,7 +147,7 @@ public class ResponsibleFormWindowSimpleAdvanced<E> extends FormWindowSimple {
      *
      * @param listener 调用的方法
      */
-    public ResponsibleFormWindowSimpleAdvanced<E> onClosed(@NotNull Runnable listener) {
+    public final ResponsibleFormWindowSimpleAdvanced<E> onClosed(@NotNull Runnable listener) {
         Objects.requireNonNull(listener);
         this.windowClosedListener = (player) -> listener.run();
         return this;
@@ -152,9 +167,7 @@ public class ResponsibleFormWindowSimpleAdvanced<E> extends FormWindowSimple {
         Objects.requireNonNull(player);
         Objects.requireNonNull(entry);
 
-        if (this instanceof ResponseListenerAdvanced) {
-            ((ResponseListenerAdvanced) this).onClicked(entry, player);
-        }
+        this.onClicked(entry, player);
 
         if (this.buttonClickedListener != null) {
             this.buttonClickedListener.accept(entry, player);
@@ -163,6 +176,9 @@ public class ResponsibleFormWindowSimpleAdvanced<E> extends FormWindowSimple {
 
     public void callClosed(@NotNull Player player) {
         Objects.requireNonNull(player);
+
+        this.onClosed(player);
+
         if (this.windowClosedListener != null) {
             this.windowClosedListener.accept(player);
         }
@@ -175,11 +191,12 @@ public class ResponsibleFormWindowSimpleAdvanced<E> extends FormWindowSimple {
 
     @SuppressWarnings("unchecked")
     static boolean onEvent(PlayerFormRespondedEvent event) {
-        if (event.getWindow() instanceof ResponsibleFormWindowSimpleAdvanced && event.getResponse() instanceof FormResponseSimple) {
+        if (event.getWindow() instanceof ResponsibleFormWindowSimpleAdvanced) {
             ResponsibleFormWindowSimpleAdvanced window = (ResponsibleFormWindowSimpleAdvanced) event.getWindow();
 
             if (event.getWindow().wasClosed() || event.getResponse() == null) {
                 window.callClosed(event.getPlayer());
+                window.closed = false;//for resending
             } else {
                 window.callClicked(window.getEntry(((FormResponseSimple) event.getResponse()).getClickedButtonId()), event.getPlayer());
             }

@@ -25,7 +25,7 @@ By using **GUI**, you can easily create forms.
   This is very useful!  
   Sample:  
   ```java
-  class A extends ResponsibleFormWindowSimple implements SimpleResponseListener {
+  class A extends ResponsibleFormWindowSimple {
       A() {
           super("Title", "Content");
           addButton(new ElementButton("Say Hi"));
@@ -57,7 +57,7 @@ By using **GUI**, you can easily create forms.
     Sample(comparing with the sample above):
 
     ```java
-    class A extends ResponsibleFormWindowSimple implements SimpleResponseListener {
+    class A extends ResponsibleFormWindowSimple {
         A() {
             super("Title", "Content");
             addButton("Say Hi", player->player.sendMessage("Hi"));//fast addButton

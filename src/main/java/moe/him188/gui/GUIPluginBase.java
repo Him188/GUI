@@ -9,24 +9,37 @@ import moe.him188.gui.window.WindowManager;
  */
 public class GUIPluginBase extends PluginBase {
     private static GUIPluginBase instance;
+    private ListenerManager listenerManager;
 
-    {
+    public GUIPluginBase() {
+        super();
+
         instance = this;
+        listenerManager = new ListenerManager();
     }
 
     public static GUIPluginBase getInstance() {
         return instance;
     }
 
-    private WindowManager.RespondedListener listener;
-
     @Override
     public void onEnable() {
         super.onEnable();
+        listenerManager.register();
+    }
 
-        if (listener == null) {
-            listener = new WindowManager.RespondedListener();
+    private class ListenerManager {
+        private WindowManager.RespondedListener respondedListener;
+        private WindowManager.GoBackListener goBackListener;
+
+        private ListenerManager() {
+            respondedListener = new WindowManager.RespondedListener();
+            goBackListener = new WindowManager.GoBackListener();
         }
-        Server.getInstance().getPluginManager().registerEvents(listener, this);
+
+        private void register() {
+            Server.getInstance().getPluginManager().registerEvents(goBackListener, GUIPluginBase.this);
+            Server.getInstance().getPluginManager().registerEvents(respondedListener, GUIPluginBase.this);
+        }
     }
 }
