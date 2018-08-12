@@ -6,7 +6,6 @@ import moe.him188.gui.template.response.TemplateResponse;
 import moe.him188.gui.utils.ResponseParseException;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TemplateElementStepSlider<K> extends TemplateElement<K> {
@@ -14,18 +13,26 @@ public class TemplateElementStepSlider<K> extends TemplateElement<K> {
     private final List<String> steps;
     private final int defaultStepIndex;
 
-    public TemplateElementStepSlider(@NotNull K elementKey, String name) {
-        this(elementKey, name, new ArrayList<>());
+    /**
+     * @param steps size >= 1
+     */
+    public TemplateElementStepSlider(@NotNull K elementKey, String name, List<String> steps) throws IllegalArgumentException {
+        this(elementKey, name, steps, steps.size() - 1);
     }
 
-    public TemplateElementStepSlider(@NotNull K elementKey, String name, List<String> steps) {
-        this(elementKey, name, steps, steps.size() == 0 ? 0 : steps.size() - 1);
-    }
-
-    public TemplateElementStepSlider(@NotNull K elementKey, String name, List<String> steps, int defaultStep) {
+    /**
+     * @param steps       size >= 1
+     * @param defaultStep >= 0
+     */
+    public TemplateElementStepSlider(@NotNull K elementKey, String name, List<String> steps, int defaultStep) throws IllegalArgumentException {
         super(elementKey);
         this.name = name;
         this.steps = steps;
+        if (this.steps.size() == 0) {
+            throw new IllegalArgumentException("steps must have at least 1 element");
+            //or FormWindowCustom#setResponse will throw IndexOutOfBoundsException
+        }
+
         this.defaultStepIndex = defaultStep;
     }
 
