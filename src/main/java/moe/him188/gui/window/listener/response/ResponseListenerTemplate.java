@@ -6,7 +6,7 @@ import moe.him188.gui.template.response.TemplateResponses;
 /**
  * @author Him188moe @ GUI Project
  */
-public interface ResponseListenerTemplate<K> {
+public interface ResponseListenerTemplate<K> extends ResponseListener {
     /**
      * 当表单提交数据并关闭窗口时调用
      *

@@ -5,7 +5,7 @@ import cn.nukkit.Player;
 /**
  * @author Him188moe @ GUI Project
  */
-public interface ResponseListenerAdvanced<E> {
+public interface ResponseListenerAdvanced<E> extends ResponseListener {
     /**
      * 当表单提交数据时调用
      *

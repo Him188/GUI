@@ -5,7 +5,7 @@ import cn.nukkit.Player;
 /**
  * @author Him188moe @ GUI Project
  */
-public interface ResponseListenerSimple {
+public interface ResponseListenerSimple extends ResponseListener {
     /**
      * 当表单提交数据并关闭窗口时调用. <br>
      * Called when player clicked a button.

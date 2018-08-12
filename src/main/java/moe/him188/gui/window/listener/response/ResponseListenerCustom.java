@@ -6,7 +6,7 @@ import cn.nukkit.form.response.FormResponseCustom;
 /**
  * @author Him188moe @ GUI Project
  */
-public interface ResponseListenerCustom {
+public interface ResponseListenerCustom extends ResponseListener {
     /**
      * 当表单提交数据时调用
      *
