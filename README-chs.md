@@ -114,7 +114,7 @@
   请查看源码 [`ResponsibleFormWindowTemplated`](https://github.com/Him188/GUI/blob/master/src/main/java/moe/him188/gui/window/ResponsibleFormWindowTemplated.java)
   **或者查看模板示例, 快速了解如何使用**: [template example](https://github.com/Him188/GUI/blob/master/TemplateExample.md)
 
- Backable
+## Backable
   所有类型的 `ResponsibleFormWindow` 都支持直接返回上一级窗口.  
   并且你只需使用一行代码:
   ```
