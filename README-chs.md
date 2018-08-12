@@ -1,13 +1,13 @@
-# GUI - FormWindow tools
+**GUI - FormWindow tools**
 
 这是为开发者制作的插件
 通过使用 **GUI**, 你可以炒鸡容易地创建表单窗口, 并通过内置的事件方法处理点击和关闭事件!
 
-## Features
+# Features
 
 
 
-### ResponseListener
+## ResponseListener
 
   每个表单都可以有 **内部**事件检测器([ResponseListener](https://github.com/Him188/GUI/blob/master/src/main/java/moe/him188/gui/window/listener/response/ResponseListener.java))
   这将会比实现nk Listener, 监听 PlayerFormRespondedEvent, 调用窗口的等不知道方便到哪里去!!
@@ -37,7 +37,7 @@
 
   有没有觉得使用 **ResponseListener** 比使用 nukkit EventListener 方便得多?
 
-### Functional listeners
+## Functional listeners
 
   **函数式方法(lambda) 支持**
 
@@ -62,12 +62,12 @@
   }
   ```
 
-### ResponseListener & Functional listeners
+## ResponseListener & Functional listeners
 
   ResponseListener 与 函数式监听器可以同时使用  
   注意: **ResponseListener 将会被优先调用**
 
-### ResponsibleButton
+## ResponsibleButton
   提供给 ResponsibleFormWindowSimple 的 **ResponsibleButton**
   不仅仅是窗口, 甚至按钮都可以监听(就像 Android 那样)!
   是否觉得上面的写法还是很麻烦? --那么这个实现将会是很好的替代!
@@ -86,7 +86,7 @@
   ```
   Yeah! 你的代码正在一步步缩小, 不是嘛?!
 
-### ResponsibleFormWindowSimpleAdvanced
+## ResponsibleFormWindowSimpleAdvanced
   这是一个非常棒的实现, 为了方便(其实是懒)这里贴上代码里面的 javadoc
   这里简称 ResponsibleFormWindowSimpleAdvanced 为高级版(2333)
   简称 ResponsibleFormWindowSimple 为普通版
@@ -101,7 +101,7 @@
   ```
   请花上一分钟时间读一读 [源代码](src/main/java/moe/him188/gui/window/ResponsibleFormWindowSimpleAdvanced.java), 你就会懂了
 
-### ResponsibleFormWindowTemplated
+## ResponsibleFormWindowTemplated
   这是 ResponsibleFormWindow 的实现.
   通过使用它, 你可以通过你自己的 **key** 比如 `enum`, `String` 来获取表单数据.
   模板的 `ElementInput` 拥有内容检查你, 它可以自动检查玩家表单输入是否正确(符合预期格式).
@@ -114,7 +114,7 @@
   请查看源码 [`ResponsibleFormWindowTemplated`](https://github.com/Him188/GUI/blob/master/src/main/java/moe/him188/gui/window/ResponsibleFormWindowTemplated.java)
   **或者查看模板示例, 快速了解如何使用**: [template example](https://github.com/Him188/GUI/blob/master/TemplateExample.md)
 
-### Backable
+ Backable
   所有类型的 `ResponsibleFormWindow` 都支持直接返回上一级窗口.  
   并且你只需使用一行代码:
   ```
@@ -122,8 +122,8 @@
   ```
   你也可以获取玩家的上一级窗口, 详细请查看源码 [Backable.java](https://github.com/Him188/GUI/blob/master/src/main/java/moe/him188/gui/utils/Backable.java)
 
-## How to use
-### Maven repository
+# How to use
+## Maven repository
 
 1. Add `repository` in `repositories`
     ```xml
@@ -146,7 +146,7 @@
     - GUI
     ```
 
-### Package JAR file
+## Package JAR file
 
 1. 在项目根目录中运行 `mvn clean package`
 
