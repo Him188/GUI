@@ -13,7 +13,6 @@ import moe.him188.gui.utils.ExceptionConsumer;
 import moe.him188.gui.utils.ResponseParseException;
 import moe.him188.gui.window.listener.response.ResponseListenerTemplate;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -59,7 +58,6 @@ public class ResponsibleFormWindowTemplated<K> extends FormWindowCustom {
      *
      * @return last response, nullable.
      */
-    @Nullable
     public TemplateResponses<K> getLastResponses() {
         return lastResponses;
     }
@@ -69,7 +67,6 @@ public class ResponsibleFormWindowTemplated<K> extends FormWindowCustom {
      *
      * @return last player, nullable
      */
-    @Nullable
     public Player getLastPlayer() {
         return lastPlayer;
     }
