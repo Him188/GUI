@@ -7,31 +7,6 @@
 
 
 
-### Functional listeners
-
-  **函数式方法(lambda) 支持**
-
-  这将会大幅缩短创建一些表单的代码, 比如提示窗口  
-  你可以仅使用一行代码就对玩家发送一个窗口并处理点击按钮事件  
-  例子:  
-  `
-  player.showFormWindow(new ResponsibleFormWindowModal("Tips", "Hello", "Yes", "No")
-.onResponded(confirmation -> player.sendMessage("Your choice:"+confirmation)));
-  `
-  [ResponsibleFormWindowSimpleAdvanced.java](src/main/java/moe/him188/gui/window/ResponsibleFormWindowSimpleAdvanced.java):
-  ```java
-  public class ResponsibleFormWindowModal extends FormWindowModal implements Backable, ResponseListenerModal {
-      public final ResponsibleFormWindowModal onClicked(BiConsumer<Boolean, Player> listener) {
-          this.buttonClickedListener = listener;
-          return this;
-      }
-      public final ResponsibleFormWindowModal onClosed(Consumer<Player> listener) {
-          this.windowClosedListener = listener;
-          return this;
-      }
-  }
-  ```
-
 ### ResponseListener
 
   每个表单都可以有 **内部**事件检测器([ResponseListener](https://github.com/Him188/GUI/blob/master/src/main/java/moe/him188/gui/window/listener/response/ResponseListener.java))
@@ -61,6 +36,31 @@
   ```
 
   有没有觉得使用 **ResponseListener** 比使用 nukkit EventListener 方便得多?
+
+### Functional listeners
+
+  **函数式方法(lambda) 支持**
+
+  这将会大幅缩短创建一些表单的代码, 比如提示窗口  
+  你可以仅使用一行代码就对玩家发送一个窗口并处理点击按钮事件  
+  例子:  
+  `
+  player.showFormWindow(new ResponsibleFormWindowModal("Tips", "Hello", "Yes", "No")
+.onResponded(confirmation -> player.sendMessage("Your choice:"+confirmation)));
+  `
+  [ResponsibleFormWindowSimpleAdvanced.java](src/main/java/moe/him188/gui/window/ResponsibleFormWindowSimpleAdvanced.java):
+  ```java
+  public class ResponsibleFormWindowModal extends FormWindowModal implements Backable, ResponseListenerModal {
+      public final ResponsibleFormWindowModal onClicked(BiConsumer<Boolean, Player> listener) {
+          this.buttonClickedListener = listener;
+          return this;
+      }
+      public final ResponsibleFormWindowModal onClosed(Consumer<Player> listener) {
+          this.windowClosedListener = listener;
+          return this;
+      }
+  }
+  ```
 
 ### ResponseListener & Functional listeners
 
