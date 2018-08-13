@@ -1,6 +1,6 @@
 **GUI - FormWindow tools**
 
-这是为开发者制作的插件
+这是为开发者制作的插件  
 通过使用 **GUI**, 你可以炒鸡容易地创建表单窗口, 并通过内置的事件方法处理点击和关闭事件!
 
 # Features
@@ -9,8 +9,8 @@
 
 ## ResponseListener
 
-  每个表单都可以有 **内部**事件检测器([ResponseListener](https://github.com/Him188/GUI/blob/master/src/main/java/moe/him188/gui/window/listener/response/ResponseListener.java))
-  这将会比实现nk Listener, 监听 PlayerFormRespondedEvent, 调用窗口的等不知道方便到哪里去!!
+  每个表单都可以有 **内部**事件检测器([ResponseListener](https://github.com/Him188/GUI/blob/master/src/main/java/moe/him188/gui/window/listener/response/ResponseListener.java))  
+  这将会比实现nk Listener, 监听 PlayerFormRespondedEvent, 调用窗口的等不知道方便到哪里去!!  
   例子:
   ```java
   class A extends ResponsibleFormWindowSimple {
@@ -61,16 +61,14 @@
       }
   }
   ```
-
-## ResponseListener & Functional listeners
-
+### Using Listeners
   ResponseListener 与 函数式监听器可以同时使用  
   注意: **ResponseListener 将会被优先调用**
 
 ## ResponsibleButton
-  提供给 ResponsibleFormWindowSimple 的 **ResponsibleButton**
-  不仅仅是窗口, 甚至按钮都可以监听(就像 Android 那样)!
-  是否觉得上面的写法还是很麻烦? --那么这个实现将会是很好的替代!
+  提供给 ResponsibleFormWindowSimple 的 **ResponsibleButton**  
+  不仅仅是窗口, 甚至按钮都可以监听(就像 Android 那样)!  
+  是否觉得上面的写法还是很麻烦? --那么这个实现将会是很好的替代!  
   例子(可以和上面的相比较):
   ```java
   class A extends ResponsibleFormWindowSimple {
@@ -87,8 +85,8 @@
   Yeah! 你的代码正在一步步缩小, 不是嘛?!
 
 ## ResponsibleFormWindowSimpleAdvanced
-  这是一个非常棒的实现, 为了方便(其实是懒)这里贴上代码里面的 javadoc
-  这里简称 ResponsibleFormWindowSimpleAdvanced 为高级版(2333)
+  这是一个非常棒的实现, 为了方便(其实是懒)这里贴上代码里面的 javadoc  
+  这里简称 ResponsibleFormWindowSimpleAdvanced 为高级版(2333)  
   简称 ResponsibleFormWindowSimple 为普通版
   ```text
   高级版无需通过 id 自找数据, 一切的一切都由 GUI 帮你完成. 你只需要实现后续处理即可!
@@ -102,16 +100,16 @@
   请花上一分钟时间读一读 [源代码](src/main/java/moe/him188/gui/window/ResponsibleFormWindowSimpleAdvanced.java), 你就会懂了
 
 ## ResponsibleFormWindowTemplated
-  这是 ResponsibleFormWindow 的实现.
-  通过使用它, 你可以通过你自己的 **key** 比如 `enum`, `String` 来获取表单数据.
+  这是 ResponsibleFormWindow 的实现.  
+  通过使用它, 你可以通过你自己的 **key** 比如 `enum`, `String` 来获取表单数据.  
   模板的 `ElementInput` 拥有内容检查你, 它可以自动检查玩家表单输入是否正确(符合预期格式).
-  ```
+  ```text
   比如, 你设置ID为"test"的 Input 只能输入整数, 你在收到返回数据时, 可以通过ID "test" 直接获取玩家的输入内容. 而原本NK表单只有整数ID, 对于项目多达十几个的表单很不方便.
   当玩家提交表单, 模板会将表单数据按照你预期希望的数据类型转换, 因此你可以直接取到整数型, 日期型, 甚至`Level`, `Player`, `Item`类型的数据!(不然, 试想10个输入框, 你需要花几十行判断和转换类型?)
   如果玩家输入数据有误, 你可以选择性地处理错误. 我们提供了 `ExceptionConsumer` 来捕获错误. 也提供了默认的处理方法: 只处理一个错误, 处理每个错误, 集中处理全部错误.
   当你想让玩家重新填写这一项, 你可以连已经填写的其他正确数据, 一起发送表格. 这样能大幅提高表格输入体验.(不然, 试想10个输入框, 填错了一个就全没了?)
   ```
-  请查看源码 [`ResponsibleFormWindowTemplated`](https://github.com/Him188/GUI/blob/master/src/main/java/moe/him188/gui/window/ResponsibleFormWindowTemplated.java)
+  请查看源码 [`ResponsibleFormWindowTemplated`](https://github.com/Him188/GUI/blob/master/src/main/java/moe/him188/gui/window/ResponsibleFormWindowTemplated.java)  
   **或者查看模板示例, 快速了解如何使用**: [template example](https://github.com/Him188/GUI/blob/master/TemplateExample.md)
 
 ## Backable
