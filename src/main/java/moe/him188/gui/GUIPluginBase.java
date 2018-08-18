@@ -29,6 +29,7 @@ public class GUIPluginBase extends PluginBase {
     }
 
     private class ListenerManager {
+
         private WindowManager.RespondedListener respondedListener;
         private WindowManager.GoBackListener goBackListener;
 
