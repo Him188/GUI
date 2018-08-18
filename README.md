@@ -71,6 +71,7 @@ By using **GUI**, you can easily create forms.
   Notice that: **ResponseListener will be called before Functional listeners**
 
 ## **ResponsibleButton**
+
   **ResponsibleButton** for ResponsibleFormWindowSimple  
   Not only windows but also buttons can have listeners!  
   You think ResponsibleFormWindowSimple is also too trouble to use? --This would be great choice!  
@@ -121,6 +122,7 @@ By using **GUI**, you can easily create forms.
   Or fast know hot wo use: [template example](TemplateExample.md)
 
 ## Backable
+
   Each `ResponsibleFormWindow` supports directly back to the window which has been sent before.  
   And you just need to code one line:
   ```
@@ -129,6 +131,7 @@ By using **GUI**, you can easily create forms.
   你也可以获取玩家的上一级窗口, 详细请查看源码 [Backable.java](https://github.com/Him188/GUI/blob/master/src/main/java/moe/him188/gui/utils/Backable.java)
 
 ## How to use
+
 ### Maven repository
 
 1. Add `repository` in `repositories`
