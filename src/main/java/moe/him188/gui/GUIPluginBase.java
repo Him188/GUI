@@ -14,6 +14,7 @@ public class GUIPluginBase extends PluginBase {
     public GUIPluginBase() {
         super();
 
+
         instance = this;
         listenerManager = new ListenerManager();
     }
