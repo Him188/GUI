@@ -1,4 +1,4 @@
-**GUI - FormWindow tools**
+**GUI - FormWindow tools** [![Build Status](https://travis-ci.org/Him188/GUI.svg?branch=master)](https://travis-ci.org/Him188/GUI)
 # Links
 
 **(中文版说明)**[**Chinese README**](https://github.com/Him188/GUI/blob/master/README-chs.md)
