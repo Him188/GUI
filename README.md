@@ -2,12 +2,13 @@
 # Links
 **(中文版说明)**[**Chinese README**](https://github.com/Him188/GUI/blob/master/README-chs.md)
 
+# Introduction
+
 This plugin is made for developers.  
-By using **GUI**, you can easily create forms.
+By using **GUI**, you can easily create forms.  
+**Contribution is welcomed**
 
 # Features
-
-
 
 ## ResponseListener
 

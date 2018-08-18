@@ -1,11 +1,12 @@
 **GUI - FormWindow tools**
 
+# Introduction
+
 这是为开发者制作的插件  
-通过使用 **GUI**, 你可以炒鸡容易地创建表单窗口, 并通过内置的事件方法处理点击和关闭事件!
+通过使用 **GUI**, 你可以炒鸡容易地创建表单窗口, 并通过内置的事件方法处理点击和关闭事件!  
+**欢迎你贡献代码给这个项目!** 无论 PR 还是 issue.
 
 # Features
-
-
 
 ## ResponseListener
 
