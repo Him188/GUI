@@ -18,55 +18,18 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
- * {@link ResponsibleFormWindowSimple} 高级版(2333). <br/>
- * Advanced {@link ResponsibleFormWindowSimple} <br/>
- * 高级版无需通过 id 自找数据, 一切的一切都由 GUI 帮你完成. 你只需要实现后续处理即可! <br/>
- * You needn't get entries from id that is responded in {@link ResponsibleFormWindowSimple#onClicked}, but everything will be done by GUI. <br>
- * <br/>
- * 普通版里面, 点击事件函数参数1是 int, 是按钮的 ID. <br/>
- * In Normal, type of click event function parameter 1 is int, which represents the button ID.  <br>
- * 并且需要使用 Simple 类型表单的情况, 一般是有一组同一类型的数据需要依次显示. 比如传送世界列表, 任务列表 <br/>
- * And when you are using the {@link FormWindowSimple}, generally it's time of a group of the same type of data need to show. Such as teleport positions, missions lists. <br>
- * 在普通版构造器中, 你需要手动对数据遍历并添加按钮, 在普通版click事件中, 你又需要手动从数据({@link List},{@link Map}等)中取出第 n 项, 再处理. <br/>
- * In normal constructors, you should foreach your Collections add add buttons. <br>
- * In normal click functions, you should get entry(value) from Collections. <br>
- * 如果再来一个窗口, 你又要枯燥地重复一切. 那么是时候使用高级版了! <br/>
- * In another window, you need to repeat everything again, that's too boring! At this time, you should use Advanced. <br>
- * <br/>
- * 高级版里面, 由java泛型支持, 你在构造器中需要传入一组数据和构造按钮的函数, 然后在点击事件中直接拿到按钮对应的数据进行处理 <br>
- * In Advanced, with the support of java Generics, you can get entry directly in click events. <br>
- * <p>
- * 普通版要这么做: <br>
- * In Normal: <br>
- * <pre>
- * List<Publisher> data = new ArrayList<>();
- * window = new 普通版(title, content){
- *     for (publisher: data){
- *         addButton(new ElementButton(publisher.getName()));
- *     }
- *
- *     onClicked((id, player) -> {
- *         Publisher publisher = data.get(id);
- *         //coding
- *     })
- * };
- * </pre>
- * 高级版只要这么做: <br>
- * In Advanced: <br>
- * <pre>
- * window = new 高级版(title, content, data, Publisher::getName).onClicked((publisher, player) -> {
- *     //coding
- * });
- * </pre>
+ * 类似于 {@link ResponsibleFormWindowSimpleAdvanced}.
  *
  * @author Him188moe @ GUI Project
  */
-public class ResponsibleFormWindowSimpleAdvanced<E> extends FormWindowSimple implements Backable, ResponseListenerAdvanced<E> {
-    protected transient BiConsumer<E, Player> buttonClickedListener = null;
+public class ResponsibleFormWindowSimpleMap<K, V> extends FormWindowSimple implements Backable, ResponseListenerAdvanced<V> {
+    protected transient BiConsumer<V, Player> buttonClickedListener = null;
 
     protected transient Consumer<Player> windowClosedListener = null;
 
-    protected transient final List<E> entries;
+    protected transient final Map<K, V> entries;
+
+    protected transient final List<V> values;
 
     private transient FormWindow parent;
 
@@ -74,25 +37,27 @@ public class ResponsibleFormWindowSimpleAdvanced<E> extends FormWindowSimple imp
      * @param title            标题
      * @param content          内容
      * @param entries          需要展示在每个按钮上的数据 | entries to show in the buttons
-     * @param buttonTextGetter 按钮名字获取器. 用于获取每个数据对应的按钮的名字 | Used to get the name of each button
+     * @param buttonTextGetter 按钮名字获取器. 用于获取每个数据对应的按钮的名字. (通过 map 的 key) | Used to get the name of each button (By map key)
      */
-    public ResponsibleFormWindowSimpleAdvanced(String title, String content, @NotNull Collection<E> entries, @NotNull Function<? super E, String> buttonTextGetter) {
+    public ResponsibleFormWindowSimpleMap(String title, String content, @NotNull Map<K, V> entries, @NotNull Function<? super K, String> buttonTextGetter) {
         super(Objects.requireNonNull(title), Objects.requireNonNull(content));
         Objects.requireNonNull(buttonTextGetter);
         Objects.requireNonNull(entries);
 
-        for (E entry : entries) {
+        for (K entry : entries.keySet()) {
             this.addButton(new ElementButton(buttonTextGetter.apply(entry)));
         }
-        this.entries = Collections.unmodifiableList(new ArrayList<>(entries));
+        this.values = Collections.unmodifiableList(new ArrayList<>(entries.values()));
+
+        this.entries = Collections.unmodifiableMap(entries);
     }
 
-    public List<E> getEntries() {
+    public Map<K, V> getEntries() {
         return entries;
     }
 
-    public E getEntry(int id) {
-        return this.entries.get(id);
+    public V getEntryValue(int id) {
+        return this.values.get(id);
     }
 
     @Override
@@ -111,7 +76,7 @@ public class ResponsibleFormWindowSimpleAdvanced<E> extends FormWindowSimple imp
      *
      * @param listener 调用的方法
      */
-    public final ResponsibleFormWindowSimpleAdvanced<E> onClicked(@NotNull BiConsumer<E, Player> listener) {
+    public final ResponsibleFormWindowSimpleMap<K, V> onClicked(@NotNull BiConsumer<V, Player> listener) {
         Objects.requireNonNull(listener);
         this.buttonClickedListener = listener;
         return this;
@@ -123,7 +88,7 @@ public class ResponsibleFormWindowSimpleAdvanced<E> extends FormWindowSimple imp
      *
      * @param listener 调用的方法(无 Player)
      */
-    public final ResponsibleFormWindowSimpleAdvanced<E> onClicked(@NotNull Consumer<E> listener) {
+    public final ResponsibleFormWindowSimpleMap<K, V> onClicked(@NotNull Consumer<V> listener) {
         Objects.requireNonNull(listener);
         this.buttonClickedListener = (response, player) -> listener.accept(response);
         return this;
@@ -135,7 +100,7 @@ public class ResponsibleFormWindowSimpleAdvanced<E> extends FormWindowSimple imp
      *
      * @param listener 调用的方法
      */
-    public final ResponsibleFormWindowSimpleAdvanced<E> onClosed(@NotNull Consumer<Player> listener) {
+    public final ResponsibleFormWindowSimpleMap<K, V> onClosed(@NotNull Consumer<Player> listener) {
         Objects.requireNonNull(listener);
         this.windowClosedListener = listener;
         return this;
@@ -147,7 +112,7 @@ public class ResponsibleFormWindowSimpleAdvanced<E> extends FormWindowSimple imp
      *
      * @param listener 调用的方法
      */
-    public final ResponsibleFormWindowSimpleAdvanced<E> onClosed(@NotNull Runnable listener) {
+    public final ResponsibleFormWindowSimpleMap<K, V> onClosed(@NotNull Runnable listener) {
         Objects.requireNonNull(listener);
         this.windowClosedListener = (player) -> listener.run();
         return this;
@@ -163,7 +128,7 @@ public class ResponsibleFormWindowSimpleAdvanced<E> extends FormWindowSimple imp
     }
 
     @SuppressWarnings("unchecked")
-    public void callClicked(@NotNull E entry, @NotNull Player player) {
+    public void callClicked(@NotNull V entry, @NotNull Player player) {
         Objects.requireNonNull(player);
         Objects.requireNonNull(entry);
 
@@ -191,14 +156,14 @@ public class ResponsibleFormWindowSimpleAdvanced<E> extends FormWindowSimple imp
 
     @SuppressWarnings("unchecked")
     static boolean onEvent(PlayerFormRespondedEvent event) {
-        if (event.getWindow() instanceof ResponsibleFormWindowSimpleAdvanced) {
-            ResponsibleFormWindowSimpleAdvanced window = (ResponsibleFormWindowSimpleAdvanced) event.getWindow();
+        if (event.getWindow() instanceof ResponsibleFormWindowSimpleMap) {
+            ResponsibleFormWindowSimpleMap window = (ResponsibleFormWindowSimpleMap) event.getWindow();
 
             if (event.getWindow().wasClosed() || event.getResponse() == null) {
                 window.callClosed(event.getPlayer());
                 window.closed = false;//for resending
             } else {
-                window.callClicked(window.getEntry(((FormResponseSimple) event.getResponse()).getClickedButtonId()), event.getPlayer());
+                window.callClicked(window.getEntryValue(((FormResponseSimple) event.getResponse()).getClickedButtonId()), event.getPlayer());
             }
 
             return true;
