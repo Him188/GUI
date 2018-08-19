@@ -6,6 +6,9 @@
 通过使用 **GUI**, 你可以炒鸡容易地创建表单窗口, 并通过内置的事件方法处理点击和关闭事件!  
 **欢迎你贡献代码给这个项目!** 无论 PR 还是 issue.
 
+# Download [![Build Status](https://travis-ci.org/Him188/GUI.svg?branch=master)](https://travis-ci.org/Him188/GUI)
+- [Jenkins](http://repo.him188.moe:8080/job/GUI)
+
 # Features
 
 ## ResponseListener

@@ -1,4 +1,4 @@
-**GUI - FormWindow tools** [![Build Status](https://travis-ci.org/Him188/GUI.svg?branch=master)](https://travis-ci.org/Him188/GUI)
+**GUI - FormWindow tools**
 # Links
 
 **(中文版说明)**[**Chinese README**](https://github.com/Him188/GUI/blob/master/README-chs.md)
@@ -8,6 +8,9 @@
 This plugin is made for developers.  
 By using **GUI**, you can easily create forms.  
 **Contribution is welcomed**
+
+# Download [![Build Status](https://travis-ci.org/Him188/GUI.svg?branch=master)](https://travis-ci.org/Him188/GUI)
+- [Jenkins](http://repo.him188.moe:8080/job/GUI)
 
 # Features
 
