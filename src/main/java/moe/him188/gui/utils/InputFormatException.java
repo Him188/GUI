@@ -12,11 +12,15 @@ public class InputFormatException extends RuntimeException {
     private final Reason reason;
     private final String input;
 
-    public enum Reason {
+    public enum ReasonDefaults implements Reason {
         NUMBER_FORMAT,
         PLAYER_NOT_FOUND,
         LEVEL_NOT_FOUND,
         DATE_FORMAT
+    }
+
+    public interface Reason {
+
     }
 
     public InputFormatException(Reason reason, String originalInput) {

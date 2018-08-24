@@ -23,7 +23,7 @@ public class InputTypeDate extends InputType<Date> {
         try {
             return format.parse(content);
         } catch (ParseException e) {
-            throw new InputFormatException(InputFormatException.Reason.DATE_FORMAT, content, e);
+            throw new InputFormatException(InputFormatException.ReasonDefaults.DATE_FORMAT, content, e);
         }
     }
 }

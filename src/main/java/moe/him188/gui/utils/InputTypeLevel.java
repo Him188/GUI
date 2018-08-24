@@ -11,7 +11,7 @@ public class InputTypeLevel extends InputType<Level> {
     public Level parseResponse(String content) throws InputFormatException {
         Level level = Server.getInstance().getLevelByName(content);
         if (level == null) {
-            throw new InputFormatException(InputFormatException.Reason.LEVEL_NOT_FOUND, content, new NullPointerException());
+            throw new InputFormatException(InputFormatException.ReasonDefaults.LEVEL_NOT_FOUND, content, new NullPointerException());
         }
         return level;
     }

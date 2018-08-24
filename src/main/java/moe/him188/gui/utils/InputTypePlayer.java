@@ -11,7 +11,7 @@ public class InputTypePlayer extends InputType<Player> {
     public Player parseResponse(String content) throws InputFormatException {
         Player player = Server.getInstance().getPlayer(content);
         if (player == null) {
-            throw new InputFormatException(InputFormatException.Reason.PLAYER_NOT_FOUND, content, new NullPointerException());
+            throw new InputFormatException(InputFormatException.ReasonDefaults.PLAYER_NOT_FOUND, content, new NullPointerException());
         }
 
         return player;

@@ -9,7 +9,7 @@ public class InputTypeInteger extends InputType<Integer> {
         try {
             return Integer.parseInt(content);
         } catch (NumberFormatException e) {
-            throw new InputFormatException(InputFormatException.Reason.NUMBER_FORMAT, content, e);
+            throw new InputFormatException(InputFormatException.ReasonDefaults.NUMBER_FORMAT, content, e);
         }
     }
 }

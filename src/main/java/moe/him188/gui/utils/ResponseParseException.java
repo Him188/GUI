@@ -1,6 +1,7 @@
 package moe.him188.gui.utils;
 
 import moe.him188.gui.template.element.TemplateElement;
+import moe.him188.gui.template.element.TemplateElementDropdown;
 
 /**
  * @author Him188moe @ GUI Project
@@ -22,7 +23,7 @@ public class ResponseParseException extends Exception {
      * <ul>
      * <li>{@link InputFormatException]}</li>
      * </ul>
-     * 意外时还可能出现
+     * 意外时(在 {@link TemplateElementDropdown} 中转换选中 ID)还可能出现
      * <ul>
      * <li>{@link NumberFormatException]}</li>
      * </ul>

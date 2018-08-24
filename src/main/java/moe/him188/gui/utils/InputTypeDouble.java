@@ -9,7 +9,7 @@ public class InputTypeDouble extends InputType<Double> {
         try {
             return Double.parseDouble(content);
         } catch (NumberFormatException e) {
-            throw new InputFormatException(InputFormatException.Reason.NUMBER_FORMAT, content, e);
+            throw new InputFormatException(InputFormatException.ReasonDefaults.NUMBER_FORMAT, content, e);
         }
     }
 }
