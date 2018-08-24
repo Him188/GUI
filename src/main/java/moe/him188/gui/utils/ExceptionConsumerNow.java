@@ -12,7 +12,7 @@ import java.lang.reflect.Array;
 public abstract class ExceptionConsumerNow<E extends Exception> implements ExceptionConsumer<E> {
     @SuppressWarnings("unchecked")
     @Override
-    public void catchException(Player player, E e) {
-        this.accept(player, (E[]) Array.newInstance(e.getClass().getComponentType(), 1));
+    public void catchException(Player player, E exception) {
+        this.accept(player, (E[]) Array.newInstance(exception.getClass().getComponentType(), 1));
     }
 }

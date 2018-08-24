@@ -9,12 +9,12 @@ import cn.nukkit.Player;
  */
 public class ExceptionConsumerIgnore<E extends Exception> implements ExceptionConsumer<E> {
     @Override
-    public void catchException(Player player, E e) {
+    public void catchException(Player player, E exception) {
 
     }
 
     @Override
-    public void accept(Player player, E[] e) {
+    public void accept(Player player, E[] exceptions) {
 
     }
 }

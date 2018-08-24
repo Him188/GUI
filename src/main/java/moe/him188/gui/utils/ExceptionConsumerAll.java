@@ -16,8 +16,8 @@ public abstract class ExceptionConsumerAll<E extends Exception> implements Excep
     private E lastException = null;
 
     @Override
-    public void catchException(Player player, E e) {
-        list.add(this.lastException = e);
+    public void catchException(Player player, E exception) {
+        list.add(this.lastException = exception);
     }
 
     @SuppressWarnings("unchecked")

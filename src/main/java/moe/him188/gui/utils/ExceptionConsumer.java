@@ -22,9 +22,9 @@ public interface ExceptionConsumer<E extends Exception> {
     /**
      * 处理异常
      *
-     * @param exception exception, notnull, maybe empty
+     * @param exceptions exception, notnull, maybe empty
      */
-    void accept(Player player, E[] exception);
+    void accept(Player player, E[] exceptions);
 
     /**
      * 当需要处理的异常已经全部被 {@link #catchException(Player, Exception)} 时调用

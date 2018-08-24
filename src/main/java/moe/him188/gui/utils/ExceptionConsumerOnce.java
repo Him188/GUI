@@ -14,10 +14,10 @@ public abstract class ExceptionConsumerOnce<E extends Exception> implements Exce
 
     @SuppressWarnings("unchecked")
     @Override
-    public void catchException(Player player, E e) {
+    public void catchException(Player player, E exception) {
         if (!accepted) {
             accepted = true;
-            this.accept(player, (E[]) Array.newInstance(e.getClass().getComponentType(), 1));
+            this.accept(player, (E[]) Array.newInstance(exception.getClass().getComponentType(), 1));
         }
     }
 }
