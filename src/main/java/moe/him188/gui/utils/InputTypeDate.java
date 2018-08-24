@@ -1,5 +1,7 @@
 package moe.him188.gui.utils;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Date;
@@ -18,6 +20,7 @@ public class InputTypeDate extends InputType<Date> {
         return format;
     }
 
+    @NotNull
     @Override
     public Date parseResponse(String content) throws InputFormatException {
         try {

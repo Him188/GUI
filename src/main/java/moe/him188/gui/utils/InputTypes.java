@@ -12,8 +12,20 @@ import java.util.Date;
  * @author Him188moe @ GUI Project
  */
 public final class InputTypes {
+    /**
+     * @since 1.7
+     */
+    public static final InputType<Long> LONG = new InputTypeLong();
     public static final InputType<Integer> INTEGER = new InputTypeInteger();
     public static final InputType<Double> DOUBLE = new InputTypeDouble();
+    /**
+     * @since 1.7
+     */
+    public static final InputType<Float> FLOAT = new InputTypeFloat();
+    /**
+     * @since 1.7
+     */
+    public static final InputType<String> USERNAME = new InputTypeUsername();
     public static final InputType<String> STRING = new InputTypeString();
     public static final InputType<Boolean> BOOLEAN = new InputTypeBoolean();
 

@@ -7,12 +7,12 @@
     <groupId>moe.him188</groupId>
     <artifactId>gui</artifactId>
     <name>GUI</name>
-    <version>1.6</version>
+    <version>1.7</version>
 
     <repositories>
         <repository>
-            <id>nukkit</id>
-            <url>http://repo.him188.moe:8081/repository/nukkit/</url>
+            <id>him188-public</id>
+            <url>http://repo.him188.moe:8081/repository/public/</url>
         </repository>
     </repositories>
 
