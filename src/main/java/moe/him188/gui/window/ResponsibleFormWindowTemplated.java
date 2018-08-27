@@ -16,6 +16,7 @@ import moe.him188.gui.utils.NoParentWindowFoundException;
 import moe.him188.gui.utils.ResponseParseException;
 import moe.him188.gui.window.listener.response.ResponseListenerTemplate;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -99,11 +100,22 @@ public class ResponsibleFormWindowTemplated<K> extends FormWindowCustom implemen
     /**
      * Apply {@link #lastResponses} to this.
      *
-     * @see TemplateResponses.Builder#applyToWindow(FormWindowCustom)
+     * @see TemplateResponses.Builder#applyToWindow(FormWindowCustom, K[])
      */
     public void applyLastResponse() throws NullPointerException {
+        this.applyLastResponse(null);
+    }
+
+    /**
+     * Apply {@link #lastResponses} to this.
+     *
+     * @param doNotKeepValues keys that will not be filled
+     *
+     * @see TemplateResponses.Builder#applyToWindow(FormWindowCustom, K[])
+     */
+    public void applyLastResponse(@Nullable K[] doNotKeepValues) throws NullPointerException {
         Objects.requireNonNull(this.lastResponses);
-        this.lastResponses.getBuilder().applyToWindow(this);
+        this.lastResponses.getBuilder().applyToWindow(this, doNotKeepValues);
     }
 
     /**
@@ -229,13 +241,23 @@ public class ResponsibleFormWindowTemplated<K> extends FormWindowCustom implemen
      * 将表单重新发送给玩家, 并保留已经填写的格式正确的数据.
      */
     public void resendWindow(@NotNull Player player) {
+        this.resendWindow(player, null);
+    }
+
+    /**
+     * 将表单重新发送给玩家, 并保留已经填写的格式正确的数据.
+     *
+     * @param doNotKeepValues keys that will not be filled
+     */
+    public void resendWindow(@NotNull Player player, @Nullable K[] doNotKeepValues) {
         Objects.requireNonNull(player);
         if (this.lastResponses == null) {
             throw new UnsupportedOperationException();
         }
-        this.applyLastResponse();
+        this.applyLastResponse(doNotKeepValues);
         player.showFormWindow(this);
     }
+
 
     public void callClosed(@NotNull Player player) {
         Objects.requireNonNull(player);

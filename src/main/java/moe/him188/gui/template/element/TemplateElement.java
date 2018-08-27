@@ -10,7 +10,7 @@ import org.jetbrains.annotations.Nullable;
  *
  * @author Him188moe @ GUI Project
  */
-public abstract class TemplateElement<K> { // TODO: 2018/8/1 0001 添加所有 element
+public abstract class TemplateElement<K> {
     /**
      * 用于模板中通过这个key获取这个element的返回值
      */
@@ -19,7 +19,7 @@ public abstract class TemplateElement<K> { // TODO: 2018/8/1 0001 添加所有 e
     /**
      * <code>@Nullable</code> for {@link TemplateElementLabel}
      *
-     * @param responseKey
+     * @param responseKey key
      */
     public TemplateElement(@Nullable K responseKey) {
         this.responseKey = responseKey;

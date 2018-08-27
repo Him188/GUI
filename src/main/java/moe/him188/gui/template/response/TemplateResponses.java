@@ -7,10 +7,9 @@ import moe.him188.gui.utils.InputType;
 import moe.him188.gui.utils.InputTypeDate;
 import moe.him188.gui.utils.InputTypeInteger;
 import moe.him188.gui.utils.InputTypeString;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.Date;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
+import java.util.*;
 
 /**
  * @param <K> 用于取出 response 的 key
@@ -207,9 +206,12 @@ public final class TemplateResponses<K> extends LinkedHashMap<K, TemplateRespons
          * 将返回数据内容填充到窗口中. <br>
          * 填充按照参数 <code>form</code> 元素顺序, 依次填入数据, 请确保类型相同!
          *
-         * @param form form
+         * @param form            form
+         * @param doNotKeepValues keys that will not be filled
          */
-        public void applyToWindow(FormWindowCustom form) { // FIXME: 2018/8/3 0003 不能正确填充数据! 填入的数据都无效, 是空白  已确认不是continue问题
+        public void applyToWindow(FormWindowCustom form, @Nullable K[] doNotKeepValues) { // FIXME: 2018/8/3 0003 不能正确填充数据! 填入的数据都无效, 是空白  已确认不是continue问题
+            final List<K> skip = doNotKeepValues == null ? new ArrayList<>() : Arrays.asList(doNotKeepValues);
+
             Iterator<K> keyIterator = keySet().iterator();
             for (Element element : form.getElements()) {
                 if (element instanceof ElementLabel) {
@@ -223,6 +225,10 @@ public final class TemplateResponses<K> extends LinkedHashMap<K, TemplateRespons
                         throw new RuntimeException("unmatched form");
                     }
                     key = keyIterator.next();
+                }
+
+                if (skip.contains(key)) {
+                    continue;
                 }
 
                 if (element instanceof ElementInput) {
