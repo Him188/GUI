@@ -141,7 +141,7 @@ By using **GUI**, you can easily create forms.
     ```xml
     <repository>
         <id>him188-gui</id>
-        <url>http://repo.him188.moe:8081/repository/gui/</url>
+        <url>http://repo.him188.moe:8081/repository/public/</url>
     </repository>
     ```
 2. Add `dependency` in `build.dependencies`
