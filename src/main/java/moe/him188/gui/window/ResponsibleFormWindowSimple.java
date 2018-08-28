@@ -17,10 +17,12 @@ import moe.him188.gui.window.listener.response.ResponseListenerSimple;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 /**
  * 能直接接受提交表单 ({@link #onClicked} 和关闭窗口事件({@link #onClosed}) 的 {@link FormWindowSimple}.
@@ -43,6 +45,14 @@ public class ResponsibleFormWindowSimple extends FormWindowSimple implements Bac
 
     public ResponsibleFormWindowSimple(String title, String content) {
         this(title, content, new ArrayList<>());
+    }
+
+    public ResponsibleFormWindowSimple(String title, String content, String... buttons) {
+        super(title, content, Arrays.stream(buttons).map(ElementButton::new).collect(Collectors.toList()));
+    }
+
+    public ResponsibleFormWindowSimple(String title, String content, ElementButton... buttons) {
+        super(title, content, Arrays.asList(buttons));
     }
 
     public ResponsibleFormWindowSimple(String title, String content, @NotNull List<ElementButton> buttons) {

@@ -207,7 +207,7 @@ public final class TemplateResponses<K> extends LinkedHashMap<K, TemplateRespons
          * 填充按照参数 <code>form</code> 元素顺序, 依次填入数据, 请确保类型相同!
          *
          * @param form            form
-         * @param doNotKeepValues keys that will not be filled
+         * @param doNotKeepValues keys that will not be filled. These elements will be defaultValues
          */
         public void applyToWindow(FormWindowCustom form, @Nullable K[] doNotKeepValues) { // FIXME: 2018/8/3 0003 不能正确填充数据! 填入的数据都无效, 是空白  已确认不是continue问题
             final List<K> skip = doNotKeepValues == null ? new ArrayList<>() : Arrays.asList(doNotKeepValues);

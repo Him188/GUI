@@ -14,6 +14,7 @@ import moe.him188.gui.window.listener.response.ResponseListenerCustom;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -38,6 +39,10 @@ public class ResponsibleFormWindowCustom extends FormWindowCustom implements Bac
 
     public ResponsibleFormWindowCustom(String title) {
         this(title, new ArrayList<>());
+    }
+
+    public ResponsibleFormWindowCustom(String title, Element... contents) {
+        this(title, Arrays.asList(contents));
     }
 
     public ResponsibleFormWindowCustom(String title, @NotNull List<Element> contents) {

@@ -13,7 +13,9 @@ import java.util.function.Consumer;
  * Tip window
  *
  * @author Him188moe @ GUI Project
+ * @deprecated Use {@link ResponsibleFormWindowSimple#ResponsibleFormWindowSimple(String, String, String...)}
  */
+@Deprecated
 public class TipWindow extends ResponsibleFormWindowSimple {
     public TipWindow(String title, String content, String buttonText) {
         super(title, content, new ArrayList<ElementButton>() {

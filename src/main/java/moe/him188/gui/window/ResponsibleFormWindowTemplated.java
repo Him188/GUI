@@ -109,7 +109,7 @@ public class ResponsibleFormWindowTemplated<K> extends FormWindowCustom implemen
     /**
      * Apply {@link #lastResponses} to this.
      *
-     * @param doNotKeepValues keys that will not be filled
+     * @param doNotKeepValues keys that will not be filled. These elements will be defaultValues
      *
      * @see TemplateResponses.Builder#applyToWindow(FormWindowCustom, K[])
      */

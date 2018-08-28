@@ -21,6 +21,7 @@ import java.util.function.Function;
  * 类似于 {@link ResponsibleFormWindowSimpleAdvanced}.
  *
  * @author Him188moe @ GUI Project
+ * @since 1.8
  */
 public class ResponsibleFormWindowSimpleMap<K, V> extends FormWindowSimple implements Backable, ResponseListenerAdvanced<V> {
     protected transient BiConsumer<V, Player> buttonClickedListener = null;
