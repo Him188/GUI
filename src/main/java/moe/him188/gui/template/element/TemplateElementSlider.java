@@ -18,7 +18,7 @@ public class TemplateElementSlider<K> extends TemplateElement<K> {
     private final float defaultValue;
 
     public TemplateElementSlider(@NotNull K elementKey, String name, int min, int max) {
-        this(elementKey, name, min, max, 0);
+        this(elementKey, name, min, max, -1);
     }
 
     public TemplateElementSlider(@NotNull K elementKey, String name, int min, int max, int step) {
@@ -30,7 +30,11 @@ public class TemplateElementSlider<K> extends TemplateElement<K> {
         this.name = name;
         this.min = min;
         this.max = max;
-        this.step = step;
+        if (step != -1f && step > 0) {
+            this.step = step;
+        } else {
+            this.step = 0;
+        }
         this.defaultValue = defaultValue;
     }
 
