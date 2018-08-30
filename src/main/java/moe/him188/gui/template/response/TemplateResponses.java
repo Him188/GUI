@@ -1,5 +1,6 @@
 package moe.him188.gui.template.response;
 
+import cn.nukkit.Player;
 import cn.nukkit.form.element.*;
 import cn.nukkit.form.window.FormWindowCustom;
 import moe.him188.gui.template.element.*;
@@ -36,10 +37,11 @@ public final class TemplateResponses<K> extends LinkedHashMap<K, TemplateRespons
     }
 
     /**
-     * 获取 Input 内容
+     * 获取 Input 内容. 注意请勿尝试将 String 类型转 int 类型, 即使输入的是纯数字. <br>
+     * 不推荐使用这个方法, 因为它不具有安全性, 且容易失误. 请使用 <code>getInputXXX</code> 代替.
      *
      * @param key       key
-     * @param inputType 用于转换类型
+     * @param inputType 用于转换类型. 必须是 {@link InputType} 的泛型或其子类
      * @param <R>       Input 的数据类型
      *
      * @return Input 内容
@@ -106,6 +108,36 @@ public final class TemplateResponses<K> extends LinkedHashMap<K, TemplateRespons
      */
     public long getInputLong(K key) {
         return (long) getInputResponse(key).get();
+    }
+
+    /**
+     * 获取 {@link InputTypePlayer} 类型 Input 的内容
+     *
+     * @param key key
+     *
+     * @return Input 内容
+     *
+     * @see InputTypePlayer
+     * @see TemplateElementInput
+     * @since 1.11
+     */
+    public Player getInputPlayer(K key) {
+        return (Player) getInputResponse(key).get();
+    }
+
+    /**
+     * 获取 {@link InputTypeBoolean} 类型 Input 的内容
+     *
+     * @param key key
+     *
+     * @return Input 内容
+     *
+     * @see InputTypeBoolean
+     * @see TemplateElementInput
+     * @since 1.11
+     */
+    public boolean getInputBoolean(K key) {
+        return (boolean) getInputResponse(key).get();
     }
 
     /**
