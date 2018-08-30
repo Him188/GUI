@@ -60,8 +60,13 @@ public class TemplateElementDropdown<K> extends TemplateElement<K> {
     @Override
     public Response parseResponse(Object object) throws ResponseParseException {
         try {
-            int response = Integer.parseInt(String.valueOf(object));
-            return new Response(response, this.getOption(response));
+            String option = String.valueOf(object);
+            for (int i = 0; i < this.options.size(); i++) {
+                if (this.options.get(i).equals(option)) {
+                    return new Response(i, option);
+                }
+            }
+            throw new ResponseParseException(this, new NullPointerException(option));
         } catch (NumberFormatException e) {
             throw new ResponseParseException(this, e);
         }

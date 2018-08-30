@@ -17,7 +17,9 @@ public abstract class ExceptionConsumerOnce<E extends Exception> implements Exce
     public void catchException(Player player, E exception) {
         if (!accepted) {
             accepted = true;
-            this.accept(player, (E[]) Array.newInstance(exception.getClass(), 1));
+            E[] array = (E[]) Array.newInstance(exception.getClass(), 1);
+            array[0] = exception;
+            this.accept(player, array);
         }
     }
 }
