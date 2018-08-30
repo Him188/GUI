@@ -2,6 +2,6 @@ name: GUI
 author: Him188moe
 main: moe.him188.gui.GUIPluginBase
 api: [1.0.0]
-version: 1.9
+version: 1.10
 description: "Form window tools"
 load: STARTUP

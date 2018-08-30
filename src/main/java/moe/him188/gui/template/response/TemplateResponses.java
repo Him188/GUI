@@ -3,10 +3,7 @@ package moe.him188.gui.template.response;
 import cn.nukkit.form.element.*;
 import cn.nukkit.form.window.FormWindowCustom;
 import moe.him188.gui.template.element.*;
-import moe.him188.gui.utils.InputType;
-import moe.him188.gui.utils.InputTypeDate;
-import moe.him188.gui.utils.InputTypeInteger;
-import moe.him188.gui.utils.InputTypeString;
+import moe.him188.gui.utils.*;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -94,6 +91,51 @@ public final class TemplateResponses<K> extends LinkedHashMap<K, TemplateRespons
      */
     public int getInputInteger(K key) {
         return (int) getInputResponse(key).get();
+    }
+
+    /**
+     * 获取 {@link InputTypeLong} 类型 Input 的内容
+     *
+     * @param key key
+     *
+     * @return Input 内容
+     *
+     * @see InputTypeLong
+     * @see TemplateElementInput
+     * @since 1.10
+     */
+    public long getInputLong(K key) {
+        return (long) getInputResponse(key).get();
+    }
+
+    /**
+     * 获取 {@link InputTypeDouble} 类型 Input 的内容
+     *
+     * @param key key
+     *
+     * @return Input 内容
+     *
+     * @see InputTypeDouble
+     * @see TemplateElementInput
+     * @since 1.10
+     */
+    public double getInputDouble(K key) {
+        return (double) getInputResponse(key).get();
+    }
+
+    /**
+     * 获取 {@link InputTypeFloat} 类型 Input 的内容
+     *
+     * @param key key
+     *
+     * @return Input 内容
+     *
+     * @see InputTypeFloat
+     * @see TemplateElementInput
+     * @since 1.10
+     */
+    public float getInputFloat(K key) {
+        return (float) getInputResponse(key).get();
     }
 
     /**
