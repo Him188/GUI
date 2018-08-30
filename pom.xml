@@ -7,7 +7,7 @@
     <groupId>moe.him188</groupId>
     <artifactId>gui</artifactId>
     <name>GUI</name>
-    <version>1.10</version>
+    <version>1.11</version>
 
     <repositories>
         <repository>
