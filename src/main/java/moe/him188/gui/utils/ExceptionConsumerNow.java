@@ -13,6 +13,6 @@ public abstract class ExceptionConsumerNow<E extends Exception> implements Excep
     @SuppressWarnings("unchecked")
     @Override
     public void catchException(Player player, E exception) {
-        this.accept(player, (E[]) Array.newInstance(exception.getClass().getComponentType(), 1));
+        this.accept(player, (E[]) Array.newInstance(exception.getClass(), 1));
     }
 }
