@@ -44,6 +44,7 @@ public class ResponsibleFormWindowTemplated<K> extends FormWindowCustom implemen
 
     protected transient Player lastPlayer = null;
 
+    @Nullable
     protected transient ExceptionConsumer<ResponseParseException> exceptionConsumer;
 
     private transient FormWindow parent;
@@ -143,8 +144,7 @@ public class ResponsibleFormWindowTemplated<K> extends FormWindowCustom implemen
      *
      * @param exceptionConsumer 处理异常的函数
      */
-    public final ResponsibleFormWindowTemplated<K> setExceptionConsumer(@NotNull ExceptionConsumer<ResponseParseException> exceptionConsumer) {
-        Objects.requireNonNull(exceptionConsumer);
+    public final ResponsibleFormWindowTemplated<K> setExceptionConsumer(@Nullable ExceptionConsumer<ResponseParseException> exceptionConsumer) {
         this.exceptionConsumer = exceptionConsumer;
         return this;
     }

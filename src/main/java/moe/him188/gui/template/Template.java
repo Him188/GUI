@@ -9,6 +9,7 @@ import moe.him188.gui.utils.ExceptionConsumer;
 import moe.him188.gui.utils.ExceptionConsumerIgnore;
 import moe.him188.gui.utils.KeyAlreadyContainsException;
 import moe.him188.gui.utils.ResponseParseException;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -102,7 +103,7 @@ public class Template<K> {
             }
         }
 
-        public TemplateResponses<K> parseTemplateResponse(Player player, FormResponseCustom form, ExceptionConsumer<ResponseParseException> exceptionConsumer) {
+        public TemplateResponses<K> parseTemplateResponse(Player player, FormResponseCustom form, @Nullable ExceptionConsumer<ResponseParseException> exceptionConsumer) {
             Objects.requireNonNull(player);
             Objects.requireNonNull(form);
             if (exceptionConsumer == null) {
