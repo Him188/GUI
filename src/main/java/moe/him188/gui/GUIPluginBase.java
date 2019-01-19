@@ -33,12 +33,18 @@ public class GUIPluginBase extends PluginBase {
         private WindowManager.RespondedListener respondedListener;
         private WindowManager.GoBackListener goBackListener;
 
+        private boolean registered = false;
+
         private ListenerManager() {
             respondedListener = new WindowManager.RespondedListener();
             goBackListener = new WindowManager.GoBackListener();
         }
 
         private void register() {
+            if (registered) {
+                return;
+            }
+            registered = true;
             Server.getInstance().getPluginManager().registerEvents(goBackListener, GUIPluginBase.this);
             Server.getInstance().getPluginManager().registerEvents(respondedListener, GUIPluginBase.this);
         }
