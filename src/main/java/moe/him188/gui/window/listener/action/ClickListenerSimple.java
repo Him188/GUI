@@ -11,6 +11,6 @@ public interface ClickListenerSimple extends ClickListener {
 
     @Override
     default void accept(Player player) {
-
+        run();
     }
 }
