@@ -40,7 +40,7 @@ public class ResponsibleFormWindowSimpleMap<K, V> extends FormWindowSimple imple
      * @param entries          需要展示在每个按钮上的数据 | entries to show in the buttons
      * @param buttonTextGetter 按钮名字获取器. 用于获取每个数据对应的按钮的名字. (通过 map 的 key) | Used to get the name of each button (By map key)
      */
-    public ResponsibleFormWindowSimpleMap(String title, String content, @NotNull Map<K, V> entries, @NotNull Function<? super K, String> buttonTextGetter) {
+    public ResponsibleFormWindowSimpleMap(String title, String content, @NotNull Map<K, V> entries, @NotNull Function<K, String> buttonTextGetter) {
         super(Objects.requireNonNull(title), Objects.requireNonNull(content));
         Objects.requireNonNull(buttonTextGetter);
         Objects.requireNonNull(entries);

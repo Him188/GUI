@@ -76,7 +76,7 @@ public class ResponsibleFormWindowSimpleAdvanced<E> extends FormWindowSimple imp
      * @param entries          需要展示在每个按钮上的数据 | entries to show in the buttons
      * @param buttonTextGetter 按钮名字获取器. 用于获取每个数据对应的按钮的名字 | Used to get the name of each button
      */
-    public ResponsibleFormWindowSimpleAdvanced(String title, String content, @NotNull Collection<E> entries, @NotNull Function<? super E, String> buttonTextGetter) {
+    public ResponsibleFormWindowSimpleAdvanced(String title, String content, @NotNull Collection<E> entries, @NotNull Function<E, String> buttonTextGetter) {
         super(Objects.requireNonNull(title), Objects.requireNonNull(content));
         Objects.requireNonNull(buttonTextGetter);
         Objects.requireNonNull(entries);
