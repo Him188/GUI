@@ -35,6 +35,14 @@ public class ResponsibleFormWindowModal extends FormWindowModal implements Backa
 
     private transient FormWindow parent;
 
+    public ResponsibleFormWindowModal(String trueButtonText, String falseButtonText) {
+        super("", "", trueButtonText, falseButtonText);
+    }
+
+    public ResponsibleFormWindowModal(String content, String trueButtonText, String falseButtonText) {
+        super("", content, trueButtonText, falseButtonText);
+    }
+
     public ResponsibleFormWindowModal(String title, String content, String trueButtonText, String falseButtonText) {
         super(title, content, trueButtonText, falseButtonText);
     }

@@ -43,6 +43,14 @@ public class ResponsibleFormWindowSimple extends FormWindowSimple implements Bac
 
     private transient FormWindow parent;
 
+    public ResponsibleFormWindowSimple() {
+        this("", "", new ArrayList<>());
+    }
+
+    public ResponsibleFormWindowSimple(String content) {
+        this("", content, new ArrayList<>());
+    }
+
     public ResponsibleFormWindowSimple(String title, String content) {
         this(title, content, new ArrayList<>());
     }

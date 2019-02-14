@@ -37,6 +37,10 @@ public class ResponsibleFormWindowCustom extends FormWindowCustom implements Bac
 
     private transient FormWindow parent = null;
 
+    public ResponsibleFormWindowCustom() {
+        this("");
+    }
+
     public ResponsibleFormWindowCustom(String title) {
         this(title, new ArrayList<>());
     }

@@ -87,6 +87,23 @@ public class ResponsibleFormWindowSimpleAdvanced<E> extends FormWindowSimple imp
         this.entries = Collections.unmodifiableList(new ArrayList<>(entries));
     }
 
+    /**
+     * @param content          内容
+     * @param entries          需要展示在每个按钮上的数据 | entries to show in the buttons
+     * @param buttonTextGetter 按钮名字获取器. 用于获取每个数据对应的按钮的名字 | Used to get the name of each button
+     */
+    public ResponsibleFormWindowSimpleAdvanced(String content, @NotNull Collection<E> entries, @NotNull Function<E, String> buttonTextGetter) {
+        this("", content, entries, buttonTextGetter);
+    }
+
+    /**
+     * @param entries          需要展示在每个按钮上的数据 | entries to show in the buttons
+     * @param buttonTextGetter 按钮名字获取器. 用于获取每个数据对应的按钮的名字 | Used to get the name of each button
+     */
+    public ResponsibleFormWindowSimpleAdvanced(@NotNull Collection<E> entries, @NotNull Function<E, String> buttonTextGetter) {
+        this("", "", entries, buttonTextGetter);
+    }
+
     public List<E> getEntries() {
         return entries;
     }
