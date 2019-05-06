@@ -10,7 +10,7 @@ By using **GUI**, you can easily create forms.
 **Contribution is welcomed**
 
 # Download [![Build Status](https://travis-ci.org/Him188/GUI.svg?branch=master)](https://travis-ci.org/Him188/GUI)
-- [Jenkins](http://repo.him188.moe:8080/job/GUI)
+- [TeamCity](http://repo.him188.moe:2333/viewType.html?buildTypeId=Him188Nukkit_Build)
 
 # Features
 
