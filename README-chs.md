@@ -7,7 +7,7 @@
 **欢迎你贡献代码给这个项目!** 无论 PR 还是 issue.
 
 # Download [![Build Status](https://travis-ci.org/Him188/GUI.svg?branch=master)](https://travis-ci.org/Him188/GUI)
-- [Jenkins](http://repo.him188.moe:8080/job/GUI)
+- [TeamCity](http://repo.him188.moe:2333/viewType.html?buildTypeId=Gui_Build)
 
 # Features
 
@@ -15,7 +15,7 @@
 
   每个表单都可以有 **内部**事件检测器([ResponseListener](https://github.com/Him188/GUI/blob/master/src/main/java/moe/him188/gui/window/listener/response/ResponseListener.java))  
   这将会比实现nk Listener, 监听 PlayerFormRespondedEvent, 调用窗口的等不知道方便到哪里去!!  
-  例子:
+  例子
   ```java
   class A extends ResponsibleFormWindowSimple {
       A() {
@@ -86,7 +86,6 @@
       }
   }
   ```
-  Yeah! 你的代码正在一步步缩小, 不是嘛?!
 
 ## ResponsibleFormWindowSimpleAdvanced
   这是一个非常棒的实现, 为了方便(其实是懒)这里贴上代码里面的 javadoc  
