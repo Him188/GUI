@@ -3,6 +3,7 @@ package moe.him188.gui.element;
 import cn.nukkit.Player;
 import cn.nukkit.form.element.ElementButton;
 import cn.nukkit.form.element.ElementButtonImageData;
+import cn.nukkit.form.window.FormWindowSimple;
 import moe.him188.gui.window.ResponsibleFormWindowSimple;
 import moe.him188.gui.window.listener.action.ClickListener;
 import moe.him188.gui.window.listener.action.ClickListenerSimple;
@@ -11,7 +12,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 /**
- * 能监听点击事件的按钮, 注意这个按钮只能用于 {@link ResponsibleFormWindowSimple}
+ * 能监听点击事件的按钮, 注意这个按钮只能用于 {@link ResponsibleFormWindowSimple},
+ * 当用于普通 {@link FormWindowSimple} 时任何监听器都不起作用.
  *
  * @author Him188moe @ GUI Project
  */
