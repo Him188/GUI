@@ -4,6 +4,7 @@ import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.EventPriority;
 import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerFormRespondedEvent;
+import cn.nukkit.event.player.PlayerKickEvent;
 import cn.nukkit.event.player.PlayerQuitEvent;
 import cn.nukkit.form.window.FormWindow;
 import moe.him188.gui.utils.Backable;
@@ -44,7 +45,7 @@ public final class WindowManager {
             lastWindows = new HashMap<>();
         }
 
-        @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+        @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
         public void onResponded(PlayerFormRespondedEvent event) {
             FormWindow parent = lastWindows.remove(event.getPlayer().getLoaderId());
             if (parent != null) {
@@ -55,8 +56,13 @@ public final class WindowManager {
             lastWindows.put(event.getPlayer().getLoaderId(), event.getWindow());
         }
 
-        @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
+        @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
         public void onQuit(PlayerQuitEvent event) {
+            lastWindows.remove(event.getPlayer().getLoaderId());
+        }
+
+        @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+        public void onKick(PlayerKickEvent event) {
             lastWindows.remove(event.getPlayer().getLoaderId());
         }
     }

@@ -90,7 +90,6 @@ By using **GUI**, you can easily create forms.
       }
   }
   ```
-  Yeah! Your codes is more and more conciser, isn't it?
 
 ## ResponsibleFormWindowSimpleAdvanced
 
@@ -129,7 +128,7 @@ By using **GUI**, you can easily create forms.
   ```
   window.goBack(player);
   ```
-  你也可以获取玩家的上一级窗口, 详细请查看源码 [Backable.java](https://github.com/Him188/GUI/blob/master/src/main/java/moe/him188/gui/utils/Backable.java)
+  You can also get players' latest windows, please view [Backable.java](https://github.com/Him188/GUI/blob/master/src/main/java/moe/him188/gui/utils/Backable.java)
 
 ## How to use
 
@@ -142,6 +141,7 @@ By using **GUI**, you can easily create forms.
         <url>http://repo.him188.moe:8081/repository/public/</url>
     </repository>
     ```
+    This repo may permanently work.
 2. Add `dependency` in `build.dependencies`
     ```xml
     <dependency>
@@ -150,6 +150,8 @@ By using **GUI**, you can easily create forms.
         <version>LATEST</version>
     </dependency>
     ```
+    Sometimes the LATEST version sign does not work, in this case, you need to use the latest version, such as `1.13.4` instead.
+    And, you can get the latest version in `pom.xml`
 3. Don't forget to add `depend` into `plugin.yml`
     ```yaml
     depend:
