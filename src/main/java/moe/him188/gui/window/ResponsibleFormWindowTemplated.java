@@ -279,17 +279,18 @@ public class ResponsibleFormWindowTemplated<K> extends FormWindowCustom implemen
                 .replace("defaultStepIndex", "default");
     }
 
-    @SuppressWarnings("unchecked")
-    static boolean onEvent(PlayerFormRespondedEvent event) {
-        if (event.getWindow() instanceof ResponsibleFormWindowTemplated) {
-            ResponsibleFormWindowTemplated window = (ResponsibleFormWindowTemplated) event.getWindow();
 
-            if (event.getWindow().wasClosed() || event.getResponse() == null) {
-                window.callClosed(event.getPlayer());
+    @SuppressWarnings("unchecked")
+    static boolean onEvent(FormWindow formWindow, FormResponse response, Player player) {
+        if (formWindow instanceof ResponsibleFormWindowTemplated) {
+            ResponsibleFormWindowTemplated window = (ResponsibleFormWindowTemplated) formWindow;
+
+            if (window.wasClosed() || response == null) {
+                window.callClosed(player);
                 window.closed = false;//for resending
             } else {
-                window.setLastResponses(event.getPlayer(), (FormResponseCustom) event.getResponse());
-                window.callClicked(window.getLastResponses(), event.getPlayer());
+                window.setLastResponses(player, (FormResponseCustom) response);
+                window.callClicked(window.getLastResponses(), player);
             }
             return true;
         }

@@ -187,15 +187,15 @@ public class ResponsibleFormWindowModal extends FormWindowModal implements Backa
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    static boolean onEvent(PlayerFormRespondedEvent event) {
-        if (event.getWindow() instanceof ResponsibleFormWindowModal) {
-            ResponsibleFormWindowModal window = (ResponsibleFormWindowModal) event.getWindow();
+    static boolean onEvent(FormWindow formWindow, FormResponse response, Player player) {
+        if (formWindow instanceof ResponsibleFormWindowModal) {
+            ResponsibleFormWindowModal window = (ResponsibleFormWindowModal) formWindow;
 
-            if (event.getWindow().wasClosed() || event.getResponse() == null) {
-                window.callClosed(event.getPlayer());
+            if (window.wasClosed() || response == null) {
+                window.callClosed(player);
                 window.closed = false;//for resending
             } else {
-                window.callClicked(((FormResponseModal) event.getResponse()).getClickedButtonId() == 0, event.getPlayer());
+                window.callClicked(((FormResponseModal) response).getClickedButtonId() == 0, player);
             }
             return true;
         }

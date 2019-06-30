@@ -14,6 +14,8 @@ import java.util.Objects;
 /**
  * 能监听点击事件的按钮, 注意这个按钮只能用于 {@link ResponsibleFormWindowSimple},
  * 当用于普通 {@link FormWindowSimple} 时任何监听器都不起作用.
+ * A button for {@link ResponsibleFormWindowSimple}, which can listen the click event.
+ * When being using on {@link FormWindowSimple}, the listener does not work.
  *
  * @author Him188moe @ GUI Project
  */

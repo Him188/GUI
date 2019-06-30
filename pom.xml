@@ -7,7 +7,7 @@
     <groupId>moe.him188</groupId>
     <artifactId>gui</artifactId>
     <name>GUI</name>
-    <version>1.13.4</version>
+    <version>1.14</version>
 
     <repositories>
         <repository>
@@ -26,13 +26,9 @@
 
     <distributionManagement>
         <repository>
-            <id>releases</id>
+            <id>him188-repo</id>
             <url>http://repo.him188.moe:8081/repository/gui/</url>
         </repository>
-        <snapshotRepository>
-            <id>Snapshots</id>
-            <url>http://repo.him188.moe:8081/repository/gui/</url>
-        </snapshotRepository>
     </distributionManagement>
 
     <build>

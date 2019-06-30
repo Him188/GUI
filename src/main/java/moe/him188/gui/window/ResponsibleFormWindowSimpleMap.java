@@ -1,8 +1,8 @@
 package moe.him188.gui.window;
 
 import cn.nukkit.Player;
-import cn.nukkit.event.player.PlayerFormRespondedEvent;
 import cn.nukkit.form.element.ElementButton;
+import cn.nukkit.form.response.FormResponse;
 import cn.nukkit.form.response.FormResponseSimple;
 import cn.nukkit.form.window.FormWindow;
 import cn.nukkit.form.window.FormWindowSimple;
@@ -173,20 +173,18 @@ public class ResponsibleFormWindowSimpleMap<K, V> extends FormWindowSimple imple
     }
 
     @SuppressWarnings("unchecked")
-    static boolean onEvent(PlayerFormRespondedEvent event) {
-        if (event.getWindow() instanceof ResponsibleFormWindowSimpleMap) {
-            ResponsibleFormWindowSimpleMap window = (ResponsibleFormWindowSimpleMap) event.getWindow();
+    static boolean onEvent(FormWindow formWindow, FormResponse response, Player player) {
+        if (formWindow instanceof ResponsibleFormWindowSimpleMap) {
+            ResponsibleFormWindowSimpleMap window = (ResponsibleFormWindowSimpleMap) formWindow;
 
-            if (event.getWindow().wasClosed() || event.getResponse() == null) {
-                window.callClosed(event.getPlayer());
+            if (window.wasClosed() || response == null) {
+                window.callClosed(player);
                 window.closed = false;//for resending
             } else {
-                window.callClicked(window.getEntryValue(((FormResponseSimple) event.getResponse()).getClickedButtonId()), event.getPlayer());
+                window.callClicked(window.getEntryValue(((FormResponseSimple) response).getClickedButtonId()), player);
             }
-
             return true;
         }
         return false;
     }
-
 }

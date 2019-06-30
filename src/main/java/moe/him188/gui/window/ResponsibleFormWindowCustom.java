@@ -158,15 +158,15 @@ public class ResponsibleFormWindowCustom extends FormWindowCustom implements Bac
         }
     }
 
-    static boolean onEvent(PlayerFormRespondedEvent event) {
-        if (event.getWindow() instanceof ResponsibleFormWindowCustom) {
-            ResponsibleFormWindowCustom window = (ResponsibleFormWindowCustom) event.getWindow();
+    static boolean onEvent(FormWindow formWindow, FormResponse response, Player player) {
+        if (formWindow instanceof ResponsibleFormWindowCustom) {
+            ResponsibleFormWindowCustom window = (ResponsibleFormWindowCustom) formWindow;
 
-            if (event.getWindow().wasClosed() || event.getResponse() == null) {
-                window.callClosed(event.getPlayer());
+            if (window.wasClosed() || response == null) {
+                window.callClosed(player);
                 window.closed = false;//for resending
             } else {
-                window.callClicked((FormResponseCustom) event.getResponse(), event.getPlayer());
+                window.callClicked(((FormResponseCustom) response), player);
             }
             return true;
         }

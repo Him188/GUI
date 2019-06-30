@@ -200,15 +200,15 @@ public class ResponsibleFormWindowSimple extends FormWindowSimple implements Bac
         }
     }
 
-    static boolean onEvent(PlayerFormRespondedEvent event) {
-        if (event.getWindow() instanceof ResponsibleFormWindowSimple) {
-            ResponsibleFormWindowSimple window = (ResponsibleFormWindowSimple) event.getWindow();
+    static boolean onEvent(FormWindow formWindow, FormResponse response, Player player) {
+        if (formWindow instanceof ResponsibleFormWindowSimple) {
+            ResponsibleFormWindowSimple window = (ResponsibleFormWindowSimple) formWindow;
 
-            if (event.getWindow().wasClosed() || event.getResponse() == null) {
-                window.callClosed(event.getPlayer());
+            if (window.wasClosed() || response == null) {
+                window.callClosed(player);
                 window.closed = false;//for resending
             } else {
-                window.callClicked(((FormResponseSimple) event.getResponse()).getClickedButtonId(), event.getPlayer());
+                window.callClicked(((FormResponseSimple) response).getClickedButtonId(), player);
             }
             return true;
         }

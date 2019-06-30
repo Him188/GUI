@@ -1,11 +1,14 @@
 package moe.him188.gui.window;
 
+import cn.nukkit.Player;
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.EventPriority;
 import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerFormRespondedEvent;
 import cn.nukkit.event.player.PlayerKickEvent;
 import cn.nukkit.event.player.PlayerQuitEvent;
+import cn.nukkit.event.player.PlayerSettingsRespondedEvent;
+import cn.nukkit.form.response.FormResponse;
 import cn.nukkit.form.window.FormWindow;
 import moe.him188.gui.utils.Backable;
 
@@ -20,21 +23,30 @@ import java.util.Map;
 public final class WindowManager {
 
     public static final class RespondedListener implements Listener {
-        @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
+        @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
         public void onResponded(PlayerFormRespondedEvent event) {
-            if (ResponsibleFormWindowSimpleAdvanced.onEvent(event)) {
+            processResponseEvent(event.getWindow(), event.getResponse(), event.getPlayer());
+        }
+
+        @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+        public void onResponded(PlayerSettingsRespondedEvent event) {
+            processResponseEvent(event.getWindow(), event.getResponse(), event.getPlayer());
+        }
+
+        private void processResponseEvent(FormWindow window, FormResponse response, Player player) {
+            if (ResponsibleFormWindowSimpleAdvanced.onEvent(window, response, player)) {
                 return;
             }
-            if (ResponsibleFormWindowSimple.onEvent(event)) {
+            if (ResponsibleFormWindowSimple.onEvent(window, response, player)) {
                 return;
             }
-            if (ResponsibleFormWindowTemplated.onEvent(event)) {
+            if (ResponsibleFormWindowTemplated.onEvent(window, response, player)) {
                 return;
             }
-            if (ResponsibleFormWindowCustom.onEvent(event)) {
+            if (ResponsibleFormWindowCustom.onEvent(window, response, player)) {
                 return;
             }
-            ResponsibleFormWindowModal.onEvent(event);
+            ResponsibleFormWindowModal.onEvent(window, response, player);
         }
     }
 
