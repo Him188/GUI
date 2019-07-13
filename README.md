@@ -8,7 +8,7 @@ By using **GUI**, you can easily create forms.
 **Contribution is welcomed**
 
 # Download [![Build Status](https://travis-ci.org/Him188/GUI.svg?branch=master)](https://travis-ci.org/Him188/GUI)
-- [TeamCity](http://repo.him188.moe:2333/viewType.html?buildTypeId=gui_Build)
+- [TeamCity](http://mamoe.net:2333/viewType.html?buildTypeId=gui_Build)
 
 # Features
 
