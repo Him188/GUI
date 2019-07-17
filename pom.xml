@@ -26,8 +26,8 @@
 
     <distributionManagement>
         <repository>
-            <id>him188-repo</id>
-            <url>http://repo.him188.moe:8081/repository/gui/</url>
+            <id>mamoe-repo</id>
+            <url>http://mamoe.net:8081/repository/gui/</url>
         </repository>
     </distributionManagement>
 

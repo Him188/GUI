@@ -3,18 +3,18 @@
 # Introduction
 
 这是为开发者制作的插件  
-通过使用 **GUI**, 你可以炒鸡容易地创建表单窗口, 并通过内置的事件方法处理点击和关闭事件!  
+通过使用 **GUI**, 你可以容易地创建表单窗口, 并通过内置的事件方法处理点击和关闭事件!  
 **欢迎你贡献代码给这个项目!** 无论 PR 还是 issue.
 
 # Download [![Build Status](https://travis-ci.org/Him188/GUI.svg?branch=master)](https://travis-ci.org/Him188/GUI)
-- [TeamCity](http://repo.him188.moe:2333/viewType.html?buildTypeId=Gui_Build)
+- [TeamCity](http://mamoe.net:2333/viewType.html?buildTypeId=Gui_Build)
 
 # Features
 
 ## ResponseListener
 
   每个表单都可以有 **内部**事件检测器([ResponseListener](https://github.com/Him188/GUI/blob/master/src/main/java/moe/him188/gui/window/listener/response/ResponseListener.java))  
-  这将会比实现nk Listener, 监听 PlayerFormRespondedEvent, 调用窗口的等不知道方便到哪里去!!  
+  这将会比实现nk Listener, 监听 PlayerFormRespondedEvent 方便许多  
   例子
   ```java
   class A extends ResponsibleFormWindowSimple {
@@ -38,8 +38,6 @@
       }
   }
   ```
-
-  有没有觉得使用 **ResponseListener** 比使用 nukkit EventListener 方便得多?
 
 ## Functional listeners
 
@@ -71,8 +69,8 @@
 
 ## ResponsibleButton
   提供给 ResponsibleFormWindowSimple 的 **ResponsibleButton**  
-  不仅仅是窗口, 甚至按钮都可以监听(就像 Android 那样)!  
-  是否觉得上面的写法还是很麻烦? --那么这个实现将会是很好的替代!  
+  不仅仅是窗口, 甚至按钮都可以监听(就像 Android 那样)  
+  是否觉得上面的写法还是很麻烦? --那么这个实现将会是很好的替代  
   例子(可以和上面的相比较):
   ```java
   class A extends ResponsibleFormWindowSimple {
@@ -88,8 +86,8 @@
   ```
 
 ## ResponsibleFormWindowSimpleAdvanced
-  这是一个非常棒的实现, 为了方便(其实是懒)这里贴上代码里面的 javadoc  
-  这里简称 ResponsibleFormWindowSimpleAdvanced 为高级版(2333)  
+  这是为了方便这里贴上代码里面的 javadoc  
+  我简称 ResponsibleFormWindowSimpleAdvanced 为高级版  
   简称 ResponsibleFormWindowSimple 为普通版
   ```text
   高级版无需通过 id 自找数据, 一切的一切都由 GUI 帮你完成. 你只需要实现后续处理即可!
@@ -130,7 +128,7 @@
     ```xml
     <repository>
         <id>him188-gui</id>
-        <url>http://repo.him188.moe:8081/repository/public/</url>
+        <url>http://mamoe.net:8081/repository/public/</url>
     </repository>
     ```
 2. Add `dependency` in `build.dependencies`

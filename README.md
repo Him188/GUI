@@ -7,8 +7,8 @@ This plugin is made for developers.
 By using **GUI**, you can easily create forms.  
 **Contribution is welcomed**
 
-# Download [![Build Status](https://travis-ci.org/Him188/GUI.svg?branch=master)](https://travis-ci.org/Him188/GUI)
-- [TeamCity](http://repo.him188.moe:2333/viewType.html?buildTypeId=gui_Build)
+# Download
+- [TeamCity](http://mamoe.net:2333/viewType.html?buildTypeId=gui_Build)
 
 # Features
 
@@ -137,8 +137,8 @@ By using **GUI**, you can easily create forms.
 1. Add `repository` in `repositories`
     ```xml
     <repository>
-        <id>him188-gui</id>
-        <url>http://repo.him188.moe:8081/repository/public/</url>
+        <id>mamoe-repo</id>
+        <url>http://mamoe.net:8081/repository/public/</url>
     </repository>
     ```
     This repo may permanently work.
@@ -150,7 +150,7 @@ By using **GUI**, you can easily create forms.
         <version>LATEST</version>
     </dependency>
     ```
-    Sometimes the LATEST version sign does not work, in this case, you need to use the latest version, such as `1.13.4` instead.
+    Sometimes the 'LATEST' version signal does not work, in this case, you need to use the latest version, such as `1.14` instead.
     And, you can get the latest version in `pom.xml`
 3. Don't forget to add `depend` into `plugin.yml`
     ```yaml
