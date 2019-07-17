@@ -12,7 +12,7 @@
     <repositories>
         <repository>
             <id>him188-public</id>
-            <url>http://repo.him188.moe:8081/repository/public/</url>
+            <url>http://mamoe.net:8081/repository/public/</url>
         </repository>
     </repositories>
 
