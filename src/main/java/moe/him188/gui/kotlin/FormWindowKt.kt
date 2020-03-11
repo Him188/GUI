@@ -23,8 +23,3 @@ inline fun <K> Player.showFormTemplated(template: Template<K>, listener: FormTem
 inline fun Player.showFormCustom(listener: FormCustomBuilder.() -> Unit) {
     this.showFormWindow(FormCustomBuilder().apply(listener).build())
 }
-
-class ListenerBuilder<T> {
-    private lateinit var clickListener: (Int) -> Unit
-    private lateinit var closeListener: (Player) -> Unit
-}
