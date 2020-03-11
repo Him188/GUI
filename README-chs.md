@@ -11,6 +11,27 @@
 
 # Features
 
+## Kotlin DSL
+
+Only available in Kotlin  
+Learn more in [](src/main/java/moe/him188/gui/kotlin/FormWindowKt.kt)  
+Sample for showing FormSimple
+
+```kotlin
+player.showFormSimple("Button1", "Button2", "Vararg buttons") {
+  title("Set title here")
+  content("Set content here")
+
+  onClicked {//it: Int
+    player.sendMessage("You clicked a button whose id is $it")
+  }
+  
+  onClosed {//it: Player
+    it.sendMessage("You closed the form")
+  }
+}
+```
+
 ## ResponseListener
 
   每个表单都可以有 **内部**事件检测器([ResponseListener](https://github.com/Him188/GUI/blob/master/src/main/java/moe/him188/gui/window/listener/response/ResponseListener.java))  

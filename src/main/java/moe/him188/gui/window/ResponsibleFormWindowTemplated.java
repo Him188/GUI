@@ -90,9 +90,8 @@ public class ResponsibleFormWindowTemplated<K> extends FormWindowCustom implemen
      * Get last responses
      *
      * @return last response, nullable.
-     *
      * @see #setLastResponses(Player, FormResponseCustom)
-     * @see #onEvent(PlayerFormRespondedEvent)
+     * @see #onEvent(FormWindow, FormResponse, Player)
      */
     public TemplateResponses<K> getLastResponses() {
         return lastResponses;
@@ -125,7 +124,7 @@ public class ResponsibleFormWindowTemplated<K> extends FormWindowCustom implemen
      * @return last player, nullable
      *
      * @see #setLastResponses(Player, FormResponseCustom)
-     * @see #onEvent(PlayerFormRespondedEvent)
+     * @see #onEvent(FormWindow, FormResponse, Player)
      */
     public Player getLastPlayer() {
         return lastPlayer;
@@ -225,7 +224,6 @@ public class ResponsibleFormWindowTemplated<K> extends FormWindowCustom implemen
      * @param response response
      * @param player   player
      */
-    @SuppressWarnings("unchecked")
     public void callClicked(@NotNull TemplateResponses<K> response, @NotNull Player player) {
         Objects.requireNonNull(player);
         Objects.requireNonNull(response);
@@ -272,7 +270,6 @@ public class ResponsibleFormWindowTemplated<K> extends FormWindowCustom implemen
     @Override
     public String getJSONData() {
         String toModify = new Gson().toJson(this, FormWindowCustom.class);//must!!
-        //We need to replace this due to Java not supporting declaring class field 'default'
         return toModify.replace("defaultOptionIndex", "default")
                 .replace("defaultText", "default")
                 .replace("defaultValue", "default")

@@ -12,10 +12,30 @@ By using **GUI**, you can easily create forms.
 
 # Features
 
+## Kotlin DSL
+
+Only available in Kotlin  
+Learn more in [](src/main/java/moe/him188/gui/kotlin/FormWindowKt.kt)  
+Sample for showing FormSimple
+
+```kotlin
+player.showFormSimple("Button1", "Button2", "Vararg buttons") {
+  title("Set title here")
+  content("Set content here")
+
+  onClicked {//it: Int
+    player.sendMessage("You clicked a button whose id is $it")
+  }
+  
+  onClosed {//it: Player
+    it.sendMessage("You closed the form")
+  }
+}
+```
+
 ## ResponseListener
 
-  ([ResponseListener.java](https://github.com/Him188/GUI/blob/master/src/main/java/moe/him188/gui/window/listener/response/ResponseListener.java))  
-  This is very useful!  
+  ([ResponseListener.java](src/main/java/moe/him188/gui/window/listener/response/ResponseListener.java))  
     Sample:
   ```java
   class A extends ResponsibleFormWindowSimple {
@@ -40,32 +60,18 @@ By using **GUI**, you can easily create forms.
   }
   ```
 
-  Don't you think it is much easier to create FormWindow by using interface **ResponseListener** instead of another nukkit EventListener?
-
 ## Functional listeners
 
   **Functional method(lambda) support**
 
-  This will reduce much codes in send TipWindows  
-  You can send FormWindow and process only in one line!  
+  You can send FormWindow and process only in one line  
   Sample:  
   `
-  player.showFormWindow(new ResponsibleFormWindowModal("Tips", "Hello", "Yes", "No")
+  player.showFormWindow(new FormModal("Tips", "Hello", "Yes", "No")
 .onResponded(confirmation -> player.sendMessage("Your choice:"+confirmation)));
   `
+
   [ResponsibleFormWindowSimpleAdvanced.java](src/main/java/moe/him188/gui/window/ResponsibleFormWindowSimpleAdvanced.java):
-  ```java
-  public class ResponsibleFormWindowModal extends FormWindowModal implements Backable, ResponseListenerModal {
-      public final ResponsibleFormWindowModal onClicked(BiConsumer<Boolean, Player> listener) {
-          this.buttonClickedListener = listener;
-          return this;
-      }
-      public final ResponsibleFormWindowModal onClosed(Consumer<Player> listener) {
-          this.windowClosedListener = listener;
-          return this;
-      }
-  }
-  ```
 ### Using Listeners
 
   ResponseListener and Functional listeners can be used at the same time  
@@ -74,9 +80,7 @@ By using **GUI**, you can easily create forms.
 ## **ResponsibleButton**
 
   **ResponsibleButton** for ResponsibleFormWindowSimple  
-  Not only windows but also buttons can have listeners!  
-  You think ResponsibleFormWindowSimple is also too trouble to use? --This would be great choice!  
-  Sample(comparing with the sample above):
+  Sample:
 
   ```java
   class A extends ResponsibleFormWindowSimple {
@@ -95,7 +99,7 @@ By using **GUI**, you can easily create forms.
 
   ResponsibleFormWindowSimple**Advanced**  
   This is a wonderful implement of ResponsibleFormWindowSimple!  
-   (I can't translate this paragraph  into English)
+   (I can't translate this paragraph into English)
   ```text
   高级版无需通过 id 自找数据, 一切的一切都由 GUI 帮你完成. 你只需要实现后续处理即可!
   普通版里面, 点击事件函数参数1是 int, 是按钮的 ID.
@@ -112,7 +116,7 @@ By using **GUI**, you can easily create forms.
   extends `ResponsibleFormWindow`  
   By using it, you can get responses from your custom **key** such as `enum`, `String`  
   The template has checkers(parsers) to `TemplateElementInput`, It can automatically check whether the input is correct.  
-  (I can't translate this paragraph  into English)
+  (I can't translate this paragraph into English)
   ```
   比如, 你设置ID为"test"的 Input 只能输入整数, 你在收到返回数据时, 可以通过ID "test" 直接获取玩家的输入内容. 而原本NK表单只有整数ID, 对于项目多达十几个的表单很不方便.
   当玩家提交表单, 模板会将表单数据按照你预期希望的数据类型转换, 因此你可以直接取到整数型, 日期型, 甚至`Level`, `Player`, `Item`类型的数据!(不然, 试想10个输入框, 你需要花几十行判断和转换类型?)
@@ -128,7 +132,7 @@ By using **GUI**, you can easily create forms.
   ```
   window.goBack(player);
   ```
-  You can also get players' latest windows, please view [Backable.java](https://github.com/Him188/GUI/blob/master/src/main/java/moe/him188/gui/utils/Backable.java)
+  You can also get players' latest windows, please view [Backable.java](src/main/java/moe/him188/gui/utils/Backable.java)
 
 ## How to use
 
