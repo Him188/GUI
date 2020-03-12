@@ -53,10 +53,8 @@ class FormSimpleBuilder {
         button(this)
     }
 
-    inline fun buttons(block: MutableList<String>.() -> Unit) {
-        mutableListOf<String>().apply(block).forEach {
-            form.addButton(it)
-        }
+    inline fun buttons(block: ButtonsBuilder.() -> Unit) {
+        ButtonsBuilder().apply(block)
     }
 
     inner class ButtonsBuilder {
