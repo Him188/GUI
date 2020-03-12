@@ -33,19 +33,20 @@ class FormSimpleBuilder {
         closeListener = listener
     }
 
-    @PublishedApi
-    internal val buttons: MutableList<String> = mutableListOf()
-
     fun button(name: String) {
-        buttons += name
+        form.addButton(name)
     }
 
     fun button(vararg name: String) {
-        buttons += name
+        name.forEach {
+            form.addButton(it)
+        }
     }
 
     fun buttons(vararg name: String) {
-        buttons += name
+        name.forEach {
+            form.addButton(it)
+        }
     }
 
     operator fun String.unaryPlus() {
@@ -53,8 +54,19 @@ class FormSimpleBuilder {
     }
 
     inline fun buttons(block: MutableList<String>.() -> Unit) {
-        buttons.apply(block)
+        mutableListOf<String>().apply(block).forEach {
+            form.addButton(it)
+        }
     }
 
-    fun build(): ResponsibleFormWindowSimple = FormSimple(title, content, *buttons.toTypedArray()).onClicked(clickListener).onClosed(closeListener)
+    inner class ButtonsBuilder {
+        operator fun String.invoke(onClick: (Player) -> Unit) {
+            form.addButton(this, onClick)
+        }
+    }
+
+    @PublishedApi
+    internal val form = FormSimple(title, content)
+
+    fun build(): ResponsibleFormWindowSimple = form.onClicked(clickListener).onClosed(closeListener)
 }
