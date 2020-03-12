@@ -18,9 +18,11 @@ Learn more in [](src/main/java/moe/him188/gui/kotlin/FormWindowKt.kt)
 Sample for showing FormSimple
 
 ```kotlin
-player.showFormSimple("Button1", "Button2", "Vararg buttons") {
+player.showFormSimple() {
   title("Set title here")
   content("Set content here")
+  
+  buttons(""Button1", "Button2", "Vararg buttons")
 
   onClicked {//it: Int
     player.sendMessage("You clicked a button whose id is $it")
